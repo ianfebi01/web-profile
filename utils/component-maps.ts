@@ -1,5 +1,6 @@
 import BannerStandard from '@/components/Banner/BannerStandard'
 import ProfileBanner from '@/components/Banner/ProfileBanner'
+import Accordian from '@/components/Content/Accordian'
 import ArticleSearch from '@/components/Content/ArticleSearch'
 import BodyCopy from '@/components/Content/BodyCopy'
 import FeaturedExperiences from '@/components/Content/FeaturedExperiences'
@@ -22,4 +23,5 @@ export const componentMap: Record<string, React.FC<{ sectionData: any }>> = {
   'content-components.quote'                 : Quote,
   'content-components.simple-cards'          : SimpleCards,
   'content-components.text-left-image-right' : TextLeftImageRight,
+  'content-components.accordian' : Accordian,
 }
