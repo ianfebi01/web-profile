@@ -90,7 +90,8 @@ const getSection = (
           !!sectionData?.sectionSettings?.description ) && (
           <div
             className={cn( 'mx-auto pb-12', {
-              'text-center max-w-5xl' : sectionData?.sectionSettings?.centreText,
+              'text-center max-w-3xl' : sectionData?.sectionSettings?.centreText,
+              'max-w-3xl'             : sectionData?.__component === 'content-components.body-copy',
               'text-blue-dark'        : !['blue-dark'].includes( bgColour ),
               'text-white'            : ['blue-dark'].includes( bgColour ),
             } )}
