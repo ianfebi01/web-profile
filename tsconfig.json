@@ -28,7 +28,8 @@
       ],
       "@/components/*": [
         "./components/*"
-      ]
+      ],
+      "@payload-config": ["./app/payload.config.ts"]
     }
   },
   "include": [
