@@ -1,3 +1,6 @@
+@use "sass:meta";
+@use 'abstracts/mixins';
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap');
 
@@ -7,22 +10,21 @@
 
 
 // Abstracts
-@import 'abstracts/mixins';
 
 // Global
-@import 'base/global';
+@include meta.load-css('base/global');
 // @import 'base/overrides';
 // @import 'base/color';
 
 // Layouts
-@import 'layouts/global';
+@include meta.load-css('layouts/global');
 // @import 'layouts/default';
 // @import 'layouts/error';
 
 // Components
-@import 'components/global';
-@import 'components/searchbox';
-@import 'components/swiper';
+@include meta.load-css('components/global');
+@include meta.load-css('components/searchbox');
+@include meta.load-css('components/swiper');
 
 
 

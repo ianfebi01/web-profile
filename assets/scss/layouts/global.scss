@@ -1,21 +1,23 @@
+@use "../abstracts/mixins";
+
 .main {
     @apply flex min-h-screen flex-col items-center;
 
-    @include element(header) {
+    @include mixins.element(header) {
         @apply flex items-center fixed inset-x-0 mx-auto top-1 w-fit sm:w-full max-w-5xl sm:p-4 p-4 md:p-4 lg:px-0 xl:px-0 2xl:px-0 z-50;
     }
 
-    @include element(section) {
+    @include mixins.element(section) {
         @apply w-full flex flex-col items-center sm:px-4 px-4 md:px-4 xl:px-0 2xl:px-0;
     }
 
-    @include element(container) {
+    @include mixins.element(container) {
         @apply w-full h-full grow-[1] max-w-5xl;
     }
 }
 
 .article {
-    @include element(container) {
+    @include mixins.element(container) {
         @apply w-full h-full grow-[1] max-w-3xl;
     }
 }
