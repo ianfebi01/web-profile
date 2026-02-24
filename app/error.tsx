@@ -1,5 +1,6 @@
 'use client' // Error components must be Client Components
 
+import '@/assets/scss/main.scss'
 import Button from '@/components/Buttons/Button'
 import Image from 'next/image'
 

@@ -1,3 +1,5 @@
+import '@/assets/scss/main.scss'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 import type { Metadata } from 'next'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import ReactQueryProvider from '@/components/Context/ReactQueryProvider'

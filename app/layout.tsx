@@ -1,6 +1,3 @@
-import '@/assets/scss/main.scss'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-
 import { ReactNode } from 'react';
 
 type Props = {
