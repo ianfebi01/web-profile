@@ -35,7 +35,7 @@ interface Props {
   position?: Placement
   isTableFilter?: boolean
   handleCommitted?: ( val: Date | null ) => void
-  boundaryRef?: React.RefObject<HTMLElement>
+  boundaryRef?: React.RefObject<HTMLElement | null>
 }
 
 const SingleDatePicker = ( {

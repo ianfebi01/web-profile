@@ -4,7 +4,7 @@ import { routing } from './i18n/routing'
 
 const intlMiddleware = createIntlMiddleware( routing )
 
-export default function middleware( req: NextRequest ) {
+export default function proxy( req: NextRequest ) {
   // Run i18n middleware first
   const intlResponse = intlMiddleware( req )
 

@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 interface Props {
   url: string
   label: string
-  icon: ReactElement
+  icon: ReactElement<any>
   className?: string
 }
 const LinkOpenNewTab = ( { url, label, icon, className = '' }: Props ) => {

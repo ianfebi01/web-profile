@@ -41,7 +41,9 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
       className="mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 list-none"
     >
       {portofolios?.map( ( item, i ) => (
-        <div ref={( el ) => ( cards.current[i] = el )}
+        <div ref={el => {
+          (cards.current[i] = el);
+        }}
           key={item.slug}
           className='translate-y-[75px] opacity-0'
         >
@@ -49,7 +51,7 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
         </div>
       ) )}
     </div>
-  )
+  );
 }
 
 export default PortofoliosWrapper

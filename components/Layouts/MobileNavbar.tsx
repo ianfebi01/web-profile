@@ -104,7 +104,9 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                       {items.map( ( item, key ) => (
                         <div
                           key={key}
-                          ref={( el ) => ( itemsRefs.current[key] = el )}
+                          ref={el => {
+                            (itemsRefs.current[key] = el);
+                          }}
                           className={cn( 'opacity-0 translate-y-[50px]' )}
                         >
                           {!!item.categoryName && item.navItems.length > 0 ? (
@@ -232,7 +234,9 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                 </div>
                 {socials.map( ( item, index ) => (
                   <button
-                    ref={( el ) => ( itemsRefs.current[items.length + 1 + index] = el )}
+                    ref={el => {
+                      (itemsRefs.current[items.length + 1 + index] = el);
+                    }}
                     onClick={() => openNewTab( item.href )}
                     className={cn(
                       'opacity-0 translate-y-[50px]',
@@ -251,5 +255,5 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
         </Transition.Child>
       </Dialog>
     </Transition>
-  )
+  );
 }

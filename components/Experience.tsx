@@ -132,7 +132,9 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
           <div
             key={item.companyName}
             className="pt-4 first:pt-0 translate-y-[50px] opacity-0"
-            ref={( el ) => ( itemsRef.current[index] = el )}
+            ref={el => {
+              (itemsRef.current[index] = el);
+            }}
           >
             {item.steps.length > 1 && (
               <>
@@ -174,7 +176,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
         {/* <ProgressVertical steps={steps} /> */}
       </div>
     </div>
-  )
+  );
 }
 
 export default Experience

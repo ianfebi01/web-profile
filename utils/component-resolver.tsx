@@ -5,7 +5,7 @@ import { componentMap } from './component-maps'
 export default function componentResolver(
   section: any,
   index: number
-): ReactElement | null {
+): ReactElement<any> | null {
   const key: string = section.__component // e.g., 'about.about-section'
   const Component = componentMap[key]
 

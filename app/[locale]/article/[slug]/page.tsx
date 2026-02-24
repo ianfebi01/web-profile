@@ -11,13 +11,14 @@ import {
 import { Metadata } from 'next'
 
 type Props = {
-  params: {
+  params: Promise<{
     lang: string
     slug: string
-  }
+  }>
 }
 
-export async function generateMetadata( { params }: Props ): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const response = await getDetail( params.slug )
   const data = response?.attributes
 
@@ -87,11 +88,12 @@ export async function generateStaticParams() {
   )
 }
 
-export default async function ArticlePage( {
-  params,
-}: {
-  params: { slug: string }
-} ) {
+export default async function ArticlePage(
+  props: {
+    params: Promise<{ slug: string }>
+  }
+) {
+  const params = await props.params;
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery( {
     queryKey : ['article', 'detail', params.slug],

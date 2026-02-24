@@ -16,13 +16,14 @@ import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 
 type Props = {
-  params: {
+  params: Promise<{
     locale: Locale
     slug: string
-  }
+  }>
 }
 
-export async function generateMetadata( { params }: Props ): Promise<Metadata> {
+export async function generateMetadata(props: Props): Promise<Metadata> {
+  const params = await props.params;
   const { locale } = await params
   setRequestLocale( locale )
 
@@ -69,11 +70,12 @@ export async function generateStaticParams() {
   )
 }
 
-export default async function PortofolioPage( {
-  params,
-}: {
-  params: { slug: string }
-} ) {
+export default async function PortofolioPage(
+  props: {
+    params: Promise<{ slug: string }>
+  }
+) {
+  const params = await props.params;
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery( {
     queryKey : ['portofolio', 'detail', params.slug],
