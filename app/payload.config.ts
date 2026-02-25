@@ -2,6 +2,9 @@ import sharp from 'sharp'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { buildConfig } from 'payload'
+import { seoPlugin } from '@payloadcms/plugin-seo';
+import { Media } from '../collections/Media';
+import { cloudinaryStorage } from 'payload-cloudinary';
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -13,7 +16,7 @@ export default buildConfig({
     },
 
     // Define and configure your collections in this array
-    collections: [],
+    collections: [Media],
 
     // Your Payload secret - should be a complex and secure string, unguessable
     secret: process.env.PAYLOAD_SECRET || '',
@@ -27,4 +30,25 @@ export default buildConfig({
     // This is optional - if you don't need to do these things,
     // you don't need it!
     sharp,
+    plugins: [
+        seoPlugin({
+            collections: [
+                'pages',
+            ],
+            uploadsCollection: 'media',
+            generateTitle: ({ doc }) => `${doc.title} | Ian Febi S`,
+            generateDescription: ({ doc }) => doc.excerpt
+        }),
+        cloudinaryStorage({
+            config: {
+                cloud_name: process.env.CLOUDINARY_CLOUD_NAME || '',
+                api_key: process.env.CLOUDINARY_API_KEY || '',
+                api_secret: process.env.CLOUDINARY_API_SECRET || ''
+            },
+            collections: {
+                media: true,
+            },
+            folder: process.env.CLOUDINARY_FOLDER || 'web-profile-payload',
+        })
+    ]
 })
