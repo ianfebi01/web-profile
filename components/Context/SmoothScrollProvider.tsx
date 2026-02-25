@@ -38,9 +38,11 @@ const SmoothScroll = ( { children }: {children: ReactNode} ) => {
   return (
     <>
       <motion.div
-        ref={scrollRef}
-        style={{ y : spring }} // translateY of scroll container using negative scroll value
-        className="scroll-container"
+        {...({
+          ref: scrollRef,
+          style: { y : spring }, 
+          className: "scroll-container",
+        } as any)}
       >
         {children}
       </motion.div>

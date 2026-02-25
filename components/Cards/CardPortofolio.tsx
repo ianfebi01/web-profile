@@ -54,8 +54,8 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
   /**
    *  Animation
    */
-  const cardRef = useRef( null )
-  const isInView = useInView( cardRef, {
+  const cardRef = useRef<HTMLDivElement>( null )
+  const isInView = useInView( cardRef as any, {
     once : true,
   } )
   const animationControl = useAnimation()

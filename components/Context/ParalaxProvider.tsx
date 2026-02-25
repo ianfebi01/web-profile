@@ -7,9 +7,9 @@ interface Props {
   position?: 'top' | 'center' | 'end'
 }
 const ParalaxProvider = ( { children, position = 'top' }: Props ) => {
-  const ref = useRef( null )
+  const ref = useRef<HTMLDivElement>( null )
   const { scrollYProgress } = useScroll( {
-    target : ref,
+    target : ref as any,
     offset :
       position === 'top'
         ? ['start start', 'end start']

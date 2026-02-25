@@ -6,8 +6,8 @@ interface Props{
 	quote: string
 }
 const TextQuote: FunctionComponent<Props> = ( { quote } ) => {
-  const textRef = useRef( null )
-  const isInView = useInView( textRef, {
+  const textRef = useRef<HTMLDivElement>( null )
+  const isInView = useInView( textRef as any, {
     once : true,
   } )
 
@@ -22,23 +22,25 @@ const TextQuote: FunctionComponent<Props> = ( { quote } ) => {
   return (
     <div ref={textRef}>
       <motion.p
-        variants={{
-          hidden : {
-            opacity : 0,
-            scale   : 0,
+        {...({
+          variants : {
+            hidden : {
+              opacity : 0,
+              scale   : 0,
+            },
+            visible : {
+              opacity : 1,
+              scale   : 1,
+            },
           },
-          visible : {
-            opacity : 1,
-            scale   : 1,
+          initial : "hidden",
+          transition : {
+            type   : 'spring',
+            bounce : 0.5,
           },
-        }}
-        initial="hidden"
-        transition={{
-          type   : 'spring',
-          bounce : 0.5,
-        }}
-        animate={textControll}
-        className="text-base md:text-2xl font-medium text-center"
+          animate : textControll,
+          className : "text-base md:text-2xl font-medium text-center",
+        } as any)}
       >
         {quote}
       </motion.p>

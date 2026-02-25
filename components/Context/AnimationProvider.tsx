@@ -23,8 +23,8 @@ const AnimationProvider: FunctionComponent<Props> = ( {
   once = true,
   delay = 0.2,
 } ) => {
-  const ref = useRef( null )
-  const isInView = useInView( ref, {
+  const ref = useRef<HTMLDivElement>( null )
+  const isInView = useInView( ref as any, {
     once,
   } )
   const animationControl = useAnimation()
@@ -47,24 +47,26 @@ const AnimationProvider: FunctionComponent<Props> = ( {
       className="h-full"
     >
       <motion.div
-        variants={{
-          hidden : {
-            opacity : 0,
-            y       : 75,
+        {...({
+          variants : {
+            hidden : {
+              opacity : 0,
+              y       : 75,
+            },
+            visible : {
+              opacity : 1,
+              y       : 0,
+            },
           },
-          visible : {
-            opacity : 1,
-            y       : 0,
+          initial: 'hidden',
+          animate: animationControl,
+          transition: {
+            duration : 0.3,
+            delay    : delay,
+            ease     : easeOut,
           },
-        }}
-        initial="hidden"
-        animate={animationControl}
-        transition={{
-          duration : 0.3,
-          delay    : delay,
-          ease     : easeOut,
-        }}
-        className={className}
+          className: className,
+        } as any)}
       >
         {children}
       </motion.div>

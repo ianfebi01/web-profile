@@ -5,6 +5,14 @@ import { buildConfig } from 'payload'
 import { seoPlugin } from '@payloadcms/plugin-seo';
 import { Media } from '../collections/Media';
 import { cloudinaryStorage } from 'payload-cloudinary';
+import { Site } from '../globals/Site';
+import { Profile } from '../globals/Profile';
+import { HomePage } from '../globals/HomePage';
+import { Tags } from '../collections/Tags';
+import { Skills } from '../collections/Skills';
+import { Projects } from '../collections/Projects';
+import { Articles } from '../collections/Articles';
+import { Pages } from '../collections/Pages';
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -16,7 +24,8 @@ export default buildConfig({
     },
 
     // Define and configure your collections in this array
-    collections: [Media],
+    collections: [Media, Tags, Skills, Projects, Articles, Pages],
+    globals: [Site, Profile, HomePage],
 
     // Your Payload secret - should be a complex and secure string, unguessable
     secret: process.env.PAYLOAD_SECRET || '',

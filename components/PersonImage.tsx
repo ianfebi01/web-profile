@@ -7,8 +7,8 @@ type Props = {
 	image: string
 }
 const PersonImage: FunctionComponent<Props> = ( { image } ) => {
-  const personImageRef = useRef( null )
-  const personImageView = useInView( personImageRef, {
+  const personImageRef = useRef<HTMLDivElement>( null )
+  const personImageView = useInView( personImageRef as any, {
     once : false,
   } )
   const personImageControl = useAnimation()
@@ -25,24 +25,25 @@ const PersonImage: FunctionComponent<Props> = ( { image } ) => {
       className="absolute bottom-0 mx-auto inset-x-0 w-fit"
     >
       <motion.div
-        variants={{
-          hidden : {
-            opacity : 0,
-            y       : 391,
+        {...({
+          variants : {
+            hidden : {
+              opacity : 0,
+              y       : 391,
+            },
+            visible : {
+              opacity : 1,
+              y       : 0,
+            },
           },
-          visible : {
-            opacity : 1,
-            y       : 0,
+          initial : "hidden",
+          animate : personImageControl,
+          transition : {
+            duration : 0.5,
+            ease     : easeInOut,
           },
-        }}
-        initial="hidden"
-        animate={personImageControl}
-        transition={{
-          duration : 0.5,
-          ease     : easeInOut,
-        }}
-        className='w-[261px] h-[391px] relative'
-
+          className : 'w-[261px] h-[391px] relative',
+        } as any)}
       >
         <Image src={image}
           alt="Profile image"

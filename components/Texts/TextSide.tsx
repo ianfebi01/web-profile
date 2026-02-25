@@ -6,8 +6,8 @@ interface Props{
 	openToWork: boolean
 }
 const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
-  const textRef = useRef( null )
-  const textView = useInView( textRef, {
+  const textRef = useRef<HTMLDivElement>( null )
+  const textView = useInView( textRef as any, {
     once : true,
   } )
 
@@ -22,24 +22,26 @@ const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
       className="absolute inset-y-0 my-auto h-fit sm:translate-y-28 md:translate-y-8"
     >
       <motion.div
-        variants={{
-          hidden : {
-            opacity : 0,
-            y       : 45,
+        {...({
+          variants : {
+            hidden : {
+              opacity : 0,
+              y       : 45,
+            },
+            visible : {
+              opacity : 1,
+              y       : 0,
+            },
           },
-          visible : {
-            opacity : 1,
-            y       : 0,
+          initial : "hidden",
+          animate : textControl,
+          transition : {
+            duration : 0.3,
+            delay    : 0.6,
+            ease     : easeOut,
           },
-        }}
-        initial="hidden"
-        animate={textControl}
-        transition={{
-          duration : 0.3,
-          delay    : 0.6,
-          ease     : easeOut,
-        }}
-        className="  invisible  sm:visible flex w-full left-0 gap-2"
+          className : "  invisible  sm:visible flex w-full left-0 gap-2",
+        } as any)}
       >
         <div className="grow-[1] w-full shrink-[1] ">
           {openToWork &&
