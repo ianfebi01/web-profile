@@ -4,7 +4,7 @@ import '@/assets/scss/main.scss'
 import Button from '@/components/Buttons/Button'
 import Image from 'next/image'
 
-export default function Error({ reset }: { reset: () => void }) {
+export default function Error({ error, reset }: { error?: Error; reset?: () => void }) {
   return (
     <body className="h-screen flex flex-col items-center justify-center relative">
       <div className="absolute container w-full h-full z-10">
@@ -32,7 +32,7 @@ export default function Error({ reset }: { reset: () => void }) {
         <Button
           onClick={
             // Attempt to recover by trying to re-render the segment
-            () => reset()
+            () => reset?.()
           }
         >
           Try again
