@@ -13,7 +13,7 @@ export const Profile: GlobalConfig = {
     },
     {
       name: 'bio',
-      type: 'richText',
+      type: 'textarea',
     },
     {
       name: 'bannerImage',

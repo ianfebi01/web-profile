@@ -17,7 +17,7 @@ export const Skills: CollectionConfig = {
     },
     {
       name: 'description',
-      type: 'richText',
+      type: 'textarea',
     },
     {
       name: 'image',

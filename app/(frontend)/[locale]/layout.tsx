@@ -45,13 +45,13 @@ export default async function LocaleLayout( {
   const siteData = ( await getSiteData( locale ) ) as { data: ApiSiteSite }
 
   return (
-    <html lang={locale}>
-      <GoogleAnalytics />
-      <ErrorBoundary errorComponent={Error}>
-        <ReactQueryProvider>
-          <body suppressHydrationWarning={true}
-            id="myportal"
-          >
+    <html lang={locale} suppressHydrationWarning>
+      <body suppressHydrationWarning={true}
+        id="myportal"
+      >
+        <GoogleAnalytics />
+        <ErrorBoundary errorComponent={Error}>
+          <ReactQueryProvider>
             <NextIntlClientProvider>
               <NextTopLoader
                 color="#F26B50"
@@ -92,9 +92,9 @@ export default async function LocaleLayout( {
                 </SectionProvider>
               </div>
             </NextIntlClientProvider>
-          </body>
-        </ReactQueryProvider>
-      </ErrorBoundary>
+          </ReactQueryProvider>
+        </ErrorBoundary>
+      </body>
     </html>
   )
 }

@@ -34,7 +34,7 @@ export const Pages: CollectionConfig = {
           fields: [
             {
               name: 'content',
-              type: 'richText',
+              type: 'textarea',
             },
           ],
         },

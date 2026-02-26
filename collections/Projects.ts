@@ -29,7 +29,7 @@ export const Projects: CollectionConfig = {
     },
     {
         name: 'content',
-        type: 'richText',
+        type: 'textarea',
     },
     {
       name: 'thumbnail',

@@ -230,21 +230,7 @@ export interface Tag {
 export interface Skill {
   id: string;
   name: string;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  description?: string | null;
   image?: (string | null) | Media;
   updatedAt: string;
   createdAt: string;
@@ -258,21 +244,7 @@ export interface Project {
   title: string;
   slug: string;
   description?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  content?: string | null;
   thumbnail?: (string | null) | Media;
   gallery?:
     | {
@@ -294,21 +266,7 @@ export interface Article {
   title: string;
   slug: string;
   introText?: string | null;
-  content?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  content?: string | null;
   heroImage?: (string | null) | Media;
   tags?: (string | Tag)[] | null;
   updatedAt: string;
@@ -324,21 +282,7 @@ export interface Page {
   slug: string;
   blocks?:
     | {
-        content?: {
-          root: {
-            type: string;
-            children: {
-              type: any;
-              version: number;
-              [k: string]: unknown;
-            }[];
-            direction: ('ltr' | 'rtl') | null;
-            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-            indent: number;
-            version: number;
-          };
-          [k: string]: unknown;
-        } | null;
+        content?: string | null;
         id?: string | null;
         blockName?: string | null;
         blockType: 'richText';
@@ -683,21 +627,7 @@ export interface Site {
 export interface Profile {
   id: string;
   name: string;
-  bio?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
+  bio?: string | null;
   bannerImage: string | Media;
   socialPlatformLinks?:
     | {

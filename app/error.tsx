@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 export default function Error({ error, reset }: { error?: Error; reset?: () => void }) {
   return (
-    <body className="h-screen flex flex-col items-center justify-center relative">
+    <div className="h-screen flex flex-col items-center justify-center relative">
       <div className="absolute container w-full h-full z-10">
         <Image
           src="/shape.svg"
@@ -38,6 +38,6 @@ export default function Error({ error, reset }: { error?: Error; reset?: () => v
           Try again
         </Button>
       </article>
-    </body>
+    </div>
   )
 }
