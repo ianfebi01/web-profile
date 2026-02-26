@@ -281,12 +281,20 @@ export interface Page {
   title: string;
   slug: string;
   blocks?:
-    | {
-        content?: string | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'richText';
-      }[]
+    | (
+        | BodyCopyBlock
+        | TextLeftImageRightBlock
+        | SimpleCardsBlock
+        | SmallBannerBlock
+        | DividerBlock
+        | AccordianBlock
+        | QuoteBlock
+        | FeaturedPortofoliosBlock
+        | FeaturedExperiencesBlock
+        | IconTextsBlock
+        | ArticleSearchBlock
+        | PortofolioSearchBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -298,6 +306,170 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BodyCopyBlock".
+ */
+export interface BodyCopyBlock {
+  content?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.body-copy';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextLeftImageRightBlock".
+ */
+export interface TextLeftImageRightBlock {
+  image: string | Media;
+  fullWidthBgImage?: boolean | null;
+  reverse?: boolean | null;
+  fullWidth: boolean;
+  bodyCopy?: string | null;
+  biggerColumn?: ('image' | 'content') | null;
+  scaling?: ('contain' | 'cover') | null;
+  buttons?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        newTab?: boolean | null;
+        style?: ('primary' | 'secondary' | 'transparent') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.text-left-image-right';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimpleCardsBlock".
+ */
+export interface SimpleCardsBlock {
+  title?: string | null;
+  cards?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        image?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.simple-cards';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SmallBannerBlock".
+ */
+export interface SmallBannerBlock {
+  backgroundImage?: (string | null) | Media;
+  buttons?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        newTab?: boolean | null;
+        style?: ('primary' | 'secondary' | 'transparent') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.small-banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DividerBlock".
+ */
+export interface DividerBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.divider';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordianBlock".
+ */
+export interface AccordianBlock {
+  items?:
+    | {
+        heading: string;
+        content: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.accordian';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBlock".
+ */
+export interface QuoteBlock {
+  quote: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.quote';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPortofoliosBlock".
+ */
+export interface FeaturedPortofoliosBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.featured-portofolios';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedExperiencesBlock".
+ */
+export interface FeaturedExperiencesBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.featured-experiences';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconTextsBlock".
+ */
+export interface IconTextsBlock {
+  icons: {
+    image?: (string | null) | Media;
+    bodyCopy?: string | null;
+    link?: string | null;
+    linkNewTab?: boolean | null;
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.icon-texts';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArticleSearchBlock".
+ */
+export interface ArticleSearchBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.article-search';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortofolioSearchBlock".
+ */
+export interface PortofolioSearchBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'content-components.portofolio-search';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -520,13 +692,18 @@ export interface PagesSelect<T extends boolean = true> {
   blocks?:
     | T
     | {
-        richText?:
-          | T
-          | {
-              content?: T;
-              id?: T;
-              blockName?: T;
-            };
+        'content-components.body-copy'?: T | BodyCopyBlockSelect<T>;
+        'content-components.text-left-image-right'?: T | TextLeftImageRightBlockSelect<T>;
+        'content-components.simple-cards'?: T | SimpleCardsBlockSelect<T>;
+        'content-components.small-banner'?: T | SmallBannerBlockSelect<T>;
+        'content-components.divider'?: T | DividerBlockSelect<T>;
+        'content-components.accordian'?: T | AccordianBlockSelect<T>;
+        'content-components.quote'?: T | QuoteBlockSelect<T>;
+        'content-components.featured-portofolios'?: T | FeaturedPortofoliosBlockSelect<T>;
+        'content-components.featured-experiences'?: T | FeaturedExperiencesBlockSelect<T>;
+        'content-components.icon-texts'?: T | IconTextsBlockSelect<T>;
+        'content-components.article-search'?: T | ArticleSearchBlockSelect<T>;
+        'content-components.portofolio-search'?: T | PortofolioSearchBlockSelect<T>;
       };
   meta?:
     | T
@@ -537,6 +714,160 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BodyCopyBlock_select".
+ */
+export interface BodyCopyBlockSelect<T extends boolean = true> {
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "TextLeftImageRightBlock_select".
+ */
+export interface TextLeftImageRightBlockSelect<T extends boolean = true> {
+  image?: T;
+  fullWidthBgImage?: T;
+  reverse?: T;
+  fullWidth?: T;
+  bodyCopy?: T;
+  biggerColumn?: T;
+  scaling?: T;
+  buttons?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        newTab?: T;
+        style?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SimpleCardsBlock_select".
+ */
+export interface SimpleCardsBlockSelect<T extends boolean = true> {
+  title?: T;
+  cards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "SmallBannerBlock_select".
+ */
+export interface SmallBannerBlockSelect<T extends boolean = true> {
+  backgroundImage?: T;
+  buttons?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        newTab?: T;
+        style?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DividerBlock_select".
+ */
+export interface DividerBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "AccordianBlock_select".
+ */
+export interface AccordianBlockSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        heading?: T;
+        content?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "QuoteBlock_select".
+ */
+export interface QuoteBlockSelect<T extends boolean = true> {
+  quote?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedPortofoliosBlock_select".
+ */
+export interface FeaturedPortofoliosBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedExperiencesBlock_select".
+ */
+export interface FeaturedExperiencesBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "IconTextsBlock_select".
+ */
+export interface IconTextsBlockSelect<T extends boolean = true> {
+  icons?:
+    | T
+    | {
+        image?: T;
+        bodyCopy?: T;
+        link?: T;
+        linkNewTab?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArticleSearchBlock_select".
+ */
+export interface ArticleSearchBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "PortofolioSearchBlock_select".
+ */
+export interface PortofolioSearchBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -629,6 +960,7 @@ export interface Profile {
   name: string;
   bio?: string | null;
   bannerImage: string | Media;
+  avatar: string | Media;
   socialPlatformLinks?:
     | {
         platform: string;
@@ -682,6 +1014,7 @@ export interface ProfileSelect<T extends boolean = true> {
   name?: T;
   bio?: T;
   bannerImage?: T;
+  avatar?: T;
   socialPlatformLinks?:
     | T
     | {

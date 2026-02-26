@@ -22,6 +22,12 @@ export const Profile: GlobalConfig = {
       required: true,
     },
     {
+      name: 'avatar',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
       name: 'socialPlatformLinks',
       type: 'array',
       fields: [

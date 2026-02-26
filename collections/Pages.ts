@@ -1,4 +1,18 @@
 import type { CollectionConfig } from 'payload'
+import { 
+  BodyCopy, 
+  TextLeftImageRight, 
+  SimpleCards,
+  SmallBanner,
+  Divider,
+  Accordian,
+  Quote,
+  FeaturedPortofolios,
+  FeaturedExperiences,
+  IconTexts,
+  ArticleSearch,
+  PortofolioSearch
+} from '../blocks/ContentComponents'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -27,17 +41,18 @@ export const Pages: CollectionConfig = {
       name: 'blocks',
       type: 'blocks',
       blocks: [
-        // We will define specific blocks (like Strapi's Dynamic Zone components) here later.
-        // For now, a simple RichText block to get started:
-        {
-          slug: 'richText',
-          fields: [
-            {
-              name: 'content',
-              type: 'textarea',
-            },
-          ],
-        },
+        BodyCopy, 
+        TextLeftImageRight, 
+        SimpleCards,
+        SmallBanner,
+        Divider,
+        Accordian,
+        Quote,
+        FeaturedPortofolios,
+        FeaturedExperiences,
+        IconTexts,
+        ArticleSearch,
+        PortofolioSearch
       ],
     },
   ],
