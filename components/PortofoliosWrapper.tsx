@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin( ScrollTrigger )
 
 interface Props {
-  portofolios: ApiPortofolioPortofolio['attributes'][]
+  portofolios: any[]
 }
 
 const PortofoliosWrapper = ( { portofolios }: Props ) => {

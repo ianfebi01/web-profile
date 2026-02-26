@@ -45,9 +45,9 @@ const Gallery: React.FC<Props> = ( { sectionData } ) => {
               delay={0.2 + index * 0.1}
             >
               <div className="relative w-full overflow-hidden aspect-square">
-                {item.image?.data && (
+                {(item.image?.data || item.image) && (
                   <Image
-                    src={imageUrl( item?.image.data, 'medium' ) || ''}
+                    src={imageUrl( item?.image?.data || item?.image, 'medium' ) || ''}
                     alt={`Image-${index}`}
                     className="object-contain object-center w-full h-full"
                     placeholder={imageLoader}

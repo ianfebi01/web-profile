@@ -1,5 +1,5 @@
-import { fetchAPI } from '@/utils/fetch-api'
-import { ApiPortofolioPortofolio } from '@/types/generated/contentTypes'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 import Button2 from '../Buttons/Button2'
 import { Link } from '@/i18n/navigation'
 import NoDataFound from '../NoDataFound'
@@ -9,27 +9,20 @@ import PortofoliosWrapper from '../PortofoliosWrapper'
 const FeaturedPortofolios = async () => {
   const locale = await getLocale()
 
-  const path = `/portofolios`
-  const urlParamsObject = {
-    sort     : { createdAt : 'desc' },
-    populate : {
-      featureImage : { populate : '*' },
-      skills       : { populate : '*' },
-    },
-    pagination : {
-      start : 0,
-      limit : 3,
-    },
-    locale,
-  }
+  const payload = await getPayload({ config: configPromise })
+  const responseData = await payload.find({
+    collection: 'projects',
+    limit: 3,
+    sort: '-createdAt',
+    depth: 2
+  })
 
-  const responseData = await fetchAPI( path, urlParamsObject )
-  if ( responseData.data?.length === 0 ) return <NoDataFound />
+  if ( responseData.docs?.length === 0 ) return <NoDataFound />
 
   return (
     <div className="flex flex-col gap-4">
       <PortofoliosWrapper
-        portofolios={( responseData?.data as ApiPortofolioPortofolio[] ).map( ( item ) => item.attributes )}
+        portofolios={responseData?.docs}
       />
       <Link className="no-underline"
         href={'/portofolio'}

@@ -14,7 +14,7 @@ const Section: React.FC<Props> = ( {
 } ) => {
   const bgColour =
     sectionData.sectionSettings?.attributes?.bgColour?.data?.attributes?.name ||
-    ''
+    sectionData.sectionSettings?.bgColour || ''
 
   return (
     <TextLeftImageRight

@@ -27,62 +27,56 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const page = await getPageBySlug( params.slug, params.locale )
+  const pages = await getPageBySlug( params.slug, params.locale )
 
-  const metadata = page.data[0]?.attributes?.seo
+  if (pages.docs?.length === 0) return FALLBACK_SEO;
+  const page = pages.docs[0];
+  const metadata = (page as any)?.meta; // payload-plugin-seo defaults to 'meta'
 
   const canonicalURL = metadata?.canonicalURL || `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}/${params.slug}`;
 
-  // Extract social metadata
-  const socialMeta = metadata?.metaSocial?.length
-    ? Object.fromEntries(
-      metadata?.metaSocial?.map(
-        ( { socialNetwork, title, description, image }: any ) => [
-          socialNetwork.toLowerCase(),
-          { title, description, image },
-        ]
-      )
-    )
-    : {}
-
-  // Extract image data for Open Graph and Twitter
-
   return {
     title :
-      metadata?.metaTitle ||
-      page?.data[0]?.attributes?.title ||
+      metadata?.title ||
+      page?.title ||
       FALLBACK_SEO.title ||
       null,
-    description : metadata?.metaDescription || FALLBACK_SEO.description || null,
+    description : metadata?.description || FALLBACK_SEO.description || null,
     keywords    : metadata?.keywords || null,
-    robots      : metadata?.metaRobots || null,
     openGraph   : {
       url         : canonicalURL || null,
-      title       : metadata?.metaTitle || null,
-      description : metadata?.metaDescription || null,
+      title       : metadata?.title || page?.title || null,
+      description : metadata?.description || null,
       siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
       type        : 'website', // or "article"
-      images      : metadata?.metaImage?.data
-        ? [{ url : imageUrl( metadata?.metaImage?.data, 'medium' ) || '' }]
+      images      : metadata?.image?.url
+        ? [{ url : imageUrl( metadata?.image?.url as any, 'medium' ) || '' }]
         : [], // Add Open Graph image
     },
     twitter : {
       card  : 'summary',
       site  : '@ianfebi01',
-      title : metadata?.metaTitle || FALLBACK_SEO.title || null,
-      description :
-        socialMeta?.twitter?.description || FALLBACK_SEO.description || '',
-      images : socialMeta?.twitter?.image?.data
-        ? [{ url : imageUrl( socialMeta?.twitter?.image?.data, 'medium' ) || '' }]
+      title : metadata?.title || page?.title || FALLBACK_SEO.title || null,
+      description : metadata?.description || FALLBACK_SEO.description || '',
+      images : metadata?.image?.url
+        ? [{ url : imageUrl( metadata?.image?.url as any, 'medium' ) || '' }]
         : [], // Twitter image
     },
   }
 }
 
+export const revalidate = 60; // ISR Support
+
 export default async function PageRoute(props: Props) {
   const params = await props.params;
-  const page = await getPageBySlug( params.slug || 'home-id', params.locale )
-  if ( page.data?.length === 0 ) return notFound()
+  const pages = await getPageBySlug( params.slug || 'home-id', params.locale )
+  if ( pages.docs?.length === 0 ) return notFound()
 
-  return <HeroesAndSections page={page.data?.[0]?.attributes} />
+  const payloadPage = pages.docs[0]
+  const payloadToStrapiFormat = {
+    banner: [],
+    content: payloadPage.blocks || []
+  }
+
+  return <HeroesAndSections page={payloadToStrapiFormat as any} />
 }

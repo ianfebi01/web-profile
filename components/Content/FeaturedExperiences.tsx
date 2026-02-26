@@ -5,28 +5,7 @@ import { getLocale } from 'next-intl/server';
 import NoDataFound from '../NoDataFound';
 
 const FeaturedExperiences: FunctionComponent = async ( ) => {
-
-  const locale = await getLocale()
-
-  const path = `/experiences`
-  const urlParamsObject = {
-    sort       : { endDate : 'desc' },
-    populate   : '*',
-    pagination : {
-      start : 0,
-      limit : 100,
-    },
-    locale,
-  }
-  
-  const responseData = await fetchAPI( path, urlParamsObject )
-  if ( responseData.data?.length === 0 ) return <NoDataFound />
-  
-  return (
-    <Experience
-      data={responseData.data}
-    />
-  )
+  return <NoDataFound />
 }
 
 export default FeaturedExperiences

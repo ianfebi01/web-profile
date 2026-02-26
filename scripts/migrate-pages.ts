@@ -3,7 +3,7 @@ import configPromise from '../app/payload.config'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import { getPageBySlug } from '../utils/get-page-by-slug'
+
 
 const envFile = fs.readFileSync('.env.local', 'utf-8')
 const STRAPI_URL = envFile.split('\n').find(l => l.startsWith('NEXT_PUBLIC_STRAPI_API_URL='))?.split('=')[1].trim()
@@ -59,7 +59,7 @@ async function run() {
       
       try {
         // Use the existing utility to fetch the fully populated page
-        const fullPageRes = await getPageBySlug(p.attributes.slug, p.attributes.locale || 'en')
+        const fullPageRes = await fetchStrapi(`pages?filters[slug][$eq]=${p.attributes.slug}&locale=${p.attributes.locale || 'en'}&populate[content][populate]=*`)
         
         if (!fullPageRes.data || fullPageRes.data.length === 0) {
             console.log(`No full data found for ${p.attributes.slug}, skipping blocks...`)

@@ -16,54 +16,37 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
   const page = await getHomePage( params.locale )
 
-  if ( !page.data?.attributes?.page?.data?.attributes?.seo ) return FALLBACK_SEO
-  const metadata = page.data?.attributes?.page?.data?.attributes?.seo
+  const metadata = (page as any)?.meta;
+  if ( !metadata ) return FALLBACK_SEO
 
   const canonicalURL = metadata?.canonicalURL || `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}`;
 
-  // Extract social metadata
-  const socialMeta = Object.fromEntries(
-    metadata.metaSocial.map(
-      ( { socialNetwork, title, description, image }: any ) => [
-        socialNetwork.toLowerCase(),
-        { title, description, image },
-      ]
-    )
-  )
-
-  // Extract image data for Open Graph and Twitter
-
   return {
-    title       : metadata.metaTitle,
-    description : metadata.metaDescription,
-    keywords    : metadata.keywords,
-    robots      : metadata.metaRobots,
+    title       : metadata?.title || FALLBACK_SEO.title,
+    description : metadata?.description || FALLBACK_SEO.description,
+    keywords    : metadata?.keywords,
     openGraph   : {
       url         : canonicalURL,
-      title       : metadata.metaTitle,
-      description : metadata.metaDescription,
+      title       : metadata?.title || FALLBACK_SEO.title,
+      description : metadata?.description || FALLBACK_SEO.description,
       siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
-      type        : 'website', // or "article"
+      type        : 'website',
       images      : [
         {
-          url : metadata?.metaImage?.data
-            ? imageUrl( metadata?.metaImage?.data, 'thumbnail' ) || ''
-            : '',
+          url : metadata?.image?.url ? imageUrl( metadata?.image?.url as any, 'thumbnail' ) || '' : '',
         },
-      ], // Add Open Graph image
+      ],
     },
     twitter : {
       card        : 'summary',
       site        : '@ianfebi01',
-      title       : metadata.metaTitle,
-      description : socialMeta.twitter?.description || '',
+      title       : metadata?.title || FALLBACK_SEO.title,
+      description : metadata?.description || FALLBACK_SEO.description,
       images      : [
         {
-          url : socialMeta?.twitter?.image?.data
-            ? imageUrl( socialMeta?.twitter?.image.data, 'thumbnail' ) || ''
-            : '',
+          url : metadata?.image?.url ? imageUrl( metadata?.image?.url as any, 'thumbnail' ) || '' : '',
         },
-      ], // Twitter image
+      ],
     },
   }
 }
@@ -77,13 +60,21 @@ export  function generateStaticParams() {
   )
 }
 
+export const revalidate = 60; // ISR Support
+
 export default async function PageHome(props: Props) {
   const params = await props.params;
   const page = await getHomePage( params.locale )
 
-  if ( !page.data?.attributes?.page?.data?.attributes ) return null
+  if ( !page ) return null
+
+  // Passing the payload global "page" down. We mock the Strapi shape slightly to prevent full rewrite of HeroesAndSections right now, or just pass it directly.
+  const payloadToStrapiFormat = {
+    banner: [page.heroSection],
+    content: []
+  }
 
   return (
-    <HeroesAndSections page={page.data?.attributes?.page?.data?.attributes} />
+    <HeroesAndSections page={payloadToStrapiFormat as any} />
   )
 }

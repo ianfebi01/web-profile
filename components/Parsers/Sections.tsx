@@ -13,7 +13,9 @@ const getSection = (
   headingLevel: 1 | 2 = 2
 ) => {
   const bgColour =
-    sectionData?.sectionSettings?.bgColour?.data?.attributes?.name || ''
+    sectionData?.sectionSettings?.bgColour?.data?.attributes?.name || sectionData?.sectionSettings?.bgColour || ''
+  
+  const blockType = sectionData?.blockType || sectionData?.__component
 
   return (
     <div
@@ -83,7 +85,7 @@ const getSection = (
             ![
               'content-components.text-left-image-right',
               'content-components.small-banner',
-            ]?.includes( sectionData.__component ) && !sectionData.fullWidth,
+            ]?.includes( blockType ) && !sectionData.fullWidth,
         } )}
       >
         {( !!sectionData?.sectionSettings?.heading ||
@@ -91,7 +93,7 @@ const getSection = (
           <div
             className={cn( 'mx-auto pb-12', {
               'text-center max-w-3xl' : sectionData?.sectionSettings?.centreText,
-              'max-w-3xl'             : sectionData?.__component === 'content-components.body-copy',
+              'max-w-3xl'             : blockType === 'content-components.body-copy',
               'text-blue-dark'        : !['blue-dark'].includes( bgColour ),
               'text-white'            : ['blue-dark'].includes( bgColour ),
             } )}

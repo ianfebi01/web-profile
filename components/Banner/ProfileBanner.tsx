@@ -49,7 +49,7 @@ const ProfileBanner: FunctionComponent<Props> = ( props ) => {
           'flex w-full h-56 relative bg-cover bg-center bg-no-repeat md:hidden',
         )}
         style={{
-          backgroundImage : `url(${imageUrl( sectionData.bannerImage?.data, 'small' )})`
+          backgroundImage : `url(${imageUrl( sectionData.bannerImage?.data || sectionData.bannerImage, 'small' )})`
         }}
       >
         <div
@@ -61,7 +61,7 @@ const ProfileBanner: FunctionComponent<Props> = ( props ) => {
           }}
         >
           <Image
-            src={imageUrl( sectionData.avatar.data, 'small' ) || ''}
+            src={imageUrl( sectionData.avatar?.data || sectionData.avatar, 'small' ) || ''}
             alt="Profile image"
             fill
             priority
@@ -76,7 +76,7 @@ const ProfileBanner: FunctionComponent<Props> = ( props ) => {
           'w-full h-56 relative bg-cover bg-center bg-no-repeat hidden md:flex',
         )}
         style={{
-          backgroundImage : `url(${imageUrl( sectionData.bannerImage?.data, 'medium' )})`
+          backgroundImage : `url(${imageUrl( sectionData.bannerImage?.data || sectionData.bannerImage, 'medium' )})`
         }}
       >
         <div
@@ -88,7 +88,7 @@ const ProfileBanner: FunctionComponent<Props> = ( props ) => {
           }}
         >
           <Image
-            src={imageUrl( sectionData.avatar.data, 'medium' ) || ''}
+            src={imageUrl( sectionData.avatar?.data || sectionData.avatar, 'medium' ) || ''}
             alt="Profile image"
             fill
             priority
@@ -114,9 +114,9 @@ const ProfileBanner: FunctionComponent<Props> = ( props ) => {
           }}
         ></div>
         <div className="text-lg flex gap-4 text-center w-full justify-center items-center flex-wrap">
-          {( sectionData.socials.data as ApiSocialSocial[] ).map( ( item, i ) => {
-            const platform = item.attributes.social.platform
-            const url = item.attributes.social.url
+          {( (sectionData.socials?.data || sectionData.socials) as any[] ).map( ( item, i ) => {
+            const platform = item?.attributes?.social?.platform || item?.platform
+            const url = item?.attributes?.social?.url || item?.url
 
             switch ( platform ) {
             case 'LinkedIn':

@@ -8,7 +8,7 @@ import { getPlainText } from '@/utils/parseMd'
 import Image from 'next/image' // Update this import as needed
 
 interface PortofolioCardProps {
-  portofolio: ApiPortofolioPortofolio['attributes']
+  portofolio: any
 }
 
 const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {

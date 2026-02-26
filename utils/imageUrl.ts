@@ -1,47 +1,50 @@
 import { PluginUploadFile } from '@/types/generated/contentTypes'
 
 const imageUrl = (
-  imageObj: PluginUploadFile,
+  imageObj: any,
   imageSize: 'thumbnail' | 'small' | 'medium' | 'large' | 'xlarge' | 'original' = 'original'
 ): string | undefined => {
+  if (!imageObj) return undefined
+
+  // Extract Payload vs. Strapi structure
+  const isPayload = typeof imageObj.url === 'string'
+  const attributes = isPayload ? imageObj : imageObj?.attributes
+
+  if (!attributes) return undefined
+
   if (
-    imageObj?.attributes?.mime === 'image/svg+xml' ||
-    /^video/.test( imageObj?.attributes?.mime )
+    attributes.mimeType === 'image/svg+xml' ||
+    attributes.mime === 'image/svg+xml' ||
+    /^video/.test(attributes.mimeType || attributes.mime)
   ) {
-    return `${imageObj?.attributes?.url}`
+    return `${attributes.url}`
   }
 
-  let scaledImage: { url: string } = { url : '' }
+  let scaledImage: { url?: string } = attributes
 
-  switch ( imageSize ) {
-  case 'thumbnail':
-    scaledImage =
-        imageObj?.attributes?.formats?.thumbnail ||
-        imageObj?.attributes ||
-        imageObj
-    break
-  case 'small':
-    scaledImage =
-        imageObj?.attributes?.formats?.small || imageObj?.attributes || imageObj
-    break
-  case 'medium':
-    scaledImage =
-        imageObj?.attributes?.formats?.medium || imageObj?.attributes || imageObj
-    break
-  case 'large':
-    scaledImage =
-        imageObj?.attributes?.formats?.large || imageObj?.attributes || imageObj
-    break
-  case 'xlarge':
-    scaledImage =
-        imageObj?.attributes?.formats?.xlarge || imageObj?.attributes || imageObj
-    break
-  default:
-    scaledImage = imageObj?.attributes || imageObj || scaledImage
+  const formats = isPayload ? attributes.sizes : attributes.formats
+
+  if (formats) {
+    switch (imageSize) {
+      case 'thumbnail':
+        scaledImage = formats.thumbnail || attributes
+        break
+      case 'small':
+        scaledImage = formats.small || attributes
+        break
+      case 'medium':
+        scaledImage = formats.medium || attributes
+        break
+      case 'large':
+        scaledImage = formats.large || attributes
+        break
+      case 'xlarge':
+        scaledImage = formats.xlarge || attributes
+        break
+    }
   }
 
   const { url } = scaledImage
-
   return url ? `${url}` : undefined
 }
 

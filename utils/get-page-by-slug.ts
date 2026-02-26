@@ -1,28 +1,16 @@
-import { fetchAPI } from './fetch-api'
-import bannerQueries from '@/assets/queries/heroes.json'
-import sectionsQuery from '@/assets/queries/sections.json'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 export async function getPageBySlug( slug: string, lang: string ) {
-
-  const path = `/pages`
-  const urlParamsObject = {
-    filters  : { slug },
-    populate : {
-      banner : bannerQueries['banner'],
-      seo    : {
-        populate : {
-          metaSocial : {
-            populate : {
-              image : '*'
-            }
-          },
-          metaImage : '*'
-        }
-      },
-      content : sectionsQuery["content"]
+  const payload = await getPayload({ config: configPromise })
+  const pages = await payload.find({
+    collection: 'pages',
+    where: {
+      slug: {
+        equals: slug,
+      }
     },
-    locale : lang,
-  }
-
-  return await fetchAPI( path, urlParamsObject )
+    depth: 2,
+  })
+  return pages
 }

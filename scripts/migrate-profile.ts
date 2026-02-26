@@ -3,7 +3,20 @@ import configPromise from '../app/payload.config'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
-import { getHomePage } from '../utils/get-home-page'
+const envFile = fs.readFileSync('.env.local', 'utf-8')
+const STRAPI_URL = envFile.split('\n').find(l => l.startsWith('NEXT_PUBLIC_STRAPI_API_URL='))?.split('=')[1].trim()
+
+async function fetchStrapi(endpoint: string) {
+  const url = `${STRAPI_URL}/api/${endpoint}`
+  console.log(`[Strapi] Fetching ${url}...`)
+  const res = await fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  if (!res.ok) throw new Error(`Failed to fetch ${endpoint}: ${res.statusText}`)
+  return res.json()
+}
 
 async function downloadMedia(url: string, name: string): Promise<string> {
   const res = await fetch(url)
@@ -37,7 +50,7 @@ async function run() {
   // Fetch Home Page to get Profile
   console.log('--- Migrating Profile from Home Page ---')
   try {
-     const hpRes = await getHomePage('id')
+     const hpRes = await fetchStrapi('home-page?populate=deep,5')
 
      if (hpRes.data) {
        const bannerBlocks = hpRes.data.attributes.page.data.attributes.banner || []

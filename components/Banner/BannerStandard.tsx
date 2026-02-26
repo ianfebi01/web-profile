@@ -18,29 +18,29 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
         className={cn(
           'relative overflow-x-clip min-h-screen xxl:min-h-[710px] items-center',
           'flex md:hidden',
-          !sectionData.background?.data && 'bg-grey'
+          !(sectionData.background?.data || sectionData.background) && 'bg-grey'
         )}
         style={
-          !!sectionData.background?.data &&
-          !isVideo( sectionData.background?.data )
+          !!(sectionData.background?.data || sectionData.background) &&
+          !isVideo( sectionData.background?.data || sectionData.background )
             ? {
               background : `url(${imageUrl(
-                sectionData.background?.data,
+                sectionData.background?.data || sectionData.background,
                 'small'
               )}) no-repeat center center / cover`,
             }
             : undefined
         }
       >
-        {!!sectionData.background?.data &&
-          isVideo( sectionData.background?.data ) && (
+        {!!(sectionData.background?.data || sectionData.background) &&
+          isVideo( sectionData.background?.data || sectionData.background ) && (
           <div className="absolute w-full h-full">
             <VideoPlayer
               sources={[
                 {
                   location :
-                      imageUrl( sectionData?.background?.data, 'original' ) || '',
-                  codec : sectionData.background?.data?.attributes?.mime || '',
+                      imageUrl( sectionData.background?.data || sectionData.background, 'original' ) || '',
+                  codec : (sectionData.background?.data?.attributes?.mime || (sectionData.background as any)?.mimeType) || '',
                 },
               ]}
               isPlaying={true}
@@ -79,29 +79,29 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
         className={cn(
           'relative overflow-x-clip min-h-screen xxl:min-h-[710px] items-center',
           'hidden md:flex',
-          !sectionData.background?.data && 'bg-grey'
+          !(sectionData.background?.data || sectionData.background) && 'bg-grey'
         )}
         style={
-          !!sectionData.background?.data &&
-          !isVideo( sectionData.background?.data )
+          !!(sectionData.background?.data || sectionData.background) &&
+          !isVideo( sectionData.background?.data || sectionData.background )
             ? {
               background : `url(${imageUrl(
-                sectionData.background?.data,
+                sectionData.background?.data || sectionData.background,
                 'small'
               )}) no-repeat center center / cover`,
             }
             : undefined
         }
       >
-        {!!sectionData.background?.data &&
-          isVideo( sectionData.background?.data ) && (
+        {!!(sectionData.background?.data || sectionData.background) &&
+          isVideo( sectionData.background?.data || sectionData.background ) && (
           <div className="absolute w-full h-full">
             <VideoPlayer
               sources={[
                 {
                   location :
-                      imageUrl( sectionData?.background?.data, 'original' ) || '',
-                  codec : sectionData.background?.data?.attributes?.mime || '',
+                      imageUrl( sectionData.background?.data || sectionData.background, 'original' ) || '',
+                  codec : (sectionData.background?.data?.attributes?.mime || (sectionData.background as any)?.mimeType) || '',
                 },
               ]}
               isPlaying={true}
