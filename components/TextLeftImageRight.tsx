@@ -3,7 +3,7 @@ import Image from 'next/image'
 import React from 'react';
 import Markdown from './Parsers/Markdown'
 import imageUrl from '@/utils/imageUrl'
-import { PluginUploadFile } from '@/types/generated/contentTypes'
+import { Media } from '@/payload-types'
 import imageLoader from '@/lib/constans/image-loader'
 
 interface Button {
@@ -13,7 +13,7 @@ interface Button {
 }
 
 interface Props {
-  image: { data: PluginUploadFile }
+  image: string | Media
   fullWidthBgImage: boolean
   reverse: boolean
   bgColour: string
@@ -127,7 +127,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
               <div className="aspect-square md:aspect-video lg:aspect-[1/0.7] lg:h-full lg:w-full overflow-hidden relative z-[1]">
                 <Image
                   loading="lazy"
-                  src={imageUrl( image.data, 'small' ) || ''}
+                  src={imageUrl( image, 'small' ) || ''}
                   alt="Image Content"
                   placeholder={imageLoader}
                   className={cn( {
@@ -142,7 +142,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                 />
                 <Image
                   loading="lazy"
-                  src={imageUrl( image.data, 'xlarge' ) || ''}
+                  src={imageUrl( image, 'xlarge' ) || ''}
                   alt="Image Content"
                   placeholder={imageLoader}
                   className={cn( {

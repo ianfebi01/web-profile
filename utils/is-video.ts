@@ -1,7 +1,8 @@
-import { PluginUploadFile } from "@/types/generated/contentTypes"
+import { Media } from '@/payload-types'
 
-const isVideo = ( imageObj: PluginUploadFile ) => {
-  return /^video/.test( imageObj?.attributes?.mime )
+const isVideo = ( imageObj: Media | string | null | undefined ) => {
+  if (!imageObj || typeof imageObj === 'string') return false
+  return /^video/.test( imageObj?.mimeType || '' )
 }
 
 export default isVideo

@@ -18,10 +18,10 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import Markdown from '../Parsers/Markdown'
 import imageLoader from '@/lib/constans/image-loader'
-import { PluginUploadFile } from '@/types/generated/contentTypes'
+import { Media } from '@/payload-types'
 
 interface Props {
-  data: PluginUploadFile[]
+  data: (string | Media)[]
 }
 
 const GaleryCarousel: React.FC<Props> = ( { data } ) => {
@@ -67,9 +67,9 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
                   className="drop-shadow-2xl"
                 />
               </div>
-              {!!item?.attributes?.caption && (
+              {typeof item === 'object' && !!item?.alt && (
                 <div className="grow flex text-center w-full mx-auto max-w-3xl">
-                  <Markdown content={item?.attributes?.caption} />
+                  <Markdown content={item?.alt} />
                 </div>
               )}
             </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { ApiPortofolioPortofolio } from '@/types/generated/contentTypes'
+import { Project } from '@/payload-types'
 import PortofolioCard from './Cards/PortofolioCard'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin( ScrollTrigger )
 
 interface Props {
-  portofolios: any[]
+  portofolios: Project[]
 }
 
 const PortofoliosWrapper = ( { portofolios }: Props ) => {

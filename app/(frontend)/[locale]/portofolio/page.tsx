@@ -1,7 +1,10 @@
-import PortofolioSearch from '@/components/Content/PortofolioSearch'
 import Header from '@/components/Layouts/Header'
+import NoDataFound from '@/components/NoDataFound'
+import PortofoliosWrapper from '@/components/PortofoliosWrapper'
 import { Props } from '@/types'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 export async function generateMetadata( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
@@ -21,8 +24,8 @@ export async function generateMetadata( props: Omit<Props, 'children'> ) {
     openGraph : {
       title       : title,
       description : desc,
-      siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
-      type        : 'website', // or "article"
+      siteName    : 'Ian Febi Sastrataruna',
+      type        : 'website',
     },
     twitter : {
       card        : 'summary',
@@ -37,7 +40,14 @@ export default async function PortofolioPage( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
 
   const t = await getTranslations( { locale, namespace : 'portofolio' } )
-  
+
+  const payload = await getPayload({ config: configPromise })
+  const responseData = await payload.find({
+    collection: 'projects',
+    sort: '-createdAt',
+    depth: 2,
+  })
+
   return (
     <main>
       <section id="portofolio"
@@ -47,9 +57,13 @@ export default async function PortofolioPage( props: Omit<Props, 'children'> ) {
           <Header text={t( 'title' )}
             link={'/'}
           />
-          <PortofolioSearch />
+          {responseData.docs?.length === 0
+            ? <NoDataFound />
+            : <PortofoliosWrapper portofolios={responseData.docs} />
+          }
         </div>
       </section>
     </main>
   )
 }
+

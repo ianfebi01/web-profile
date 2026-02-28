@@ -2,13 +2,13 @@
 
 import { Link } from "@/i18n/navigation";
 import imageLoader from "@/lib/constans/image-loader";
-import { ApiPortofolioPortofolio } from "@/types/generated/contentTypes";
+import { Project } from "@/payload-types";
 import imageUrl from "@/utils/imageUrl";
 import { getPlainText } from "@/utils/parseMd";
-import Image from "next/image"; // Update this import as needed
+import Image from "next/image";
 
 interface PortofolioCardProps {
-  portofolio: any;
+  portofolio: Project | any;
 }
 
 const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
@@ -22,7 +22,7 @@ const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
           alt={`Image ${portofolio?.title}`}
           src={
             imageUrl(
-              portofolio.thumbnail?.data || portofolio.thumbnail,
+              portofolio.thumbnail,
               "original",
             ) || ""
           }
@@ -35,20 +35,15 @@ const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
       </div>
 
       <div className="relative flex flex-col h-full px-4 py-6">
-        {!!portofolio.year && (
-          <small className="px-2 py-1 mb-2 text-xs rounded-md lg:text-sm line-clamp-1 bg-dark w-fit">
-            {portofolio.year}
-          </small>
-        )}
 
         <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extra-bold lg:mb-6 lg:mt-2">
           {portofolio.title}
         </h3>
 
-        {!!getPlainText(portofolio.description) && (
+        {!!getPlainText(portofolio.description || '') && (
           <div className="xxl:text-xl">
             <p className="m-0 line-clamp-3 text-white/80">
-              {getPlainText(portofolio.description)}
+              {getPlainText(portofolio.description || '')}
             </p>
           </div>
         )}

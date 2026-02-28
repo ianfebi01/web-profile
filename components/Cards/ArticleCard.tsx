@@ -1,15 +1,16 @@
+'use client'
 import React from 'react'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import imageUrl from '@/utils/imageUrl'
-import { ApiArticleArticle } from '@/types/generated/contentTypes'
+import { Article } from '@/payload-types'
 import imageLoader from '@/lib/constans/image-loader'
 import { getPlainText } from '@/utils/parseMd'
 import { useLocale, useTranslations } from 'next-intl'
 
 interface Props {
-  data: ApiArticleArticle['attributes']
+  data: Article | any
 }
 
 const ArticleCard: React.FC<Props> = ( { data } ) => {
@@ -33,22 +34,24 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
         'h-full sm:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.3%-1.5rem)]'
       )}
     >
-      <div
-        className={cn(
-          'w-full shrink-0 overflow-hidden relative',
-          'aspect-video'
-        )}
-      >
-        <Image
-          src={imageUrl( data.featureImage, 'medium' ) || ''}
-          alt={`${data.title} Picture`}
-          className="object-cover object-top w-full h-full"
-          loading="lazy"
-          fill
-          sizes="auto"
-          placeholder={imageLoader}
-        />
-      </div>
+      {!!imageUrl( data.heroImage, 'original' ) && (
+        <div
+          className={cn(
+            'w-full shrink-0 overflow-hidden relative',
+            'aspect-video'
+          )}
+        >
+          <Image
+            src={imageUrl( data.heroImage, 'original' ) || ''}
+            alt={`${data.title} Picture`}
+            className="object-cover object-top w-full h-full"
+            loading="lazy"
+            fill
+            sizes="auto"
+            placeholder={imageLoader}
+          />
+        </div>
+      )}
 
       <div className="relative flex flex-col h-full px-4 pb-6">
         <span className="mb-2 text-xs lg:text-sm line-clamp-1 text-greydark">
@@ -58,7 +61,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
           {data.title}
         </h3>
         <div className="mb-4 lg:mb-8 xxl:text-xl">
-          <p className="m-0 line-clamp-3">{getPlainText( data.content )}</p>
+          <p className="m-0 line-clamp-3">{getPlainText( data.introText || data.content || '' )}</p>
         </div>
         <div className="grow"></div>
         <Link
@@ -74,3 +77,4 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
 }
 
 export default ArticleCard
+

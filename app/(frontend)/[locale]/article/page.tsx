@@ -1,7 +1,10 @@
-import ArticleSearch from '@/components/Content/ArticleSearch'
 import Header from '@/components/Layouts/Header'
+import NoDataFound from '@/components/NoDataFound'
+import ArticleCard from '@/components/Cards/ArticleCard'
 import { Props } from '@/types'
 import { getTranslations } from 'next-intl/server'
+import { getPayload } from 'payload'
+import configPromise from '@payload-config'
 
 export async function generateMetadata( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
@@ -19,8 +22,8 @@ export async function generateMetadata( props: Omit<Props, 'children'> ) {
     openGraph : {
       title       : title,
       description : desc,
-      siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
-      type        : 'website', // or "article"
+      siteName    : 'Ian Febi Sastrataruna',
+      type        : 'website',
     },
     twitter : {
       card        : 'summary',
@@ -36,6 +39,13 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
 
   const t = await getTranslations( { locale, namespace : 'article' } )
 
+  const payload = await getPayload({ config: configPromise })
+  const responseData = await payload.find({
+    collection: 'articles',
+    sort: '-createdAt',
+    depth: 2,
+  })
+
   return (
     <main>
       <section id="article"
@@ -45,9 +55,19 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
           <Header text={t( 'title' )}
             link={'/'}
           />
-          <ArticleSearch />
+          {responseData.docs?.length === 0
+            ? <NoDataFound />
+            : (
+              <div className="mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 list-none">
+                {responseData.docs.map( ( article ) => (
+                  <ArticleCard key={article.id} data={article} />
+                ) )}
+              </div>
+            )
+          }
         </div>
       </section>
     </main>
   )
 }
+
