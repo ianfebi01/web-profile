@@ -1,6 +1,80 @@
-import { Block } from 'payload'
+import { Block, Field } from 'payload'
 
 const svgURI = (svg: string) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400"><rect width="600" height="400" fill="#f1f5f9"/>${svg}</svg>`)}`
+
+const paddingOptions = [
+  { label: 'None', value: 'pt-0' },
+  { label: '2', value: 'pt-2' },
+  { label: '4', value: 'pt-4' },
+  { label: '6', value: 'pt-6' },
+  { label: '8', value: 'pt-8' },
+  { label: '10', value: 'pt-10' },
+  { label: '12', value: 'pt-12' },
+  { label: '16 (default)', value: 'pt-16' },
+  { label: '20', value: 'pt-20' },
+  { label: '24', value: 'pt-24' },
+]
+
+const marginOptions = [
+  { label: 'None', value: 'mt-0' },
+  { label: '2', value: 'mt-2' },
+  { label: '4', value: 'mt-4' },
+  { label: '6', value: 'mt-6' },
+  { label: '8', value: 'mt-8' },
+  { label: '10', value: 'mt-10' },
+  { label: '12', value: 'mt-12' },
+  { label: '16', value: 'mt-16' },
+  { label: '20', value: 'mt-20' },
+  { label: '24', value: 'mt-24' },
+]
+
+const SectionSettingsFields: Field = {
+  name: 'sectionSettings',
+  type: 'group',
+  admin: {
+    condition: () => true,
+  },
+  fields: [
+    {
+      name: 'bgColour',
+      label: 'Background Colour',
+      type: 'select',
+      options: [
+        { label: 'Dark (#222222)', value: 'dark' },
+        { label: 'Dark Secondary (#393939)', value: 'dark-secondary' },
+        { label: 'Orange (#F26B50)', value: 'orange' },
+        { label: 'Green (#4FAA84)', value: 'green' },
+        { label: 'White (#f1f1f1)', value: 'white' },
+      ],
+    },
+    { name: 'heading', type: 'text' },
+    { name: 'description', type: 'textarea' },
+    { name: 'centreText', type: 'checkbox', defaultValue: false },
+    { name: 'largeHeading', type: 'checkbox', defaultValue: false },
+    { name: 'textDropShadow', type: 'checkbox', defaultValue: false },
+    {
+      name: 'paddingTop',
+      type: 'select',
+      options: paddingOptions,
+    },
+    {
+      name: 'paddingBottom',
+      type: 'select',
+      options: paddingOptions.map(o => ({ ...o, value: o.value.replace('pt-', 'pb-') })),
+    },
+    {
+      name: 'marginTop',
+      type: 'select',
+      options: marginOptions,
+    },
+    {
+      name: 'marginBottom',
+      type: 'select',
+      options: marginOptions.map(o => ({ ...o, value: o.value.replace('mt-', 'mb-') })),
+    },
+    { name: 'htmlId', type: 'text', admin: { description: 'Optional HTML ID for anchor links' } },
+  ],
+}
 
 const ButtonFields = [
   { name: 'name', type: 'text' },
@@ -40,7 +114,7 @@ export const BodyCopy: Block = {
   labels: { singular: 'Body Copy', plural: 'Body Copies' },
   imageURL: svgURI('<rect x="100" y="100" width="400" height="20" rx="10" fill="#94a3b8"/><rect x="100" y="150" width="350" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="200" width="380" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="250" width="200" height="20" rx="10" fill="#cbd5e1"/>'),
   imageAltText: 'Body Copy',
-  fields: [ { name: 'content', type: 'textarea' } ],
+  fields: [ { name: 'content', type: 'textarea' }, SectionSettingsFields ],
 }
 
 export const TextLeftImageRight: Block = {
@@ -58,6 +132,7 @@ export const TextLeftImageRight: Block = {
     { name: 'biggerColumn', type: 'select', options: [{ label: 'Image', value: 'image' }, { label: 'Content', value: 'content' }] },
     { name: 'scaling', type: 'select', options: [{ label: 'Contain', value: 'contain' }, { label: 'Cover', value: 'cover' }], defaultValue: 'cover' },
     { name: 'buttons', type: 'array', fields: ButtonFields as any },
+    SectionSettingsFields,
   ],
 }
 
@@ -78,6 +153,7 @@ export const SimpleCards: Block = {
         { name: 'image', type: 'upload', relationTo: 'media' },
       ],
     },
+    SectionSettingsFields,
   ],
 }
 
@@ -90,6 +166,7 @@ export const SmallBanner: Block = {
   fields: [
     { name: 'backgroundImage', type: 'upload', relationTo: 'media' },
     { name: 'buttons', type: 'array', fields: ButtonFields as any },
+    SectionSettingsFields,
   ],
 }
 
@@ -100,7 +177,8 @@ export const Divider: Block = {
   imageURL: svgURI('<line x1="100" y1="200" x2="500" y2="200" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>'),
   imageAltText: 'Divider',
   fields: [
-    { name: 'title', type: 'text', admin: { hidden: true } }
+    { name: 'title', type: 'text', admin: { hidden: true } },
+    SectionSettingsFields,
   ],
 }
 
@@ -119,6 +197,7 @@ export const Accordian: Block = {
         { name: 'content', type: 'textarea', required: true },
       ],
     },
+    SectionSettingsFields,
   ],
 }
 
@@ -130,6 +209,7 @@ export const Quote: Block = {
   imageAltText: 'Quote',
   fields: [
     { name: 'quote', type: 'text', required: true },
+    SectionSettingsFields,
   ],
 }
 
@@ -140,7 +220,8 @@ export const FeaturedPortofolios: Block = {
   imageURL: svgURI('<rect x="100" y="50" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="320" y="50" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="100" y="220" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="320" y="220" width="180" height="130" rx="15" fill="#e2e8f0"/>'),
   imageAltText: 'Featured Portfolios',
   fields: [
-    { name: 'title', type: 'text', admin: { hidden: true } }
+    { name: 'title', type: 'text', admin: { hidden: true } },
+    SectionSettingsFields,
   ],
 }
 
@@ -151,7 +232,8 @@ export const FeaturedExperiences: Block = {
   imageURL: svgURI('<circle cx="150" cy="100" r="15" fill="#94a3b8"/><line x1="150" y1="115" x2="150" y2="185" stroke="#cbd5e1" stroke-width="4"/><circle cx="150" cy="200" r="15" fill="#94a3b8"/><line x1="150" y1="215" x2="150" y2="285" stroke="#cbd5e1" stroke-width="4"/><circle cx="150" cy="300" r="15" fill="#94a3b8"/><rect x="200" y="90" width="250" height="20" rx="10" fill="#e2e8f0"/><rect x="200" y="190" width="250" height="20" rx="10" fill="#e2e8f0"/><rect x="200" y="290" width="250" height="20" rx="10" fill="#e2e8f0"/>'),
   imageAltText: 'Featured Experiences',
   fields: [
-    { name: 'title', type: 'text', admin: { hidden: true } }
+    { name: 'title', type: 'text', admin: { hidden: true } },
+    SectionSettingsFields,
   ],
 }
 
@@ -173,6 +255,7 @@ export const IconTexts: Block = {
         { name: 'linkNewTab', type: 'checkbox' }
       ],
     },
+    SectionSettingsFields,
   ],
 }
 
@@ -183,7 +266,8 @@ export const ArticleSearch: Block = {
   imageURL: svgURI('<rect x="100" y="80" width="400" height="50" rx="25" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="4"/><circle cx="460" cy="105" r="12" stroke="#94a3b8" stroke-width="4" fill="none"/><line x1="468" y1="113" x2="478" y2="123" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><rect x="100" y="180" width="400" height="80" rx="10" fill="#e2e8f0" stroke="#e2e8f0" stroke-width="4"/><rect x="100" y="280" width="400" height="80" rx="10" fill="#e2e8f0" stroke="#e2e8f0" stroke-width="4"/>'),
   imageAltText: 'Article Search',
   fields: [
-    { name: 'title', type: 'text', admin: { hidden: true } }
+    { name: 'title', type: 'text', admin: { hidden: true } },
+    SectionSettingsFields,
   ],
 }
 
@@ -194,6 +278,7 @@ export const PortofolioSearch: Block = {
   imageURL: svgURI('<rect x="100" y="80" width="400" height="50" rx="25" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="4"/><circle cx="460" cy="105" r="12" stroke="#94a3b8" stroke-width="4" fill="none"/><line x1="468" y1="113" x2="478" y2="123" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><rect x="100" y="180" width="180" height="120" rx="10" fill="#e2e8f0"/><rect x="320" y="180" width="180" height="120" rx="10" fill="#e2e8f0"/>'),
   imageAltText: 'Portfolio Search',
   fields: [
-    { name: 'title', type: 'text', admin: { hidden: true } }
+    { name: 'title', type: 'text', admin: { hidden: true } },
+    SectionSettingsFields,
   ],
 }

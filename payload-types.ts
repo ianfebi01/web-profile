@@ -347,6 +347,26 @@ export interface BannerStandardBlock {
  */
 export interface BodyCopyBlock {
   content?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.body-copy';
@@ -372,6 +392,26 @@ export interface TextLeftImageRightBlock {
         id?: string | null;
       }[]
     | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.text-left-image-right';
@@ -390,6 +430,26 @@ export interface SimpleCardsBlock {
         id?: string | null;
       }[]
     | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.simple-cards';
@@ -409,6 +469,26 @@ export interface SmallBannerBlock {
         id?: string | null;
       }[]
     | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.small-banner';
@@ -419,6 +499,26 @@ export interface SmallBannerBlock {
  */
 export interface DividerBlock {
   title?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.divider';
@@ -435,6 +535,26 @@ export interface AccordianBlock {
         id?: string | null;
       }[]
     | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.accordian';
@@ -445,6 +565,26 @@ export interface AccordianBlock {
  */
 export interface QuoteBlock {
   quote: string;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.quote';
@@ -455,6 +595,26 @@ export interface QuoteBlock {
  */
 export interface FeaturedPortofoliosBlock {
   title?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.featured-portofolios';
@@ -465,6 +625,26 @@ export interface FeaturedPortofoliosBlock {
  */
 export interface FeaturedExperiencesBlock {
   title?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.featured-experiences';
@@ -481,6 +661,26 @@ export interface IconTextsBlock {
     linkNewTab?: boolean | null;
     id?: string | null;
   }[];
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.icon-texts';
@@ -491,6 +691,26 @@ export interface IconTextsBlock {
  */
 export interface ArticleSearchBlock {
   title?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.article-search';
@@ -501,6 +721,26 @@ export interface ArticleSearchBlock {
  */
 export interface PortofolioSearchBlock {
   title?: string | null;
+  sectionSettings?: {
+    bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
+    heading?: string | null;
+    description?: string | null;
+    centreText?: boolean | null;
+    largeHeading?: boolean | null;
+    textDropShadow?: boolean | null;
+    paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
+    paddingBottom?:
+      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
+      | null;
+    marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
+    marginBottom?:
+      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
+      | null;
+    /**
+     * Optional HTML ID for anchor links
+     */
+    htmlId?: string | null;
+  };
   id?: string | null;
   blockName?: string | null;
   blockType: 'content-components.portofolio-search';
@@ -808,6 +1048,21 @@ export interface BannerStandardBlockSelect<T extends boolean = true> {
  */
 export interface BodyCopyBlockSelect<T extends boolean = true> {
   content?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -832,6 +1087,21 @@ export interface TextLeftImageRightBlockSelect<T extends boolean = true> {
         style?: T;
         id?: T;
       };
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -848,6 +1118,21 @@ export interface SimpleCardsBlockSelect<T extends boolean = true> {
         description?: T;
         image?: T;
         id?: T;
+      };
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
       };
   id?: T;
   blockName?: T;
@@ -867,6 +1152,21 @@ export interface SmallBannerBlockSelect<T extends boolean = true> {
         style?: T;
         id?: T;
       };
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -876,6 +1176,21 @@ export interface SmallBannerBlockSelect<T extends boolean = true> {
  */
 export interface DividerBlockSelect<T extends boolean = true> {
   title?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -891,6 +1206,21 @@ export interface AccordianBlockSelect<T extends boolean = true> {
         content?: T;
         id?: T;
       };
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -900,6 +1230,21 @@ export interface AccordianBlockSelect<T extends boolean = true> {
  */
 export interface QuoteBlockSelect<T extends boolean = true> {
   quote?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -909,6 +1254,21 @@ export interface QuoteBlockSelect<T extends boolean = true> {
  */
 export interface FeaturedPortofoliosBlockSelect<T extends boolean = true> {
   title?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -918,6 +1278,21 @@ export interface FeaturedPortofoliosBlockSelect<T extends boolean = true> {
  */
 export interface FeaturedExperiencesBlockSelect<T extends boolean = true> {
   title?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -935,6 +1310,21 @@ export interface IconTextsBlockSelect<T extends boolean = true> {
         linkNewTab?: T;
         id?: T;
       };
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -944,6 +1334,21 @@ export interface IconTextsBlockSelect<T extends boolean = true> {
  */
 export interface ArticleSearchBlockSelect<T extends boolean = true> {
   title?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -953,6 +1358,21 @@ export interface ArticleSearchBlockSelect<T extends boolean = true> {
  */
 export interface PortofolioSearchBlockSelect<T extends boolean = true> {
   title?: T;
+  sectionSettings?:
+    | T
+    | {
+        bgColour?: T;
+        heading?: T;
+        description?: T;
+        centreText?: T;
+        largeHeading?: T;
+        textDropShadow?: T;
+        paddingTop?: T;
+        paddingBottom?: T;
+        marginTop?: T;
+        marginBottom?: T;
+        htmlId?: T;
+      };
   id?: T;
   blockName?: T;
 }
