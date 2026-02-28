@@ -978,11 +978,10 @@ export interface Profile {
 export interface HomePage {
   id: string;
   title: string;
-  heroSection: {
-    heading: string;
-    subheading?: string | null;
-    backgroundImage?: (string | null) | Media;
-  };
+  /**
+   * Select the Page document to render as the homepage.
+   */
+  page: string | Page;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1032,13 +1031,7 @@ export interface ProfileSelect<T extends boolean = true> {
  */
 export interface HomePageSelect<T extends boolean = true> {
   title?: T;
-  heroSection?:
-    | T
-    | {
-        heading?: T;
-        subheading?: T;
-        backgroundImage?: T;
-      };
+  page?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

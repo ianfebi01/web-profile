@@ -1,36 +1,25 @@
-import type { GlobalConfig } from 'payload'
+import type { GlobalConfig } from "payload";
 
 export const HomePage: GlobalConfig = {
-  slug: 'home-page',
+  slug: "home-page",
   access: {
     read: () => true,
   },
   fields: [
     {
-      name: 'title',
-      type: 'text',
+      name: "title",
+      type: "text",
       required: true,
-      defaultValue: 'Home',
+      defaultValue: "Home",
     },
     {
-        name: 'heroSection',
-        type: 'group',
-        fields: [
-            {
-                name: 'heading',
-                type: 'text',
-                required: true,
-            },
-            {
-                name: 'subheading',
-                type: 'textarea',
-            },
-            {
-                name: 'backgroundImage',
-                type: 'upload',
-                relationTo: 'media'
-            }
-        ]
-    }
+      name: "page",
+      type: "relationship",
+      relationTo: "pages",
+      required: true,
+      admin: {
+        description: "Select the Page document to render as the homepage.",
+      },
+    },
   ],
-}
+};

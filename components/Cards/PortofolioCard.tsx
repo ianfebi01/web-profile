@@ -1,17 +1,17 @@
-'use client'
+"use client";
 
-import { Link } from '@/i18n/navigation'
-import imageLoader from '@/lib/constans/image-loader'
-import { ApiPortofolioPortofolio } from '@/types/generated/contentTypes'
-import imageUrl from '@/utils/imageUrl'
-import { getPlainText } from '@/utils/parseMd'
-import Image from 'next/image' // Update this import as needed
+import { Link } from "@/i18n/navigation";
+import imageLoader from "@/lib/constans/image-loader";
+import { ApiPortofolioPortofolio } from "@/types/generated/contentTypes";
+import imageUrl from "@/utils/imageUrl";
+import { getPlainText } from "@/utils/parseMd";
+import Image from "next/image"; // Update this import as needed
 
 interface PortofolioCardProps {
-  portofolio: any
+  portofolio: any;
 }
 
-const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
+const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
   return (
     <Link
       href={`/portofolio/${portofolio.slug}`}
@@ -22,9 +22,9 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
           alt={`Image ${portofolio?.title}`}
           src={
             imageUrl(
-              portofolio.featureImage?.data || portofolio.featureImage,
-              'original'
-            ) || ''
+              portofolio.thumbnail?.data || portofolio.thumbnail,
+              "original",
+            ) || ""
           }
           fill
           sizes="auto"
@@ -45,16 +45,16 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
           {portofolio.title}
         </h3>
 
-        {!!getPlainText( portofolio.description ) && (
-          <div className='xxl:text-xl'>
+        {!!getPlainText(portofolio.description) && (
+          <div className="xxl:text-xl">
             <p className="m-0 line-clamp-3 text-white/80">
-              {getPlainText( portofolio.description )}
+              {getPlainText(portofolio.description)}
             </p>
           </div>
         )}
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export default PortofolioCard
+export default PortofolioCard;

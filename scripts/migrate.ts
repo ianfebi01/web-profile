@@ -197,11 +197,7 @@ async function run() {
          slug: 'home-page',
          data: {
            title: hpRes.data.attributes.title || 'Home',
-           heroSection: {
-             heading: hero.title || hpRes.data.attributes.title || 'Home',
-             subheading: hero.subtitle || hpRes.data.attributes.description || '',
-             backgroundImage: bgImage || null
-           }
+           page: undefined // To be associated with a valid Page ID later since we moved heroSection to a page
          }
        })
      }
