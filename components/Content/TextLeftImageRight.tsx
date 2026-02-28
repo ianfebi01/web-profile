@@ -27,7 +27,7 @@ const Section: React.FC<Props> = ( {
       biggerColumn={sectionData.biggerColumn}
       buttonsVariation={buttonsVariation}
       bgColour={bgColour}
-      scaling="cover"
+      scaling={sectionData?.scaling}
     />
   )
 }
