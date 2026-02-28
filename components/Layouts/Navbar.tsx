@@ -136,6 +136,7 @@ const Navbar = ( { items, socials }: Props ) => {
 
         <MobileNavbar isOpen={isOpen}
           items={items}
+          socials={socials}
           setIsOpen={setIsOpen}
         />
       </nav>

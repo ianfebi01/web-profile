@@ -40,7 +40,7 @@ export default function MenuItem( { data }: Props ) {
                   !data?.categoryName && !data.navItem && 'cursor-default'
                 )}
               >
-                {!!data?.categoryName && data.navItem ? (
+                {(!!data?.categoryName && (data.navItem?.url || data.navItem?.page)) ? (
                   <Link
                     href={constructNavUrl( data.navItem )}
                     className={cn( 'no-underline' )}
@@ -115,7 +115,7 @@ export default function MenuItem( { data }: Props ) {
                 </Popover.Panel>
               </Transition>
             </>
-          ) : (
+          ) : (!!data?.categoryName && (data.navItem?.url || data.navItem?.page)) ? (
             <Link
               href={constructNavUrl( data?.navItem )}
               className={cn(
@@ -123,13 +123,24 @@ export default function MenuItem( { data }: Props ) {
                 ' hover:border-white/25',
                 'ring-0 focus:ring-0 outline-none',
                 show || isActive ? 'text-white border-white/25' : 'text-white/50',
-                !data?.categoryName && !data.navItem && 'cursor-default'
+                !data?.categoryName && (!data.navItem?.url && !data.navItem?.page) && 'cursor-default'
               )}
               target={data.navItem?.newTab ? '_blank' : undefined}
               rel={data.navItem?.newTab ? 'noopener noreferrer' : undefined}
             >
               {data.categoryName}
             </Link>
+          ) : (
+             <div
+              className={cn(
+                'py-2 px-4 text-sm no-underline flex items-center gap-2 transition-default w-fit rounded-lg border border-transparent',
+                ' hover:border-white/25',
+                'ring-0 focus:ring-0 outline-none cursor-default',
+                show || isActive ? 'text-white border-white/25' : 'text-white/50'
+              )}
+            >
+              {data.categoryName}
+            </div>
           )
         }
       </Popover>

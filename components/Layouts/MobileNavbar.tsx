@@ -6,19 +6,19 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { NavCategoryType, NavItemType } from './Navbar'
-import { socials } from '@/lib/constans/socials-media'
 import { cn, openNewTab } from '@/lib/utils'
 import gsap from 'gsap'
 import constructNavUrl from '@/utils/construct-nav-url'
-import { Page } from '@/payload-types'
+import { Page, Site } from '@/payload-types'
 
 interface Props {
   isOpen: boolean
   items: NavCategoryType[]
+  socials: NonNullable<Site['socialPlatformLinks']>
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
+export default function MobileMenu( { isOpen, setIsOpen, items, socials }: Props ) {
   const itemsRefs = useRef<HTMLButtonElement[] | HTMLDivElement[] | null[]>( [] )
 
   return (
@@ -116,30 +116,36 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                                 >
                                   <dt>
                                     <Disclosure.Button className="flex items-start justify-between w-full text-left text-white">
-                                      <Link
-                                        href={
-                                          constructNavUrl( item.navItem ) || ''
-                                        }
-                                        className={cn(
-                                          'h3 pl-4 underline-offset-4',
-                                          !constructNavUrl( item.navItem )
-                                            ? 'no-underline pointer-events-none'
-                                            : 'no-underline hover:underline pointer-events-auto'
-                                        )}
-                                        aria-disabled={
-                                          !constructNavUrl( item.navItem )
-                                        }
-                                        tabIndex={
-                                          !constructNavUrl( item.navItem )
-                                            ? -1
-                                            : undefined
-                                        }
-                                        onClick={() =>
-                                          isOpen && setIsOpen( false )
-                                        }
-                                      >
-                                        {item.categoryName}
-                                      </Link>
+                                      {(!item.navItem?.url && !item.navItem?.page) ? (
+                                        <div className={cn('h3 pl-4 no-underline cursor-default')}>
+                                           {item.categoryName}
+                                        </div>
+                                      ) : (
+                                        <Link
+                                          href={
+                                            constructNavUrl( item.navItem ) || ''
+                                          }
+                                          className={cn(
+                                            'h3 pl-4 underline-offset-4',
+                                            !constructNavUrl( item.navItem )
+                                              ? 'no-underline pointer-events-none'
+                                              : 'no-underline hover:underline pointer-events-auto'
+                                          )}
+                                          aria-disabled={
+                                            !constructNavUrl( item.navItem )
+                                          }
+                                          tabIndex={
+                                            !constructNavUrl( item.navItem )
+                                              ? -1
+                                              : undefined
+                                          }
+                                          onClick={() =>
+                                            isOpen && setIsOpen( false )
+                                          }
+                                        >
+                                          {item.categoryName}
+                                        </Link>
+                                      )}
                                       <span className="flex items-center pr-4 ml-6 h-7 text-soft-grey hover:text-blue-dark">
                                         <FontAwesomeIcon
                                           className={`size-4 transition-all ease-in-out ${
@@ -204,7 +210,7 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                                 </dl>
                               )}
                             </Disclosure>
-                          ) : !!item.categoryName && item.navItem ? (
+                          ) : (!!item.categoryName && (item.navItem?.url || item.navItem?.page)) ? (
                             <Link
                               href={constructNavUrl( item.navItem ) || ''}
                               className={cn(
@@ -222,7 +228,16 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                             >
                               {item.categoryName}
                             </Link>
-                          ) : null}
+                          ) : (
+                            <div
+                              className={cn(
+                                'h3 px-4 underline-offset-4 w-full block',
+                                'py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out cursor-default'
+                              )}
+                            >
+                              {item.categoryName}
+                            </div>
+                          )}
                         </div>
                       ) )}
                     </div>
@@ -233,7 +248,7 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                     ref={el => {
                       (itemsRefs.current[items.length + 1 + index] = el);
                     }}
-                    onClick={() => openNewTab( item.href )}
+                    onClick={() => openNewTab( item.url )}
                     className={cn(
                       'opacity-0 translate-y-[50px]',
                       'flex items-center rounded-lg overflow-hidden',
@@ -242,7 +257,7 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                     tabIndex={-1}
                     key={index}
                   >
-                    <p className="m-0 h3">{item.name}</p>
+                    <p className="m-0 h3">{item.platform}</p>
                   </button>
                 ) )}
               </div>
