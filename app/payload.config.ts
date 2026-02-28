@@ -13,6 +13,7 @@ import { Skills } from '../collections/Skills';
 import { Projects } from '../collections/Projects';
 import { Articles } from '../collections/Articles';
 import { Pages } from '../collections/Pages';
+import { Experiences } from '../collections/Experiences';
 
 export default buildConfig({
     // If you'd like to use Rich Text, pass your editor here
@@ -24,7 +25,7 @@ export default buildConfig({
     },
 
     // Define and configure your collections in this array
-    collections: [Media, Tags, Skills, Projects, Articles, Pages],
+    collections: [Media, Tags, Skills, Projects, Articles, Pages, Experiences],
     globals: [Site, Profile, HomePage],
 
     // Your Payload secret - should be a complex and secure string, unguessable

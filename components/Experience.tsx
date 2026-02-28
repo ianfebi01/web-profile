@@ -1,6 +1,6 @@
 'use client'
 import { FunctionComponent, useEffect, useMemo, useRef } from 'react'
-import { ApiExperienceExperience } from '@/types/generated/contentTypes'
+import { Experience as ExperienceType } from '@/payload-types'
 import Markdown from './Parsers/Markdown'
 import ProgressVertical, { IStep } from './ProgressVertical'
 import gsap from 'gsap'
@@ -8,26 +8,26 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin( ScrollTrigger )
 
 interface Props {
-  data: ApiExperienceExperience[]
+  data: ExperienceType[]
 }
 
 const Experience: FunctionComponent<Props> = ( { data } ) => {
   const groupedAndSorted = useMemo(
     () =>
-      data.reduce<Record<string, ApiExperienceExperience[]>>( ( acc, item ) => {
+      data.reduce<Record<string, ExperienceType[]>>( ( acc, item ) => {
         // Group by companyName
-        if ( !acc[item.attributes.companyName] ) {
-          acc[item.attributes.companyName] = []
+        if ( !acc[item.companyName] ) {
+          acc[item.companyName] = []
         }
-        acc[item.attributes.companyName].push( item )
+        acc[item.companyName].push( item )
 
         // Sort items in the group by endDate in descending order, prioritizing null or missing endDate
-        acc[item.attributes.companyName].sort( ( a, b ) => {
-          const aEndDate = a.attributes.endDate
-            ? new Date( a.attributes.endDate ).getTime()
+        acc[item.companyName].sort( ( a, b ) => {
+          const aEndDate = a.endDate
+            ? new Date( a.endDate ).getTime()
             : null
-          const bEndDate = b.attributes.endDate
-            ? new Date( b.attributes.endDate ).getTime()
+          const bEndDate = b.endDate
+            ? new Date( b.endDate ).getTime()
             : null
 
           // Handle null or missing endDate
@@ -55,9 +55,9 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
       Object.entries( groupedAndSorted ).map( ( [companyName, experiences] ) => {
         // Calculate total working months for this company
         const totalWorkingMonths = experiences.reduce( ( total, item ) => {
-          const startDate = new Date( item.attributes.startDate )
-          const endDate = item.attributes.endDate
-            ? new Date( item.attributes.endDate )
+          const startDate = new Date( item.startDate )
+          const endDate = item.endDate
+            ? new Date( item.endDate )
             : new Date() // Use current date if endDate is null
           const months =
             ( endDate.getFullYear() - startDate.getFullYear() ) * 12 +
@@ -70,21 +70,21 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
           companyName        : companyName,
           totalWorkingMonths : totalWorkingMonths,
           steps              : experiences.map( ( item ) => {
-            const startDate = new Date( item.attributes.startDate )
-            const endDate = item.attributes.endDate
-              ? new Date( item.attributes.endDate )
+            const startDate = new Date( item.startDate )
+            const endDate = item.endDate
+              ? new Date( item.endDate )
               : new Date() // Use current date if endDate is null
             const months =
               ( endDate.getFullYear() - startDate.getFullYear() ) * 12 +
               ( endDate.getMonth() - startDate.getMonth() )
 
             return {
-              description : String( item.attributes.description ),
-              name        : String( item.attributes.companyName ),
-              role        : String( item.attributes.role ),
+              description : String( item.description || '' ),
+              name        : String( item.companyName ),
+              role        : String( item.role ),
               status :
-                item.attributes.endDate &&
-                new Date( item.attributes.endDate ) < new Date()
+                item.endDate &&
+                new Date( item.endDate ) < new Date()
                   ? 'complete'
                   : 'current',
               totalWorkingMonths : months,
@@ -180,3 +180,4 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
 }
 
 export default Experience
+
