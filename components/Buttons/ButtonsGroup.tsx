@@ -2,6 +2,7 @@ import React from 'react'
 import { cn } from '@/lib/utils'
 import { Link } from '@/i18n/navigation'
 import { BannerStandardBlock } from '@/payload-types'
+import { parseUrl } from '@/utils/parse-url'
 
 interface ButtonGroupProps {
   buttons?: BannerStandardBlock['buttons']
@@ -16,7 +17,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ( { buttons = [] } ) => {
         <Link
           key={index}
           className={cn( 'button button-primary' )}
-          href={button?.url || '#'}
+          href={parseUrl(button?.url)}
           target={button?.newTab ? '_blank' : undefined}
           rel={button?.newTab ? 'noopener noreferrer' : undefined}
         >

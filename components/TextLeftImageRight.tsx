@@ -4,7 +4,9 @@ import React from 'react';
 import Markdown from './Parsers/Markdown'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import imageUrl from '@/utils/imageUrl'
-import { Media } from '@/payload-types'
+import { TextLeftImageRightBlock, Media } from '@/payload-types'
+import { parseUrl } from '@/utils/parse-url'
+import Link from 'next/link'
 import imageLoader from '@/lib/constans/image-loader'
 
 interface Button {
@@ -86,24 +88,24 @@ const TextLeftImageRight: React.FC<Props> = ( {
             {buttons?.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-4 mt-2 lg:justify-start">
                 {buttons.map( ( button, index ) => (
-                  <a
+                  <Link
                     key={index}
                     className={cn( {
                       'button-primary button-primary-blue-dark' :
                         buttonsVariation === 'primary' &&
                         bgColour !== 'blue-dark',
-                      'button-primary button-primary-red' :
+                      'button-secondary' :
                         buttonsVariation === 'secondary' ||
                         bgColour === 'blue-dark',
                     } )}
-                    href={button.url}
+                    href={parseUrl(button.url)}
                     target={button.newTab ? '_blank' : undefined}
                     rel={button.newTab ? 'noopener noreferrer' : undefined}
                   >
                     <span className="arrow-button arrow-button-forward">
                       {button.name}
                     </span>
-                  </a>
+                  </Link>
                 ) )}
               </div>
             )}

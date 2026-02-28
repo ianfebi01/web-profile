@@ -1,5 +1,6 @@
 import { Page } from "@/payload-types"
 import { NavItemType } from "@/components/Layouts/Navbar"
+import { parseUrl } from "./parse-url"
 
 const constructNavUrl = ( navItem: NavItemType | any ) => {
   let url: string = ''
@@ -7,7 +8,7 @@ const constructNavUrl = ( navItem: NavItemType | any ) => {
   if ( navItem?.page && typeof navItem.page === 'object' && ( navItem.page as Page )?.slug ) {
     url = `/${( navItem.page as Page )?.slug}`
   } else {
-    url = navItem?.url || ''
+    url = parseUrl(navItem?.url || '')
   }
   if ( navItem?.pageAnchor ) {
     url = url + '#' + navItem.pageAnchor
