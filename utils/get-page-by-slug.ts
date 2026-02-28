@@ -5,6 +5,7 @@ export async function getPageBySlug( slug: string, lang: string ) {
   const payload = await getPayload({ config: configPromise })
   const pages = await payload.find({
     collection: 'pages',
+    locale: lang as 'en' | 'id',
     where: {
       slug: {
         equals: slug,

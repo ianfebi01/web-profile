@@ -28,6 +28,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       : await payload.findByID({
           collection: "pages",
           id: homeGlobal.page as string,
+          locale: params.locale as 'en' | 'id',
           depth: 2,
         });
 
@@ -96,12 +97,14 @@ export default async function PageHome(props: Props) {
       : await payload.findByID({
           collection: "pages",
           id: homeGlobal.page as string,
+          locale: params.locale as 'en' | 'id',
           depth: 2,
         });
 
   // Fetch profile global for profile-banner blocks
   const profile = await payload.findGlobal({
     slug: "profile",
+    locale: params.locale as 'en' | 'id',
     depth: 2,
   });
 

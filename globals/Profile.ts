@@ -10,10 +10,12 @@ export const Profile: GlobalConfig = {
       name: 'name',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'bio',
       type: 'textarea',
+      localized: true,
     },
     {
       name: 'bannerImage',
@@ -30,6 +32,7 @@ export const Profile: GlobalConfig = {
     {
       name: 'socialPlatformLinks',
       type: 'array',
+      localized: true,
       fields: [
         {
           name: 'platform',

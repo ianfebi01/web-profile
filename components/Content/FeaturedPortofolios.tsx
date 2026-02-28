@@ -12,6 +12,7 @@ const FeaturedPortofolios = async () => {
   const payload = await getPayload({ config: configPromise })
   const responseData = await payload.find({
     collection: 'projects',
+    locale: locale as 'en' | 'id',
     limit: 3,
     sort: '-createdAt',
     depth: 2

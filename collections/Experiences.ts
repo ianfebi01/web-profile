@@ -13,11 +13,13 @@ export const Experiences: CollectionConfig = {
       name: 'companyName',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'role',
       type: 'text',
       required: true,
+      localized: true,
     },
     {
       name: 'startDate',
@@ -31,6 +33,7 @@ export const Experiences: CollectionConfig = {
     {
       name: 'description',
       type: 'textarea',
+      localized: true,
     },
   ],
 }

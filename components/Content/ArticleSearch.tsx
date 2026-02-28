@@ -4,11 +4,14 @@ import ArticleCard from '../Cards/ArticleCard'
 import NoDataFound from '../NoDataFound'
 import { Link } from '@/i18n/navigation'
 import Button2 from '../Buttons/Button2'
+import { getLocale } from 'next-intl/server'
 
 const ArticleSearch = async () => {
+  const locale = await getLocale()
   const payload = await getPayload({ config: configPromise })
   const responseData = await payload.find({
     collection: 'articles',
+    locale: locale as 'en' | 'id',
     limit: 3,
     sort: '-createdAt',
     depth: 2,

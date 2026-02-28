@@ -11,6 +11,7 @@ export const HomePage: GlobalConfig = {
       type: "text",
       required: true,
       defaultValue: "Home",
+      localized: true,
     },
     {
       name: "page",

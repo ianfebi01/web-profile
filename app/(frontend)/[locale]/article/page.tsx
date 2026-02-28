@@ -42,6 +42,7 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
   const payload = await getPayload({ config: configPromise })
   const responseData = await payload.find({
     collection: 'articles',
+    locale: locale as 'en' | 'id',
     sort: '-createdAt',
     depth: 2,
   })

@@ -1,12 +1,14 @@
-import { getPayload } from 'payload'
-import configPromise from '../app/payload.config'
 import fs from 'fs'
 import path from 'path'
 import os from 'os'
 
 const envFile = fs.readFileSync('.env.local', 'utf-8')
-const STRAPI_URL = envFile.split('\n').find(l => l.startsWith('NEXT_PUBLIC_STRAPI_API_URL='))?.split('=')[1].trim()
-const STRAPI_TOKEN = envFile.split('\n').find(l => l.startsWith('NEXT_PUBLIC_STRAPI_API_TOKEN='))?.split('=')[1].trim()
+for (const line of envFile.split('\n')) {
+  const match = line.match(/^([^#=]+)=(.*)$/)
+  if (match) process.env[match[1].trim()] = match[2].trim()
+}
+const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL
+const STRAPI_TOKEN = process.env.NEXT_PUBLIC_STRAPI_API_TOKEN
 
 async function fetchStrapi(endpoint: string) {
   const url = `${STRAPI_URL}/api/${endpoint}`
@@ -30,6 +32,8 @@ async function downloadMedia(url: string, name: string): Promise<string> {
 }
 
 async function run() {
+  const { getPayload } = await import('payload')
+  const { default: configPromise } = await import('../app/payload.config')
   const payload = await getPayload({ config: configPromise })
   
   const mediaMap = new Map<number, any>()
