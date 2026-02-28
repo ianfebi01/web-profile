@@ -103,11 +103,13 @@ export interface Config {
     site: Site;
     profile: Profile;
     'home-page': HomePage;
+    'main-menu': MainMenu;
   };
   globalsSelect: {
     site: SiteSelect<false> | SiteSelect<true>;
     profile: ProfileSelect<false> | ProfileSelect<true>;
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
   };
   locale: 'en' | 'id';
   user: User;
@@ -1535,6 +1537,40 @@ export interface HomePage {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu".
+ */
+export interface MainMenu {
+  id: string;
+  navItems?:
+    | {
+        categoryName?: string | null;
+        navItem?: {
+          name?: string | null;
+          page?: (string | null) | Page;
+          newTab?: boolean | null;
+          url?: string | null;
+          pageAnchor?: string | null;
+          description?: string | null;
+        };
+        navItems?:
+          | {
+              name?: string | null;
+              page?: (string | null) | Page;
+              newTab?: boolean | null;
+              url?: string | null;
+              pageAnchor?: string | null;
+              description?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site_select".
  */
 export interface SiteSelect<T extends boolean = true> {
@@ -1580,6 +1616,42 @@ export interface ProfileSelect<T extends boolean = true> {
 export interface HomePageSelect<T extends boolean = true> {
   title?: T;
   page?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "main-menu_select".
+ */
+export interface MainMenuSelect<T extends boolean = true> {
+  navItems?:
+    | T
+    | {
+        categoryName?: T;
+        navItem?:
+          | T
+          | {
+              name?: T;
+              page?: T;
+              newTab?: T;
+              url?: T;
+              pageAnchor?: T;
+              description?: T;
+            };
+        navItems?:
+          | T
+          | {
+              name?: T;
+              page?: T;
+              newTab?: T;
+              url?: T;
+              pageAnchor?: T;
+              description?: T;
+              id?: T;
+            };
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

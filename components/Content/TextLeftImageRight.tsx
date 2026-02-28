@@ -1,10 +1,10 @@
 'use client'
-import { ContentComponentsTextLeftImageRight } from '@/types/generated/components'
+import { TextLeftImageRightBlock } from '@/payload-types'
 import React from 'react'
 import TextLeftImageRight from '@/components/TextLeftImageRight'
 
 type Props = {
-  sectionData: ContentComponentsTextLeftImageRight['attributes']
+  sectionData: TextLeftImageRightBlock
   buttonsVariation?: 'primary' | 'secondary'
 }
 
@@ -13,21 +13,21 @@ const Section: React.FC<Props> = ( {
   buttonsVariation = 'primary',
 } ) => {
   const bgColour =
-    sectionData.sectionSettings?.attributes?.bgColour?.data?.attributes?.name ||
+    (sectionData.sectionSettings?.bgColour as any)?.name ||
     sectionData.sectionSettings?.bgColour || ''
 
   return (
     <TextLeftImageRight
-      image={sectionData.image}
-      fullWidthBgImage={sectionData.fullWidthBgImage}
-      reverse={sectionData.reverse}
-      fullWidth={sectionData.fullWidth}
-      buttons={sectionData.buttons}
+      image={sectionData.image as any}
+      fullWidthBgImage={sectionData.fullWidthBgImage || false}
+      reverse={sectionData.reverse || false}
+      fullWidth={sectionData.fullWidth || false}
+      buttons={(sectionData.buttons as any) || []}
       bodyCopy={sectionData.bodyCopy}
-      biggerColumn={sectionData.biggerColumn}
+      biggerColumn={sectionData.biggerColumn as 'image' | 'content' | undefined}
       buttonsVariation={buttonsVariation}
       bgColour={bgColour}
-      scaling={sectionData?.scaling}
+      scaling={sectionData?.scaling as 'cover' | 'contain'}
     />
   )
 }

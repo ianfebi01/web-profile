@@ -1,14 +1,14 @@
-import { ContentComponentsAccordian } from '@/types/generated/components'
+import { AccordianBlock } from '@/payload-types'
 import React from 'react'
 import Accordion from '../Accordian'
 
 interface Props {
-  sectionData: ContentComponentsAccordian['attributes']
+  sectionData: AccordianBlock
 }
 const Accordian: React.FC<Props> = ( { sectionData } ) => {
   return (
     <div className="max-w-3xl mx-auto">
-      <Accordion items={sectionData.items} />
+      <Accordion items={(sectionData.items as any) || []} />
     </div>
   )
 }

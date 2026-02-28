@@ -5,19 +5,16 @@ import { Link } from '@/i18n/navigation'
 import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle, faXmark } from '@fortawesome/free-solid-svg-icons'
-import {
-  NavCategoriesNavCategories,
-  NavItemsNavItems,
-} from '@/types/generated/components'
+import { NavCategoryType, NavItemType } from './Navbar'
 import { socials } from '@/lib/constans/socials-media'
 import { cn, openNewTab } from '@/lib/utils'
 import gsap from 'gsap'
 import constructNavUrl from '@/utils/construct-nav-url'
-import { ApiPagePage } from '@/types/generated/contentTypes'
+import { Page } from '@/payload-types'
 
 interface Props {
   isOpen: boolean
-  items: NavCategoriesNavCategories['attributes'][]
+  items: NavCategoryType[]
   setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
@@ -101,7 +98,7 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                 <div className="flex w-full mt-6 grow">
                   <div className="flex flex-col w-full gap-4 py-6">
                     <div className="flex flex-col w-full h-full gap-4 text-white">
-                      {items.map( ( item, key ) => (
+                      {items?.map( ( item, key ) => (
                         <div
                           key={key}
                           ref={el => {
@@ -109,7 +106,7 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                           }}
                           className={cn( 'opacity-0 translate-y-[50px]' )}
                         >
-                          {!!item.categoryName && item.navItems.length > 0 ? (
+                          {!!item.categoryName && item.navItems && item.navItems.length > 0 ? (
                             <Disclosure as="div">
                               {( { open } ) => (
                                 <dl
@@ -167,9 +164,9 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                                       >
                                         <div className="px-4 my-4 text-xs lg:text-[1.1rem] ml-4">
                                           <div className="flex flex-col gap-4">
-                                            {item.navItems.map(
+                                            {item.navItems?.map(
                                               (
-                                                subItem: NavItemsNavItems['attributes'],
+                                                subItem: NavItemType,
                                                 indexSubitem: number
                                               ) => (
                                                 <Link
@@ -194,9 +191,8 @@ export default function MobileMenu( { isOpen, setIsOpen, items }: Props ) {
                                                 >
                                                   {subItem?.name ||
                                                     (
-                                                      subItem.page
-                                                        ?.data as ApiPagePage
-                                                    )?.attributes?.title}
+                                                      subItem.page as Page
+                                                    )?.title}
                                                 </Link>
                                               )
                                             )}

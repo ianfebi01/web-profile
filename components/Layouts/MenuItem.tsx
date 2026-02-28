@@ -4,16 +4,13 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Popover, Transition } from '@headlessui/react'
 import { useState } from 'react'
-import {
-  NavCategoriesNavCategories,
-  NavItemsNavItems,
-} from '@/types/generated/components'
+import { NavCategoryType, NavItemType } from './Navbar'
 import { Link, usePathname } from '@/i18n/navigation'
 import constructNavUrl from '@/utils/construct-nav-url'
-import { ApiPagePage } from '@/types/generated/contentTypes'
+import { Page } from '@/payload-types'
 
 interface Props {
-  data: NavCategoriesNavCategories['attributes']
+  data: NavCategoryType
 }
 export default function MenuItem( { data }: Props ) {
   const [show, setShow] = useState<boolean>( false )
@@ -81,11 +78,11 @@ export default function MenuItem( { data }: Props ) {
                   <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
                     <div className="relative grid bg-dark-secondary p-4">
                       {data.navItems.map(
-                        ( item: NavItemsNavItems['attributes'], i: number ) => (
+                        ( item: NavItemType, i: number ) => (
                           <div
                             key={i}
                             className={cn(
-                              i !== data.navItems?.length - 1 &&
+                              i !== (data.navItems?.length || 0) - 1 &&
                                 'border-b border-dark mb-2 pb-2'
                             )}
                           >
@@ -107,8 +104,7 @@ export default function MenuItem( { data }: Props ) {
                                 )}
                               >
                                 {item?.name ||
-                                  ( item.page?.data as ApiPagePage )?.attributes
-                                    ?.title}
+                                  ( item.page as Page )?.title}
                               </button>
                             </Link>
                           </div>

@@ -3,7 +3,7 @@ import { cn, openNewTab } from '@/lib/utils'
 import { Popover, Transition } from '@headlessui/react'
 import { useMemo, useState } from 'react'
 import CopyToClipboard from '../Inputs/CopyToClipboard'
-import { ArraysSocials } from '@/types/generated/components'
+import { Site } from '@/payload-types'
 import InstagramIcon from '../Icons/InstagramIcon'
 import LinkedinIcon from '../Icons/LinkedinIcon'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,7 +12,7 @@ import { useTranslations } from 'next-intl';
 
 interface Props {
   title: string
-  socials: ArraysSocials['attributes'][]
+  socials: NonNullable<Site['socialPlatformLinks']>
 }
 export default function MenuItemSocial( { title, socials }: Props ) {
   const t = useTranslations( 'socials-desc' )

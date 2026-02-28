@@ -1,4 +1,3 @@
-import { ContentComponentsBodyCopy } from '@/types/generated/components'
 import React from 'react'
 import Markdown from '../Parsers/Markdown'
 import { RichText } from '@payloadcms/richtext-lexical/react'

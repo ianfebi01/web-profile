@@ -8,6 +8,7 @@ import { cloudinaryStorage } from 'payload-cloudinary';
 import { Site } from '../globals/Site';
 import { Profile } from '../globals/Profile';
 import { HomePage } from '../globals/HomePage';
+import { MainMenu } from '../globals/MainMenu';
 import { Tags } from '../collections/Tags';
 import { Skills } from '../collections/Skills';
 import { Projects } from '../collections/Projects';
@@ -26,7 +27,7 @@ export default buildConfig({
 
     // Define and configure your collections in this array
     collections: [Media, Tags, Skills, Projects, Articles, Pages, Experiences],
-    globals: [Site, Profile, HomePage],
+    globals: [Site, Profile, HomePage, MainMenu],
 
     // Your Payload secret - should be a complex and secure string, unguessable
     secret: process.env.PAYLOAD_SECRET || '',

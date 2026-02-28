@@ -5,10 +5,7 @@ import gsap from 'gsap'
 import MenuItem from './MenuItem'
 import MobileNavbar from './MobileNavbar'
 import Image from 'next/image'
-import {
-  ArraysSocials,
-  NavCategoriesNavCategories,
-} from '@/types/generated/components'
+import { Site } from '@/payload-types'
 import MenuItemSocial from './MenuItemSocial'
 import { useTranslations } from 'next-intl'
 import LocaleSwitcher from './LocaleSwitcher'
@@ -17,9 +14,24 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { cn } from '@/lib/utils'
 
+export interface NavItemType {
+  name?: string
+  page?: any
+  newTab?: boolean
+  url?: string
+  pageAnchor?: string | null
+  description?: string | null
+}
+
+export interface NavCategoryType {
+  categoryName?: string
+  navItem?: any
+  navItems?: NavItemType[]
+}
+
 interface Props {
-  items: NavCategoriesNavCategories['attributes'][]
-  socials: ArraysSocials['attributes'][]
+  items: NavCategoryType[]
+  socials: NonNullable<Site['socialPlatformLinks']>
 }
 
 const Navbar = ( { items, socials }: Props ) => {

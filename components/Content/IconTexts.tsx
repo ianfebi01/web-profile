@@ -1,9 +1,6 @@
 import React from 'react'
 import { cn } from '@/lib/utils'
-import {
-  ArraysGalleryItems,
-  ContentComponentsIconTexts,
-} from '@/types/generated/components'
+import { IconTextsBlock } from '@/payload-types'
 import Image from 'next/image'
 import imageLoader from '@/lib/constans/image-loader'
 import Markdown from '../Parsers/Markdown'
@@ -12,7 +9,7 @@ import { Link } from '@/i18n/navigation'
 import AnimationProvider from '../Context/AnimationProvider'
 
 interface Props {
-  sectionData: ContentComponentsIconTexts['attributes']
+  sectionData: IconTextsBlock
 }
 
 const Gallery: React.FC<Props> = ( { sectionData } ) => {
@@ -26,7 +23,7 @@ const Gallery: React.FC<Props> = ( { sectionData } ) => {
       )}
     >
       {sectionData.icons?.map(
-        ( item: ArraysGalleryItems['attributes'], index: number ) => (
+        ( item: any, index: number ) => (
           <Link
             key={index}
             className={cn(
@@ -45,9 +42,9 @@ const Gallery: React.FC<Props> = ( { sectionData } ) => {
               delay={0.2 + index * 0.1}
             >
               <div className="relative w-full overflow-hidden aspect-square">
-                {(item.image?.data || item.image) && (
+                {item.image && (
                   <Image
-                    src={imageUrl( item?.image?.data || item?.image, 'medium' ) || ''}
+                    src={imageUrl( item?.image, 'medium' ) || ''}
                     alt={`Image-${index}`}
                     className="object-contain object-center w-full h-full"
                     placeholder={imageLoader}

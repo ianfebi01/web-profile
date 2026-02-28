@@ -10,7 +10,7 @@ import Navbar from '@/components/Layouts/Navbar'
 import SectionProvider from '@/components/Context/SectionProvider'
 import Footer from '@/components/Layouts/Footer'
 import { getSiteData } from '@/utils/get-site-data'
-import { ApiSiteSite } from '@/types/generated/contentTypes'
+import { Site } from '@/payload-types'
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 import Error from '@/app/error'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
@@ -42,7 +42,7 @@ export default async function LocaleLayout( {
     notFound()
   }
   
-  const siteData = ( await getSiteData( locale ) ) as { data: ApiSiteSite }
+  const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
 
   return (
     <html lang={locale} suppressHydrationWarning>
@@ -81,8 +81,8 @@ export default async function LocaleLayout( {
               />
               <div className="flex flex-col min-h-screen">
                 <Navbar
-                  items={siteData?.data?.attributes?.mainNavMenu}
-                  socials={siteData?.data?.attributes?.socials}
+                  items={siteData?.data?.mainNavMenu as any}
+                  socials={siteData?.data?.socialPlatformLinks as any}
                 />
 
                 {children}

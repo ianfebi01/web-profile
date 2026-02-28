@@ -8,10 +8,7 @@ import Button from '../Buttons/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'nextjs-toploader/app'
-import {
-  ApiPortofolioPortofolio,
-  ApiSkillSkill,
-} from '@/types/generated/contentTypes'
+import { Project, Skill } from '@/payload-types'
 import sanitize from '@/utils/sanitize'
 import parseMd from '@/utils/parseMd'
 import imageUrl from '@/utils/imageUrl'
@@ -19,7 +16,7 @@ import imageUrl from '@/utils/imageUrl'
 
 interface Props {
   color?: 'bg-dark-secondary' | 'bg-green' | 'bg-white'
-  data: ApiPortofolioPortofolio['attributes']
+  data: Project
   index: number
   once?: boolean
   loading?: boolean
@@ -87,7 +84,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
           theme={color === 'bg-white' ? 'light' : 'dark'}
           className="backdrop-blur-md shadow-sm"
         >
-          {data.year}
+          {(data as any).year}
         </Button>
         <div className="flex items-center justify-center gap-2 ml-auto">
           {showEditButton ? (
@@ -142,13 +139,13 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
               <div
                 className="line-clamp-3"
                 dangerouslySetInnerHTML={{
-                  __html : sanitize( parseMd( data.description ), 'richtext' ),
+                  __html : sanitize( parseMd( data.description || '' ), 'richtext' ),
                 }}
               ></div>
             </div>
             <div className="grow-[1]" />
             <div className="flex gap-1">
-              {( data.skills?.data as ApiSkillSkill[] )?.map( ( item, i ) => (
+              {( data.skills as Skill[] )?.map( ( item, i ) => (
                 <div
                   className={`w-4 h-4  border border-none rounded-sm relative overflow-hidden ${
                     color === 'bg-white' && 'shadow-skill'
@@ -157,9 +154,8 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                 >
                   <Image
                     src={
-                      imageUrl( item.attributes.image.data, 'thumbnail' ) || ''
+                      imageUrl( item.image as any, 'thumbnail' ) || ''
                     }
-                    fill
                     style={{
                       objectFit : 'contain',
                     }}
@@ -170,16 +166,11 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
               ) )}
             </div>
           </div>
-          {data.featureImage && (
+          {data.thumbnail && (
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={
-                    imageUrl(
-                      data.featureImage.data || data.featureImage,
-                      'small'
-                    ) || ''
-                  }
+                  src={imageUrl(data.thumbnail as any, 'small') || ''}
                   alt={data.title}
                   fill
                   priority
@@ -210,13 +201,13 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
               <div
                 className="line-clamp-3"
                 dangerouslySetInnerHTML={{
-                  __html : sanitize( parseMd( data.description ), 'richtext' ),
+                  __html : sanitize( parseMd( data.description || '' ), 'richtext' ),
                 }}
               ></div>
             </div>
             <div className="grow-[1]" />
             <div className="flex gap-1">
-              {( data.skills?.data as ApiSkillSkill[] )?.map( ( item, i ) => (
+              {( data.skills as Skill[] )?.map( ( item, i ) => (
                 <div
                   className={`w-4 h-4  border border-none rounded-sm relative overflow-hidden ${
                     color === 'bg-white' && 'shadow-skill'
@@ -226,7 +217,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                   <Image
                     src={
                       imageUrl(
-                        item.attributes.image.data || item.attributes.image,
+                        item.image,
                         'thumbnail'
                       ) || ''
                     }
@@ -241,16 +232,11 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
               ) )}
             </div>
           </div>
-          {data.featureImage && (
+          {data.thumbnail && (
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={
-                    imageUrl(
-                      data.featureImage?.data || data.featureImage,
-                      'small'
-                    ) || ''
-                  }
+                  src={imageUrl(data.thumbnail as any, 'small') || ''}
                   alt={data.title}
                   fill
                   priority

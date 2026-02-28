@@ -118,7 +118,7 @@ export default async function PageHome(props: Props) {
 
   const pageData = {
     banner: bannerBlocks,
-    content: (pageDoc as any).blocks || [],
+    blocks: (pageDoc as any).blocks || [],
   };
 
   return <HeroesAndSections page={pageData as any} />;

@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { IOptions } from '@/types/form'
 import { useEdit } from '@/lib/hooks/api/cashFlow'
 import { useTranslations } from 'next-intl'
-import { ApiTransactionTransaction } from '@/types/generated/contentTypes'
+// import replaced
 
 interface ITransactionFormInput
   extends Omit<IBodyTransaction, 'date' | 'mm_category'> {
@@ -20,7 +20,7 @@ interface ITransactionFormInput
 interface Props {
   isOpen: boolean
   setIsOpen: ( value: boolean ) => void
-  initialValue?: ApiTransactionTransaction['attributes'] & { id: number }
+  initialValue?: any
 }
 
 const EditTransaction = ( { isOpen, setIsOpen, initialValue }: Props ) => {

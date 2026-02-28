@@ -1,12 +1,13 @@
-import { NavItemsNavItems } from "@/types/generated/components"
-import { ApiPagePage } from "@/types/generated/contentTypes"
+import { Page } from "@/payload-types"
+import { NavItemType } from "@/components/Layouts/Navbar"
 
-const constructNavUrl = ( navItem: NavItemsNavItems['attributes'] ) => {
+const constructNavUrl = ( navItem: NavItemType | any ) => {
   let url: string = ''
-  if ( ( navItem?.page?.data as ApiPagePage )?.attributes?.slug ) {
-    url = `/${( navItem?.page?.data as ApiPagePage )?.attributes?.slug}`
+  
+  if ( navItem?.page && typeof navItem.page === 'object' && ( navItem.page as Page )?.slug ) {
+    url = `/${( navItem.page as Page )?.slug}`
   } else {
-    url = navItem?.url
+    url = navItem?.url || ''
   }
   if ( navItem?.pageAnchor ) {
     url = url + '#' + navItem.pageAnchor

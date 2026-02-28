@@ -8,15 +8,14 @@ import Image from "next/image";
 import React, { FunctionComponent, useRef } from "react";
 import { scalePow } from "d3-scale";
 import { cn } from "@/lib/utils";
-import { BannerComponentsProfileBanner } from "@/types/generated/components";
+import { Profile } from "@/payload-types";
 import imageUrl from "@/utils/imageUrl";
 import sanitize from "@/utils/sanitize";
 import parseMd from "@/utils/parseMd";
-import { ApiSocialSocial } from "@/types/generated/contentTypes";
 import imageLoader from "@/lib/constans/image-loader";
 
 interface Props {
-  sectionData: BannerComponentsProfileBanner["attributes"];
+  sectionData: Profile;
   myposy?: number;
   winheight?: number;
 }
@@ -49,7 +48,7 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
           "flex w-full h-56 relative bg-cover bg-center bg-no-repeat md:hidden",
         )}
         style={{
-          backgroundImage: `url(${imageUrl(sectionData.bannerImage?.data || sectionData.bannerImage, "small")})`,
+          backgroundImage: `url(${imageUrl(sectionData.bannerImage, "small")})`,
         }}
       >
         <div
@@ -63,7 +62,7 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
           <Image
             src={
               imageUrl(
-                sectionData.avatar?.data || sectionData.avatar,
+                sectionData.avatar,
                 "small",
               ) || ""
             }
@@ -81,7 +80,7 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
           "w-full h-56 relative bg-cover bg-center bg-no-repeat hidden md:flex",
         )}
         style={{
-          backgroundImage: `url(${imageUrl(sectionData.bannerImage?.data || sectionData.bannerImage, "medium")})`,
+          backgroundImage: `url(${imageUrl(sectionData.bannerImage, "medium")})`,
         }}
       >
         <div
@@ -95,7 +94,7 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
           <Image
             src={
               imageUrl(
-                sectionData.avatar?.data || sectionData.avatar,
+                sectionData.avatar,
                 "medium",
               ) || ""
             }
@@ -120,13 +119,12 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
         <div
           className="text-center text-white/75 body-copy"
           dangerouslySetInnerHTML={{
-            __html: sanitize(parseMd(sectionData.bio), "richtext"),
+            __html: sanitize(parseMd(sectionData.bio || ""), "richtext"),
           }}
         ></div>
         <div className="text-lg flex gap-4 text-center w-full justify-center items-center flex-wrap">
           {(
-            (sectionData.socials?.data ||
-              sectionData.socials ||
+            (sectionData.socialPlatformLinks ||
               (sectionData as any).socialPlatformLinks ||
               []) as any[]
           ).map((item, i) => {

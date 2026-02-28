@@ -2,13 +2,13 @@
 
 import TextQuote from '@/components/Texts/TextQuote'
 import { cn } from '@/lib/utils'
-import { ContentComponentsQuote } from '@/types/generated/components'
+import { QuoteBlock } from '@/payload-types'
 import { scalePow } from 'd3-scale'
 import Image from 'next/image'
 import { FunctionComponent } from 'react'
 
 interface Props {
-  sectionData: ContentComponentsQuote['attributes']
+  sectionData: QuoteBlock
   myposy?: number
 }
 const Quote: FunctionComponent<Props> = ( props ) => {
