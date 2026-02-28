@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { 
+  ProfileBanner,
+  BannerStandard,
   BodyCopy, 
   TextLeftImageRight, 
   SimpleCards,
@@ -38,6 +40,15 @@ export const Pages: CollectionConfig = {
       },
     },
     {
+      name: 'banner',
+      type: 'blocks',
+      maxRows: 1,
+      blocks: [
+        ProfileBanner,
+        BannerStandard,
+      ],
+    },
+    {
       name: 'blocks',
       type: 'blocks',
       blocks: [
@@ -57,3 +68,4 @@ export const Pages: CollectionConfig = {
     },
   ],
 }
+

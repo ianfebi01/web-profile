@@ -282,6 +282,7 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
+  banner?: (ProfileBannerBlock | BannerStandardBlock)[] | null;
   blocks?:
     | (
         | BodyCopyBlock
@@ -308,6 +309,37 @@ export interface Page {
   };
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProfileBannerBlock".
+ */
+export interface ProfileBannerBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner-components.profile-banner';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerStandardBlock".
+ */
+export interface BannerStandardBlock {
+  heading?: string | null;
+  description?: string | null;
+  background?: (string | null) | Media;
+  buttons?:
+    | {
+        name?: string | null;
+        url?: string | null;
+        newTab?: boolean | null;
+        style?: ('primary' | 'secondary' | 'transparent') | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner-components.banner-standard';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -709,6 +741,12 @@ export interface ArticlesSelect<T extends boolean = true> {
 export interface PagesSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  banner?:
+    | T
+    | {
+        'banner-components.profile-banner'?: T | ProfileBannerBlockSelect<T>;
+        'banner-components.banner-standard'?: T | BannerStandardBlockSelect<T>;
+      };
   blocks?:
     | T
     | {
@@ -734,6 +772,35 @@ export interface PagesSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProfileBannerBlock_select".
+ */
+export interface ProfileBannerBlockSelect<T extends boolean = true> {
+  title?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "BannerStandardBlock_select".
+ */
+export interface BannerStandardBlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  background?: T;
+  buttons?:
+    | T
+    | {
+        name?: T;
+        url?: T;
+        newTab?: T;
+        style?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -74,7 +74,7 @@ export default async function PageRoute(props: Props) {
 
   const payloadPage = pages.docs[0]
   const payloadToStrapiFormat = {
-    banner: [],
+    banner: (payloadPage as any).banner || [],
     content: payloadPage.blocks || []
   }
 

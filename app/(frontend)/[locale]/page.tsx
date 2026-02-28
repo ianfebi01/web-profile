@@ -46,7 +46,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       url: canonicalURL,
       title: metadata?.title || FALLBACK_SEO.title,
       description: metadata?.description || FALLBACK_SEO.description,
-      siteName: "Ian Febi Sastrataruna", // Replace with your site name
+      siteName: "Ian Febi Sastrataruna",
       type: "website",
       images: [
         {
@@ -90,7 +90,6 @@ export default async function PageHome(props: Props) {
 
   const payload = await getPayload({ config: configPromise });
 
-  // Resolve the actual page document since getHomePage depth might not deeply populate relations fully depending on depth
   const pageDoc =
     typeof homeGlobal.page === "object"
       ? homeGlobal.page
@@ -100,22 +99,25 @@ export default async function PageHome(props: Props) {
           depth: 2,
         });
 
-  // Fetch profile global
+  // Fetch profile global for profile-banner blocks
   const profile = await payload.findGlobal({
     slug: "profile",
     depth: 2,
   });
 
-  // Mocking the structure that HeroesAndSections expects
-  const payloadToStrapiFormat = {
-    banner: [
-      {
-        blockType: "banner-components.profile-banner",
-        ...profile,
-      },
-    ],
+  // Inject profile data into any profile-banner blocks
+  const bannerBlocks = ((pageDoc as any).banner || []).map((block: any) => {
+    if (block.blockType === 'banner-components.profile-banner') {
+      return { ...block, ...profile }
+    }
+    return block
+  })
+
+  const pageData = {
+    banner: bannerBlocks,
     content: (pageDoc as any).blocks || [],
   };
 
-  return <HeroesAndSections page={payloadToStrapiFormat as any} />;
+  return <HeroesAndSections page={pageData as any} />;
 }
+

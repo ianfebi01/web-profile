@@ -9,6 +9,31 @@ const ButtonFields = [
   { name: 'style', type: 'select', options: ['primary', 'secondary', 'transparent'], defaultValue: 'primary' },
 ]
 
+export const ProfileBanner: Block = {
+  slug: 'banner-components.profile-banner',
+  interfaceName: 'ProfileBannerBlock',
+  labels: { singular: 'Profile Banner', plural: 'Profile Banners' },
+  imageURL: svgURI('<circle cx="300" cy="120" r="50" fill="#e2e8f0"/><rect x="200" y="190" width="200" height="20" rx="10" fill="#94a3b8"/><rect x="150" y="230" width="300" height="15" rx="7" fill="#cbd5e1"/>'),
+  imageAltText: 'Profile Banner',
+  fields: [
+    { name: 'title', type: 'text', admin: { hidden: true } }
+  ],
+}
+
+export const BannerStandard: Block = {
+  slug: 'banner-components.banner-standard',
+  interfaceName: 'BannerStandardBlock',
+  labels: { singular: 'Banner Standard', plural: 'Banner Standards' },
+  imageURL: svgURI('<rect x="0" y="0" width="600" height="400" fill="#334155"/><rect x="50" y="120" width="350" height="30" rx="10" fill="#e2e8f0"/><rect x="50" y="170" width="280" height="20" rx="10" fill="#94a3b8"/><rect x="50" y="220" width="120" height="40" rx="20" fill="#3b82f6"/>'),
+  imageAltText: 'Banner Standard',
+  fields: [
+    { name: 'heading', type: 'text' },
+    { name: 'description', type: 'textarea' },
+    { name: 'background', type: 'upload', relationTo: 'media' },
+    { name: 'buttons', type: 'array', fields: ButtonFields as any },
+  ],
+}
+
 export const BodyCopy: Block = {
   slug: 'content-components.body-copy',
   interfaceName: 'BodyCopyBlock',
