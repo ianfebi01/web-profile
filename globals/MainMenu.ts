@@ -9,6 +9,7 @@ export const MainMenu: GlobalConfig = {
     {
       name: 'navItems',
       type: 'array',
+      localized: true,
       fields: [
         {
           name: 'categoryName',
