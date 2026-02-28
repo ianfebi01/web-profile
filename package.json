@@ -79,6 +79,7 @@
     "@types/qs": "^6.9.16",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "eslint-plugin-react": "^7.33.2",
+    "mongodb": "^7.1.0",
     "sass": "^1.68.0",
     "tsx": "^4.21.0"
   },

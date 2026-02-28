@@ -114,7 +114,7 @@ export const BodyCopy: Block = {
   labels: { singular: 'Body Copy', plural: 'Body Copies' },
   imageURL: svgURI('<rect x="100" y="100" width="400" height="20" rx="10" fill="#94a3b8"/><rect x="100" y="150" width="350" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="200" width="380" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="250" width="200" height="20" rx="10" fill="#cbd5e1"/>'),
   imageAltText: 'Body Copy',
-  fields: [ { name: 'content', type: 'textarea' }, SectionSettingsFields ],
+  fields: [ { name: 'content', type: 'richText' }, SectionSettingsFields ],
 }
 
 export const TextLeftImageRight: Block = {
@@ -128,7 +128,7 @@ export const TextLeftImageRight: Block = {
     { name: 'fullWidthBgImage', type: 'checkbox', defaultValue: false },
     { name: 'reverse', type: 'checkbox', defaultValue: false },
     { name: 'fullWidth', type: 'checkbox', defaultValue: false, required: true },
-    { name: 'bodyCopy', type: 'textarea' },
+    { name: 'bodyCopy', type: 'richText' },
     { name: 'biggerColumn', type: 'select', options: [{ label: 'Image', value: 'image' }, { label: 'Content', value: 'content' }] },
     { name: 'scaling', type: 'select', options: [{ label: 'Contain', value: 'contain' }, { label: 'Cover', value: 'cover' }], defaultValue: 'cover' },
     { name: 'buttons', type: 'array', fields: ButtonFields as any },

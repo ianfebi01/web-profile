@@ -2,6 +2,7 @@ import { cn } from '@/lib/utils'
 import Image from 'next/image'
 import React from 'react';
 import Markdown from './Parsers/Markdown'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 import imageUrl from '@/utils/imageUrl'
 import { Media } from '@/payload-types'
 import imageLoader from '@/lib/constans/image-loader'
@@ -20,7 +21,7 @@ interface Props {
   fullWidth: boolean
   buttons: Button[]
   accordian?: Array<any>
-  bodyCopy: string
+  bodyCopy: any
   biggerColumn?: 'image' | 'content'
   buttonsVariation: 'primary' | 'secondary'
   scaling: 'cover' | 'contain'
@@ -76,8 +77,11 @@ const TextLeftImageRight: React.FC<Props> = ( {
             } )}
           >
             <div className="body-copy">
-              {/* Assuming you have a Markdown component */}
-              <Markdown content={bodyCopy} />
+              {typeof bodyCopy === 'string' ? (
+                <Markdown content={bodyCopy} />
+              ) : (
+                <RichText data={bodyCopy} />
+              )}
             </div>
             {buttons?.length > 0 && (
               <div className="flex flex-wrap items-center justify-center gap-4 mt-2 lg:justify-start">

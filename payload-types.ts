@@ -346,7 +346,21 @@ export interface BannerStandardBlock {
  * via the `definition` "BodyCopyBlock".
  */
 export interface BodyCopyBlock {
-  content?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   sectionSettings?: {
     bgColour?: ('dark' | 'dark-secondary' | 'orange' | 'green' | 'white') | null;
     heading?: string | null;
@@ -380,7 +394,21 @@ export interface TextLeftImageRightBlock {
   fullWidthBgImage?: boolean | null;
   reverse?: boolean | null;
   fullWidth: boolean;
-  bodyCopy?: string | null;
+  bodyCopy?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   biggerColumn?: ('image' | 'content') | null;
   scaling?: ('contain' | 'cover') | null;
   buttons?:
