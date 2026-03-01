@@ -40,3 +40,6 @@ next-env.d.ts
 
 # Build script
 /build-script/node_modules
+
+# db
+/scripts/db/dump
