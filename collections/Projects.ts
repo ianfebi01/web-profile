@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 
+import { revalidateTag } from 'next/cache'
+
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {
@@ -7,6 +9,18 @@ export const Projects: CollectionConfig = {
   },
   access: {
     read: () => true,
+  },
+  hooks: {
+    afterChange: [({ doc }) => { 
+      // @ts-expect-error Next.js 15 canary typing mismatch
+      revalidateTag('projects'); 
+      return doc; 
+    }],
+    afterDelete: [({ doc }) => { 
+      // @ts-expect-error Next.js 15 canary typing mismatch
+      revalidateTag('projects'); 
+      return doc; 
+    }],
   },
   fields: [
     {

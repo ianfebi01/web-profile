@@ -16,6 +16,8 @@ import {
   PortofolioSearch
 } from '../blocks/ContentComponents'
 
+import { revalidateTag } from 'next/cache'
+
 export const Pages: CollectionConfig = {
   slug: 'pages',
   admin: {
@@ -23,6 +25,18 @@ export const Pages: CollectionConfig = {
   },
   access: {
     read: () => true, // Anyone can read published pages
+  },
+  hooks: {
+    afterChange: [({ doc }) => { 
+      // @ts-expect-error Next.js 15 canary typing mismatch
+      revalidateTag('pages'); 
+      return doc; 
+    }],
+    afterDelete: [({ doc }) => { 
+      // @ts-expect-error Next.js 15 canary typing mismatch
+      revalidateTag('pages'); 
+      return doc; 
+    }],
   },
   fields: [
     {
