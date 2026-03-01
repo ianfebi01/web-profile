@@ -29,6 +29,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
           collection: "pages",
           id: homeGlobal.page as string,
           locale: params.locale as 'en' | 'id',
+          fallbackLocale: false,
           depth: 2,
         });
 
@@ -98,6 +99,7 @@ export default async function PageHome(props: Props) {
           collection: "pages",
           id: homeGlobal.page as string,
           locale: params.locale as 'en' | 'id',
+          fallbackLocale: false,
           depth: 2,
         });
 
