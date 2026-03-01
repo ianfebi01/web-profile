@@ -12,11 +12,17 @@ const imageUrl = (
 ): string | undefined => {
   if (!imageObj) return undefined
 
-  // If it's already a string (ID or URL), return it
-  if (typeof imageObj === 'string') return imageObj
+  // If it's a full URL string (http/https), return it
+  if (typeof imageObj === 'string') {
+    if (imageObj.startsWith('http://') || imageObj.startsWith('https://') || imageObj.startsWith('/')) {
+      return imageObj
+    }
+    // Raw ID string — not a valid image URL
+    return undefined
+  }
 
-  // Payload Media object — check url, then cloudinary.secure_url
-  return imageObj.url || imageObj.cloudinary?.secure_url || undefined
+  // Payload Media object — prefer cloudinary URL, fall back to local url
+  return imageObj.cloudinary?.secure_url || imageObj.url || undefined
 }
 
 export default imageUrl

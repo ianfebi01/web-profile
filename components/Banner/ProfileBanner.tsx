@@ -59,20 +59,17 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
             )}px)`,
           }}
         >
-          <Image
-            src={
-              imageUrl(
-                sectionData.avatar,
-                "small",
-              ) || ""
-            }
-            alt="Profile image"
-            fill
-            priority
-            sizes="auto"
-            className="object-cover"
-            placeholder={imageLoader}
-          />
+          {imageUrl(sectionData.avatar, "small") && (
+            <Image
+              src={imageUrl(sectionData.avatar, "small")!}
+              alt="Profile image"
+              fill
+              priority
+              sizes="auto"
+              className="object-cover"
+              placeholder={imageLoader}
+            />
+          )}
         </div>
       </div>
       <div
@@ -91,20 +88,17 @@ const ProfileBanner: FunctionComponent<Props> = (props) => {
             )}px)`,
           }}
         >
-          <Image
-            src={
-              imageUrl(
-                sectionData.avatar,
-                "medium",
-              ) || ""
-            }
-            alt="Profile image"
-            fill
-            priority
-            sizes="auto"
-            className="object-cover"
-            placeholder={imageLoader}
-          />
+          {imageUrl(sectionData.avatar, "medium") && (
+            <Image
+              src={imageUrl(sectionData.avatar, "medium")!}
+              alt="Profile image"
+              fill
+              priority
+              sizes="auto"
+              className="object-cover"
+              placeholder={imageLoader}
+            />
+          )}
         </div>
       </div>
       <div
