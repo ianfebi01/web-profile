@@ -2,18 +2,19 @@
 import Image from 'next/image'
 import imageUrl from '@/utils/imageUrl'
 import Markdown from '@/components/Parsers/Markdown'
-import { useGetDetail } from '@/lib/hooks/api/article'
 import imageLoader from '@/lib/constans/image-loader'
 import SkeletonDetail from '../Portofolio/SkeletonDetail'
 import Header from '@/components/Layouts/Header'
 import Chip from '@/components/Chip'
 import { useTranslations } from 'next-intl'
+import { Article } from '@/payload-types'
 
 interface Props {
-  slug: string | number
+  data: Article | null
+  isFetching?: boolean
 }
-const Detail = ( { slug }: Props ) => {
-  const { data, isFetching } = useGetDetail( slug )
+
+const Detail = ( { data, isFetching }: Props ) => {
   const t = useTranslations();
 
   return (
@@ -21,7 +22,7 @@ const Detail = ( { slug }: Props ) => {
       id="portofolio"
       className="w-full flex flex-col items-center bg-dark grow-[1]"
     >
-      {isFetching && !data ? (
+      {isFetching || !data ? (
         <SkeletonDetail />
       ) : (
         <div className="w-full h-full grow-[1] max-w-5xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
@@ -34,7 +35,7 @@ const Detail = ( { slug }: Props ) => {
                 <>
                   <Image
                     className="hidden object-cover object-center w-full h-full md:block"
-                    src={imageUrl(data.heroImage, 'xlarge') || ''}
+                    src={imageUrl(data.heroImage as any, 'xlarge') || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}
@@ -43,7 +44,7 @@ const Detail = ( { slug }: Props ) => {
                   />
                   <Image
                     className="object-cover object-center w-full h-full md:hidden"
-                    src={imageUrl(data.heroImage, 'small') || ''}
+                    src={imageUrl(data.heroImage as any, 'small') || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}

@@ -64,19 +64,11 @@ export default async function ArticlePage(
   }
 ) {
   const params = await props.params;
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery( {
-    queryKey : ['article', 'detail', params.slug, params.locale],
-    queryFn  : (): Promise<Article | null> => getDetail( params.slug, params.locale ),
-  } )
-
-  const dehydratedState = dehydrate( queryClient )
+  const data = await getDetail( params.slug, params.locale );
 
   return (
     <main className="grow-[1] flex flex-col">
-      <HydrationBoundary state={dehydratedState}>
-        <Detail slug={params.slug} />
-      </HydrationBoundary>
+      <Detail data={data} />
     </main>
   )
 }

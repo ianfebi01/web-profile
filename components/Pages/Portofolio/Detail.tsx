@@ -1,8 +1,4 @@
 'use client'
-import {
-  useGetDetail,
-  useGetLatestPortofolios,
-} from '@/lib/hooks/api/portofolio'
 import SkeletonDetail from './SkeletonDetail'
 import Chip from '@/components/Chip'
 import Header from '@/components/Layouts/Header'
@@ -10,17 +6,15 @@ import Markdown from '@/components/Parsers/Markdown'
 import GaleryCarousel from '@/components/Layouts/GaleryCarousel'
 import { useTranslations } from 'next-intl'
 import PortofolioCard from '@/components/Cards/PortofolioCard'
+import { Project } from '@/payload-types'
 
 interface Props {
-  slug: string
+  data: Project | null
+  latestPortofolios: Project[] | null
+  isFetching?: boolean
 }
-const Detail = ( { slug }: Props ) => {
-  const { data, isFetching } = useGetDetail( slug )
-  const {
-    data: latestPortofolioDatas,
-    isFetching: isLatestPortofolioFetching,
-  } = useGetLatestPortofolios( slug )
 
+const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
   const t = useTranslations()
 
   return (
@@ -28,7 +22,7 @@ const Detail = ( { slug }: Props ) => {
       id="portofolio"
       className="w-full flex flex-col items-center bg-dark grow-[1]"
     >
-      {isFetching && !data ? (
+      {isFetching || !data ? (
         <SkeletonDetail />
       ) : (
         <div className="w-full h-full grow-[1] max-w-3xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
@@ -63,16 +57,14 @@ const Detail = ( { slug }: Props ) => {
               </div>
             </div>
             <hr className="border-white-overlay-2" />
-            {!isLatestPortofolioFetching &&
-              !!latestPortofolioDatas &&
-              latestPortofolioDatas?.length > 0 && (
+            {latestPortofolios && latestPortofolios.length > 0 && (
               <>
                 <h2 className="h1 mt-0">{t( 'see_latest_portfolios' )}:</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {latestPortofolioDatas?.map( ( portofolio ) => (
+                  {latestPortofolios.map( ( portofolio ) => (
                     <PortofolioCard
                       key={portofolio.slug}
-                      portofolio={portofolio}
+                      portofolio={portofolio as any}
                     />
                   ) )}
                 </div>

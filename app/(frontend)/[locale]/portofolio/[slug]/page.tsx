@@ -75,26 +75,13 @@ export default async function PortofolioPage(
   }
 ) {
   const params = await props.params;
-  const queryClient = new QueryClient()
-  await queryClient.prefetchQuery( {
-    queryKey : ['portofolio', 'detail', params.slug, params.locale],
-    queryFn  : (): Promise<Project | null> =>
-      getDetail( params.slug, params.locale ),
-  } )
 
-  await queryClient.prefetchQuery( {
-    queryKey : ['latest-portofolios', params.slug, params.locale],
-    queryFn  : (): Promise<Project[] | null> =>
-      getLatestPortofolios( params.slug, params.locale ),
-  } )
-
-  const dehydratedState = dehydrate( queryClient )
+  const data = await getDetail( params.slug, params.locale )
+  const latestPortofolios = await getLatestPortofolios( params.slug, params.locale )
 
   return (
     <main className="grow-[1] flex flex-col">
-      <HydrationBoundary state={dehydratedState}>
-        <Detail slug={params.slug} />
-      </HydrationBoundary>
+      <Detail data={data} latestPortofolios={latestPortofolios} />
     </main>
   )
 }

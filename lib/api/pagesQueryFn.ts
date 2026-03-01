@@ -1,21 +1,15 @@
-import { ApiPagePage } from '@/types/generated/contentTypes'
-import { fetchAPI } from '@/utils/fetch-api'
-import { notFound } from 'next/navigation'
+import { getPayload } from 'payload'
+import configPromise from '@/app/payload.config'
+import { Page } from '@/payload-types'
 
-export const getAllPageSlugs = async (): Promise<
-  ApiPagePage[] | null
-> => {
-  const urlParamsObject = {
-    populate : {
-      seo : { populate : '*' },
-    },
-    locale : 'all',
-  }
+export const getAllPageSlugs = async (): Promise<Page[] | null> => {
+  const payload = await getPayload({ config: configPromise })
+  const res = await payload.find({
+    collection: 'pages',
+    depth: 1,
+    limit: 1000,
+  })
 
-  const res = await fetchAPI( `/pages`, urlParamsObject )
-
-  if ( res.data?.length === 0 || !res?.data ) return notFound()
-  else {
-    return res.data
-  }
+  if (res.docs.length === 0) return null
+  return res.docs
 }

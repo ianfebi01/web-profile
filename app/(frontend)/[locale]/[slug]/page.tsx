@@ -1,7 +1,7 @@
 import { getPageBySlug } from '@/utils/get-page-by-slug'
 import HeroesAndSections from '@/components/Parsers/HeroesAndSections'
 import { notFound } from 'next/navigation'
-import { ApiPagePage } from '@/types/generated/contentTypes'
+import { Page } from '@/payload-types'
 import { getAllPageSlugs } from '@/lib/api/pagesQueryFn'
 import imageUrl from '@/utils/imageUrl'
 import { FALLBACK_SEO } from '@/utils/constants'
@@ -15,13 +15,13 @@ type Props = {
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllPageSlugs() // Fetch slugs from Strapi
+  const slugs = await getAllPageSlugs() // Fetch slugs from Payload
 
   return (
-    slugs?.map( ( slug: ApiPagePage ) => ( {
-      slug   : slug.attributes.slug,
-      locale : slug.attributes.locale,
-    } ) ) || []
+    slugs?.map( ( slug: Page ) => ( {
+      slug   : slug.slug,
+      // locale routing might need handling depending on next-intl implementation, defaulting to both
+    } ) ).flatMap(s => [{...s, locale: 'en'}, {...s, locale: 'id'}]) || []
   )
 }
 
