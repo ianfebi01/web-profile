@@ -1,69 +1,55 @@
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
-import { ApiPortofolioPortofolio } from '@/types/generated/contentTypes'
-import { fetchAPI } from '@/utils/fetch-api'
+import { Project } from '@/payload-types'
+import { useLocale } from 'next-intl'
+
 /**
- *  Get Detail
+ *  Get Portfolio Detail from Payload CMS
  */
 export const useGetDetail = (
   slug: string | number,
   enabled: boolean = true
-): UseQueryResult<ApiPortofolioPortofolio> => {
-  const urlParamsObject = {
-    filters  : { slug },
-    populate : {
-      featureImage : { populate : '*' },
-      skills       : { populate : '*' },
-      gallery      : { populate : '*' },
-      seo          : { populate : '*' },
-    },
-  }
+): UseQueryResult<Project> => {
+  const locale = useLocale()
 
-  const data = useQuery( {
-    queryKey : ['portofolio', 'detail', slug],
-    queryFn  : async () => {
-      const res = await fetchAPI( `/portofolios`, urlParamsObject )
-
-      if ( res.data?.length === 0 ) return null
-      else return res.data[0]
+  const data = useQuery({
+    queryKey: ['portofolio', 'detail', slug, locale],
+    queryFn: async () => {
+      const res = await fetch(
+        `/api/projects?where[slug][equals]=${slug}&depth=2&locale=${locale}`
+      )
+      if (!res.ok) return null
+      const json = await res.json()
+      if (json.docs?.length === 0) return null
+      return json.docs[0]
     },
-    enabled : enabled,
-  } )
+    enabled,
+  })
 
   return data
 }
+
 /**
- *  Get Latest Portofolio
+ *  Get Latest Portfolios from Payload CMS
  */
 export const useGetLatestPortofolios = (
   currentSlug: string,
   enabled: boolean = true
-): UseQueryResult<ApiPortofolioPortofolio[]> => {
-  const urlParamsObject = {
-    populate : {
-      featureImage : { populate : '*' },
-      skills       : { populate : '*' },
-    },
-    filters : {
-      slug : {
-        $ne : currentSlug,
-      },
-    },
-    pagination : {
-      limit : 4,
-    },
-    sort : ['createdAt:asc'],
-  }
+): UseQueryResult<Project[]> => {
+  const locale = useLocale()
 
-  const data = useQuery( {
-    queryKey : ['latest-portofolios', currentSlug],
-    queryFn  : async () => {
-      const res = await fetchAPI( `/portofolios`, urlParamsObject )
-
-      if ( res.data?.length === 0 ) return null
-      else return res.data
+  const data = useQuery({
+    queryKey: ['latest-portofolios', currentSlug, locale],
+    queryFn: async () => {
+      const res = await fetch(
+        `/api/projects?where[slug][not_equals]=${currentSlug}&depth=2&limit=4&sort=createdAt&locale=${locale}`
+      )
+      if (!res.ok) return null
+      const json = await res.json()
+      if (json.docs?.length === 0) return null
+      return json.docs
     },
-    enabled : enabled,
-  } )
+    enabled,
+  })
 
   return data
 }

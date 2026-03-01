@@ -1,6 +1,6 @@
 import Detail from '@/components/Pages/Article/Detail'
 import { getAllArticleSlugs, getDetail } from '@/lib/api/articleQueryFn'
-import { ApiArticleArticle } from '@/types/generated/contentTypes'
+import { Article } from '@/payload-types'
 import { FALLBACK_SEO } from '@/utils/constants'
 import imageUrl from '@/utils/imageUrl'
 import {
@@ -12,92 +12,62 @@ import { Metadata } from 'next'
 
 type Props = {
   params: Promise<{
-    lang: string
+    locale: string
     slug: string
   }>
 }
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
   const params = await props.params;
-  const response = await getDetail( params.slug )
-  const data = response?.attributes
+  const data = await getDetail( params.slug, params.locale )
 
-  // Extract SEO metadata
-  const seoMetadata = data?.seo // Assuming `seo` is the field containing SEO data
-  const title = seoMetadata?.metaTitle || data?.title || FALLBACK_SEO.title
-  const desc =
-    seoMetadata?.metaDescription ||
-    `Portfolio for project called ${data?.title}` ||
-    FALLBACK_SEO.description
-  const canonicalURL =
-    seoMetadata?.canonicalURL ||
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${params.lang}/article/${params.slug}`
-
-  // Extract social metadata (if available)
-  const socialMeta = seoMetadata?.metaSocial?.length
-    ? Object.fromEntries(
-      seoMetadata?.metaSocial?.map(
-        ( { socialNetwork, title, description, image }: any ) => [
-          socialNetwork.toLowerCase(),
-          { title, description, image },
-        ]
-      )
-    )
-    : {}
+  const title = data?.title || FALLBACK_SEO.title
+  const desc = `Article: ${data?.title}` || FALLBACK_SEO.description
+  const canonicalURL = `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}/article/${params.slug}`
 
   return {
-    title       : title || null,
-    description : desc || null,
-    keywords    : seoMetadata?.keywords || null, // Add keywords if available
-    robots      : seoMetadata?.metaRobots || null, // Add robots meta if available
+    title       : title || undefined,
+    description : desc || undefined,
     openGraph   : {
-      url         : seoMetadata?.canonicalURL || canonicalURL,
-      title       : title || null,
-      description : desc || null,
-      siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
-      type        : 'article', // or "website"
-      images      : data?.featureImage?.data
-        ? [{ url : imageUrl( data?.featureImage?.data, 'thumbnail' ) || '' }]
-        : [], // Add Open Graph image
-      authors : ['Ian Febi Sastrataruna'], // Add authors if applicable
+      url         : canonicalURL,
+      title       : title || undefined,
+      description : desc || undefined,
+      siteName    : 'Ian Febi Sastrataruna',
+      type        : 'article',
+      images      : data?.heroImage
+        ? [{ url : imageUrl( data.heroImage, 'thumbnail' ) || '' }]
+        : [],
+      authors : ['Ian Febi Sastrataruna'],
     },
     twitter : {
-      card        : 'summary', // 'summary' for small card
-      site        : '@ianfebi01', // Replace with your Twitter username
-      title       : title || null,
-      description : socialMeta?.twitter?.description || desc || '',
-      images      : socialMeta?.twitter?.image?.data
-        ? [
-          {
-            url :
-                imageUrl( socialMeta?.twitter?.image?.data, 'thumbnail' ) || '',
-          },
-        ]
-        : [], // Twitter image
+      card        : 'summary',
+      site        : '@ianfebi01',
+      title       : title || undefined,
+      description : desc || '',
     },
   }
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllArticleSlugs() // Fetch slugs from Strapi
+  const articles = await getAllArticleSlugs()
 
   return (
-    slugs?.map( ( slug: ApiArticleArticle ) => ( {
-      slug : slug.attributes.slug,
+    articles?.map( ( article: Article ) => ( {
+      slug : article.slug,
     } ) ) || []
   )
 }
 
 export default async function ArticlePage(
   props: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ locale: string; slug: string }>
   }
 ) {
   const params = await props.params;
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery( {
-    queryKey : ['article', 'detail', params.slug],
-    queryFn  : (): Promise<ApiArticleArticle | null> => getDetail( params.slug ),
+    queryKey : ['article', 'detail', params.slug, params.locale],
+    queryFn  : (): Promise<Article | null> => getDetail( params.slug, params.locale ),
   } )
 
   const dehydratedState = dehydrate( queryClient )

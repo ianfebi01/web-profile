@@ -30,31 +30,23 @@ const Detail = ( { slug }: Props ) => {
           />
           <div className="flex flex-col w-full max-w-3xl gap-4 mx-auto">
             <div className="relative w-full aspect-video">
-              {!!data?.attributes?.featureImage?.data && (
+              {!!data?.heroImage && (
                 <>
                   <Image
                     className="hidden object-cover object-center w-full h-full md:block"
-                    src={
-                      imageUrl(
-                        data?.attributes?.featureImage?.data,
-                        'xlarge'
-                      ) || ''
-                    }
+                    src={imageUrl(data.heroImage, 'xlarge') || ''}
                     fill
                     sizes="auto"
-                    alt={`${data?.attributes?.title} Image`}
+                    alt={`${data.title} Image`}
                     loading="eager"
                     placeholder={imageLoader}
                   />
                   <Image
                     className="object-cover object-center w-full h-full md:hidden"
-                    src={
-                      imageUrl( data?.attributes?.featureImage?.data, 'small' ) ||
-                      ''
-                    }
+                    src={imageUrl(data.heroImage, 'small') || ''}
                     fill
                     sizes="auto"
-                    alt={`${data?.attributes?.title} Image`}
+                    alt={`${data.title} Image`}
                     loading="lazy"
                     placeholder={imageLoader}
                   />
@@ -62,17 +54,17 @@ const Detail = ( { slug }: Props ) => {
               )}
             </div>
 
-            <h1 className="mt-4 mb-0">{data?.attributes.title}</h1>
+            <h1 className="mt-4 mb-0">{data?.title}</h1>
 
             <div className="flex flex-col w-full gap-4">
-              {!!data?.attributes.date && (
-                <Chip label={data?.attributes.date}
+              {!!data?.createdAt && (
+                <Chip label={new Date(data.createdAt).toLocaleDateString()}
                   bg="dark-secondary"
                 />
               )}
-              {!!data?.attributes.content && (
+              {!!data?.content && (
                 <div className="flex flex-col gap-4 p-4 border border-none rounded-lg bg-dark-secondary text-white/90">
-                  <Markdown content={data?.attributes.content} />
+                  <Markdown content={data.content} />
                 </div>
               )}
             </div>

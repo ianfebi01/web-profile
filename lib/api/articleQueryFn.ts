@@ -1,44 +1,30 @@
-import { ApiArticleArticle } from '@/types/generated/contentTypes'
-import { fetchAPI } from '@/utils/fetch-api'
+import { Article } from '@/payload-types'
+import { getPayload } from 'payload'
+import configPromise from '@/app/payload.config'
 import { notFound } from 'next/navigation'
 
 export const getDetail = async (
-  slug: string | number
-): Promise<ApiArticleArticle | null> => {
-  const urlParamsObject = {
-    filters  : { slug },
-    populate : {
-      featureImage : { populate : '*' },
-      skills       : { populate : '*' },
-      galery       : { populate : '*' },
-      seo          : { populate : '*' },
-    },
-    pagination : {
-      page     : 1,
-      pageSize : 10000,
-    },
-  }
-
-  const res = await fetchAPI( `/articles`, urlParamsObject )
-  if ( res.data?.length === 0 ) return notFound()
-  else {
-    return res.data[0]
-  }
+  slug: string | number,
+  locale: string = 'en'
+): Promise<Article | null> => {
+  const payload = await getPayload({ config: configPromise })
+  const res = await payload.find({
+    collection: 'articles',
+    where: { slug: { equals: slug } },
+    locale: locale as 'en' | 'id',
+    depth: 2,
+  })
+  if (res.docs.length === 0) return notFound()
+  return res.docs[0]
 }
 
-export const getAllArticleSlugs = async (): Promise<
-  ApiArticleArticle[] | null
-> => {
-  const urlParamsObject = {
-    populate : {
-      featureImage : { populate : '*' },
-      skills       : { populate : '*' },
-      galery       : { populate : '*' },
-      seo          : { populate : '*' },
-    },
-  }
-
-  const res = await fetchAPI( `/articles`, urlParamsObject )
-  if ( res.data?.length === 0 ) return null
-  else return res.data
+export const getAllArticleSlugs = async (): Promise<Article[] | null> => {
+  const payload = await getPayload({ config: configPromise })
+  const res = await payload.find({
+    collection: 'articles',
+    depth: 1,
+    limit: 1000,
+  })
+  if (res.docs.length === 0) return null
+  return res.docs
 }

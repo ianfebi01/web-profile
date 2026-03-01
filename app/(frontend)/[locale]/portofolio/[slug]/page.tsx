@@ -4,7 +4,7 @@ import {
   getDetail,
   getLatestPortofolios,
 } from '@/lib/api/portofolioQueryFn'
-import { ApiPortofolioPortofolio } from '@/types/generated/contentTypes'
+import { Project } from '@/payload-types'
 import imageUrl from '@/utils/imageUrl'
 import {
   HydrationBoundary,
@@ -27,11 +27,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const { locale } = await params
   setRequestLocale( locale )
 
-  const response = await getDetail( params.slug )
+  const data = await getDetail( params.slug, params.locale )
 
-  const data = response?.attributes
   const title = data?.title
-  const desc = `Potofolio for project called ${data?.title}`
+  const desc = `Portfolio for project called ${data?.title}`
   const canonicalURL = `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}/portofolio/${params.slug}`
 
   return {
@@ -42,51 +41,51 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       description : desc,
       url         : canonicalURL,
       siteName    : title,
-      images      : [{ url : imageUrl( data?.featureImage.data, 'thumbnail' ) || '' }],
+      images      : data?.thumbnail
+        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        : [],
       type        : 'article',
       authors     : ['Ian Febi Sastrataruna'],
     },
     twitter : {
-      card        : 'summary', // 'summary' for small card
-      site        : '@ianfebi01', // Replace with your Twitter username
+      card        : 'summary',
+      site        : '@ianfebi01',
       title,
       description : desc,
-      images      : [
-        {
-          url : imageUrl( data?.featureImage.data, 'thumbnail' ) || '',
-        },
-      ],
+      images      : data?.thumbnail
+        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        : [],
     },
   }
 }
 
 export async function generateStaticParams() {
-  const slugs = await getAllPortfolioSlugs() // Fetch slugs from Strapi
+  const projects = await getAllPortfolioSlugs()
 
   return (
-    slugs?.map( ( slug: ApiPortofolioPortofolio ) => ( {
-      slug : slug.attributes.slug,
+    projects?.map( ( project: Project ) => ( {
+      slug : project.slug,
     } ) ) || []
   )
 }
 
 export default async function PortofolioPage(
   props: {
-    params: Promise<{ slug: string }>
+    params: Promise<{ locale: string; slug: string }>
   }
 ) {
   const params = await props.params;
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery( {
-    queryKey : ['portofolio', 'detail', params.slug],
-    queryFn  : (): Promise<ApiPortofolioPortofolio | null> =>
-      getDetail( params.slug ),
+    queryKey : ['portofolio', 'detail', params.slug, params.locale],
+    queryFn  : (): Promise<Project | null> =>
+      getDetail( params.slug, params.locale ),
   } )
 
   await queryClient.prefetchQuery( {
-    queryKey : ['latest-portofolios', params.slug],
-    queryFn  : (): Promise<ApiPortofolioPortofolio[] | null> =>
-      getLatestPortofolios( params.slug ),
+    queryKey : ['latest-portofolios', params.slug, params.locale],
+    queryFn  : (): Promise<Project[] | null> =>
+      getLatestPortofolios( params.slug, params.locale ),
   } )
 
   const dehydratedState = dehydrate( queryClient )

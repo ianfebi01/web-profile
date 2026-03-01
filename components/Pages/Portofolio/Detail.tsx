@@ -10,6 +10,7 @@ import Markdown from '@/components/Parsers/Markdown'
 import GaleryCarousel from '@/components/Layouts/GaleryCarousel'
 import { useTranslations } from 'next-intl'
 import PortofolioCard from '@/components/Cards/PortofolioCard'
+
 interface Props {
   slug: string
 }
@@ -31,32 +32,32 @@ const Detail = ( { slug }: Props ) => {
         <SkeletonDetail />
       ) : (
         <div className="w-full h-full grow-[1] max-w-3xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
-          <Header text={data?.attributes.title || ''}
+          <Header text={data?.title || ''}
             link={'/portofolio'}
           />
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4 w-full mx-auto">
-              {data?.attributes.gallery?.data?.length && (
-                <GaleryCarousel data={data?.attributes.gallery?.data} />
+              {data?.gallery?.length && (
+                <GaleryCarousel data={data.gallery.map((g: any) => g.image)} />
               )}
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row gap-2 flex-wrap">
-                  {data?.attributes.year !== undefined && (
-                    <Chip label={data?.attributes.year}
+                  {!!data?.createdAt && (
+                    <Chip label={new Date(data.createdAt).toLocaleDateString()}
                       bg="dark-secondary"
                     />
                   )}
-                  {data?.attributes.url !== undefined && (
+                  {!!data?.url && (
                     <Chip
                       label="Url: "
-                      link={data?.attributes.url}
+                      link={data.url || undefined}
                       bg="dark-secondary"
                     />
                   )}
                 </div>
-                {data?.attributes.description !== undefined && (
+                {!!data?.description && (
                   <div className="bg-dark-secondary p-4 border border-none rounded-lg flex flex-col gap-4 text-white/90">
-                    <Markdown content={data?.attributes.description} />
+                    <Markdown content={data.description} />
                   </div>
                 )}
               </div>
@@ -70,8 +71,8 @@ const Detail = ( { slug }: Props ) => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {latestPortofolioDatas?.map( ( portofolio ) => (
                     <PortofolioCard
-                      key={portofolio.attributes.slug}
-                      portofolio={portofolio?.attributes}
+                      key={portofolio.slug}
+                      portofolio={portofolio}
                     />
                   ) )}
                 </div>
