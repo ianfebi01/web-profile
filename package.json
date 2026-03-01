@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "payload": "cross-env PAYLOAD_CONFIG_PATH=app/payload.config.ts payload"
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
