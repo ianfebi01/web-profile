@@ -48,4 +48,4 @@ const nextConfig = {
 }
 
 const withNextIntl = createNextIntlPlugin( './i18n/request.ts' )
-export default withPayload(withNextIntl( nextConfig )) 
+export default withPayload( withNextIntl( nextConfig ) ) 
