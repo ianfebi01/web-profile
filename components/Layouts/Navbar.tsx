@@ -13,6 +13,7 @@ import { Link } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { cn } from '@/lib/utils'
+import { useLenis } from 'lenis/react'
 
 export interface NavItemType {
   name?: string
@@ -38,23 +39,24 @@ const Navbar = ( { items, socials }: Props ) => {
   const t = useTranslations()
   const [isOpen, setIsOpen] = useState( false )
   const navbarRef = useRef<HTMLElement>( null )
-  const previousScroll = useRef( 0 )
+  const isHiddenRef = useRef( false )
 
-  useEffect( () => {
-    const handleScroll = () => {
-      const currentScroll = window.scrollY
-      const isScrollingDown = currentScroll > previousScroll.current
-
-      if ( currentScroll < previousScroll.current || currentScroll < 100 ) {
-        // Show navbar
+  useLenis(({ scroll, direction }) => {
+    if ( scroll < 100 || direction === -1 ) {
+      // Show navbar if it's currently hidden
+      if (isHiddenRef.current) {
+        isHiddenRef.current = false
         gsap.to( navbarRef.current, {
           y        : 0,
           opacity  : 1,
           duration : 0.5,
           ease     : 'power2.out',
         } )
-      } else if ( isScrollingDown && currentScroll > 100 ) {
-        // Hide navbar
+      }
+    } else if ( direction === 1 && scroll > 100 ) {
+      // Hide navbar if it's currently visible
+      if (!isHiddenRef.current) {
+        isHiddenRef.current = true
         gsap.to( navbarRef.current, {
           y        : -64,
           opacity  : 0,
@@ -62,16 +64,8 @@ const Navbar = ( { items, socials }: Props ) => {
           ease     : 'power2.inOut',
         } )
       }
-
-      previousScroll.current = currentScroll
     }
-
-    window.addEventListener( 'scroll', handleScroll, { passive : true } )
-    
-    return () => {
-      window.removeEventListener( 'scroll', handleScroll )
-    }
-  }, [] )
+  })
 
   return (
     <>
