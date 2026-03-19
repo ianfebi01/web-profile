@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import NextTopLoader from 'nextjs-toploader'
 import Navbar from '@/components/Layouts/Navbar'
+import Preloader from '@/components/UI/Preloader'
 import SectionProvider from '@/components/Context/SectionProvider'
 import SmoothScrollProvider from '@/components/Context/SmoothScrollProvider'
 import Footer from '@/components/Layouts/Footer'
@@ -46,13 +47,14 @@ export default async function LocaleLayout( {
   const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className="[scrollbar-gutter:stable]" suppressHydrationWarning>
       <body suppressHydrationWarning={true}
         id="myportal"
       >
         <GoogleAnalytics />
         <ErrorBoundary errorComponent={Error}>
           <SmoothScrollProvider>
+            <Preloader />
             <ReactQueryProvider>
             <NextIntlClientProvider>
               <NextTopLoader
