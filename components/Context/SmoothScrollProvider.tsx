@@ -1,57 +1,39 @@
 'use client'
 
-import { useRef, useState, useCallback, useLayoutEffect, ReactNode } from "react";
-import ResizeObserver from "resize-observer-polyfill"
-import { useTransform, useSpring, motion, useScroll } from "framer-motion";
+import React, { useEffect, useRef } from 'react'
+import 'lenis/dist/lenis.css'
+import { ReactLenis, useLenis } from 'lenis/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-const SmoothScroll = ( { children }: {children: ReactNode} ) => {
-  // scroll container
-  const scrollRef = useRef<HTMLDivElement>( null )
+gsap.registerPlugin(ScrollTrigger)
 
-  // page scrollable height based on content length
-  const [pageHeight, setPageHeight] = useState( 0 )
+export default function SmoothScrollProvider({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const lenisRef = useRef<any>(null)
 
-  // update scrollable height when browser is resizing
-  const resizePageHeight = useCallback( ( entries: any ) => {
-    for ( const entry of entries ) {
-      setPageHeight( entry.contentRect.height )
+  useEffect(() => {
+    function update(time: number) {
+      // gsap ticker gives time in seconds, let's multiply by 1000 to get ms.
+      lenisRef.current?.lenis?.raf(time * 1000)
     }
-  }, [] )
 
-  // observe when browser is resizing
-  useLayoutEffect( () => {
-    const resizeObserver = new ResizeObserver( entries =>
-      resizePageHeight( entries )
-    )
-    scrollRef.current && resizeObserver.observe( scrollRef.current )
-    
-    return () => resizeObserver.disconnect()
-  }, [scrollRef, resizePageHeight] )
+    gsap.ticker.add(update)
+    gsap.ticker.lagSmoothing(0)
 
-  const { scrollY } = useScroll() // measures how many pixels user has scrolled vertically
-  // as scrollY changes between 0px and the scrollable height, create a negative scroll value...
-  // ... based on current scroll position to translateY the document in a natural way
-  const transform = useTransform( scrollY, [0, pageHeight], [0, -pageHeight] )
-  const physics = { damping : 15, mass : 0.27, stiffness : 55 } // easing of smooth scroll
-  const spring = useSpring( transform, physics ) // apply easing to the negative scroll value
+    return () => {
+      gsap.ticker.remove(update)
+    }
+  }, [])
+
+  useLenis(ScrollTrigger.update)
 
   return (
-    <>
-      <motion.div
-        {...({
-          ref: scrollRef,
-          style: { y : spring }, 
-          className: "scroll-container",
-        } as any)}
-      >
-        {children}
-      </motion.div>
-      {/* blank div that has a dynamic height based on the content's inherent height */}
-      {/* this is neccessary to allow the scroll container to scroll... */}
-      {/* ... using the browser's native scroll bar */}
-      <div style={{ height : pageHeight }} />
-    </>
+    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
+      {children}
+    </ReactLenis>
   )
 }
-
-export default SmoothScroll

@@ -8,6 +8,7 @@ import GoogleAnalytics from '@/components/GoogleAnalytics'
 import NextTopLoader from 'nextjs-toploader'
 import Navbar from '@/components/Layouts/Navbar'
 import SectionProvider from '@/components/Context/SectionProvider'
+import SmoothScrollProvider from '@/components/Context/SmoothScrollProvider'
 import Footer from '@/components/Layouts/Footer'
 import { getSiteData } from '@/utils/get-site-data'
 import { Site } from '@/payload-types'
@@ -51,7 +52,8 @@ export default async function LocaleLayout( {
       >
         <GoogleAnalytics />
         <ErrorBoundary errorComponent={Error}>
-          <ReactQueryProvider>
+          <SmoothScrollProvider>
+            <ReactQueryProvider>
             <NextIntlClientProvider>
               <NextTopLoader
                 color="#F26B50"
@@ -93,6 +95,7 @@ export default async function LocaleLayout( {
               </div>
             </NextIntlClientProvider>
           </ReactQueryProvider>
+          </SmoothScrollProvider>
         </ErrorBoundary>
       </body>
     </html>
