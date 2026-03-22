@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import 'lenis/dist/lenis.css'
 import { ReactLenis, useLenis } from 'lenis/react'
 import gsap from 'gsap'
@@ -14,6 +14,14 @@ export default function SmoothScrollProvider({
   children: React.ReactNode
 }) {
   const lenisRef = useRef<any>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   useEffect(() => {
     function update(time: number) {
@@ -32,7 +40,21 @@ export default function SmoothScrollProvider({
   useLenis(ScrollTrigger.update)
 
   return (
-    <ReactLenis root ref={lenisRef} autoRaf={false} options={{ lerp: 0.1, duration: 1.2, smoothWheel: true }}>
+    <ReactLenis
+      root
+      ref={lenisRef}
+      autoRaf={false}
+      options={{
+        syncTouch: true,
+        touchMultiplier: isMobile ? 1 : 1.2,
+        wheelMultiplier: 1,
+        duration: isMobile ? 1.4 : 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+      }}
+    >
       {children}
     </ReactLenis>
   )
