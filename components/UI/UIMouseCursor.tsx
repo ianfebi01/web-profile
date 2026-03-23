@@ -6,14 +6,36 @@ import { useMousePos } from '../../hooks/useMousePos'
 
 // Inline SVG components from source
 const ChevronSVG = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path
+      d="M9 18l6-6-6-6"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 )
 
 const UPArrowSVG = ({ className }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
-    <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+  >
+    <path
+      d="M7 17L17 7M17 7H7M17 7V17"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
   </svg>
 )
 
@@ -21,7 +43,7 @@ export default function UIMouseCursor() {
   const { xpos, ypos } = useMousePos()
   const cursorRef = useRef<HTMLDivElement>(null)
   const shapeRef = useRef<HTMLDivElement>(null)
-  
+
   const [dataName, setDataName] = useState('')
   const [dataText, setDataText] = useState('')
   const [isOver, setIsOver] = useState(false)
@@ -40,7 +62,7 @@ export default function UIMouseCursor() {
   useEffect(() => {
     if (!showCursor) return
     mouseRef.current = { x: xpos, y: ypos }
-    
+
     // In case the cursor was just initialized, snap it to current position
     if (pos.current.x === -100 && pos.current.y === -100) {
       pos.current.x = xpos
@@ -52,7 +74,7 @@ export default function UIMouseCursor() {
       x: xpos,
       y: ypos,
       duration: 0.8,
-      ease: 'power4.out'
+      ease: 'power4.out',
     })
   }, [xpos, ypos, showCursor])
 
@@ -74,13 +96,13 @@ export default function UIMouseCursor() {
 
     const loop = () => {
       if (!shapeRef.current) return
-      
+
       const velX = mouseRef.current.x - pos.current.x
       const velY = mouseRef.current.y - pos.current.y
-      
+
       const distance = Math.hypot(velX, velY)
       const scale = Math.min(distance * 0.002, 0.2)
-      
+
       // Use smooth subpixel positioning (no Math.round)
       setX(pos.current.x)
       setY(pos.current.y)
@@ -109,7 +131,9 @@ export default function UIMouseCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       // .action interaction
-      const actionEl = (e.target as Element).closest('[data-name]') as HTMLElement
+      const actionEl = (e.target as Element).closest(
+        '[data-name]',
+      ) as HTMLElement
       if (actionEl) {
         setIsOver(true)
         setDataName(actionEl.dataset.name || '')
@@ -118,8 +142,14 @@ export default function UIMouseCursor() {
     }
 
     const handleMouseOut = (e: MouseEvent) => {
-      const actionEl = (e.target as Element).closest('[data-name]') as HTMLElement
-      if (actionEl && e.relatedTarget && !actionEl.contains(e.relatedTarget as Node)) {
+      const actionEl = (e.target as Element).closest(
+        '[data-name]',
+      ) as HTMLElement
+      if (
+        actionEl &&
+        e.relatedTarget &&
+        !actionEl.contains(e.relatedTarget as Node)
+      ) {
         setIsOver(false)
         setDataName('')
         setDataText('')
@@ -131,7 +161,7 @@ export default function UIMouseCursor() {
       if (magnetEl) {
         const { clientX: x, clientY: y } = e
         const rect = magnetEl.getBoundingClientRect()
-        
+
         // Offset relative to the magnet item
         const offsetX = x - rect.left
         const offsetY = y - rect.top
@@ -146,7 +176,11 @@ export default function UIMouseCursor() {
 
     const handleMagnetOut = (e: MouseEvent) => {
       const magnetEl = (e.target as Element).closest('.magnet') as HTMLElement
-      if (magnetEl && e.relatedTarget && !magnetEl.contains(e.relatedTarget as Node)) {
+      if (
+        magnetEl &&
+        e.relatedTarget &&
+        !magnetEl.contains(e.relatedTarget as Node)
+      ) {
         magnetEl.style.transform = ''
       }
     }
@@ -167,22 +201,29 @@ export default function UIMouseCursor() {
   if (!showCursor) return null
 
   // Resolve Tailwind classes representing Thomas's exact states
-  let shapeClass = "flex items-center justify-center rounded-full pointer-events-none origin-center will-change-transform shadow-md transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] backdrop-blur-md opacity-80 z-[9000] overflow-hidden "
-  let textContainerClass = "flex items-center justify-center whitespace-nowrap opacity-100 font-normal "
+  let shapeClass =
+    'flex items-center justify-center rounded-full pointer-events-none origin-center will-change-transform shadow-md transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] backdrop-blur-md opacity-80 z-[9000] overflow-hidden '
+  let textContainerClass =
+    'flex items-center justify-center whitespace-nowrap opacity-100 font-normal '
 
   if (isOver && (dataName === 'proj' || dataName === 'reel')) {
-    shapeClass += " w-[80px] h-[80px] bg-[#222222] border-transparent text-white" 
-    textContainerClass += " text-white"
+    shapeClass +=
+      ' w-[80px] h-[80px] bg-[#222222] border-transparent text-white'
+    textContainerClass += ' text-white'
   } else if (isOver && dataName === 'menu') {
-    shapeClass += " w-[70px] h-[70px] opacity-60 bg-black border-transparent text-white"
-    textContainerClass += " text-white"
+    shapeClass +=
+      ' w-[70px] h-[70px] opacity-60 bg-black border-transparent text-white'
+    textContainerClass += ' text-white'
   } else if (isOver && dataName === 'yo') {
-    shapeClass += " w-[70px] h-[70px] bg-black border-transparent text-white"
-    textContainerClass += " text-white"
+    shapeClass += ' w-[70px] h-[70px] bg-black border-transparent text-white'
+    textContainerClass += ' text-white'
+  } else if (isOver && dataName === 'button') {
+    shapeClass += ' w-[0px] h-[0px] transition-none'
+    textContainerClass += ' text-white'
   } else {
-    // Default shape 
+    // Default shape
     // Thomas uses a 20px hollow circle with a subtle border and background
-    shapeClass += " w-[20px] h-[20px] bg-black/80 border-[1px] border-white/20"
+    shapeClass += ' w-[20px] h-[20px] bg-black/80 border-[1px] border-white/20'
   }
 
   return (
@@ -190,17 +231,20 @@ export default function UIMouseCursor() {
       ref={cursorRef}
       className="fixed top-0 left-0 pointer-events-none z-[9000] font-mono text-[13px] font-normal"
     >
-      <div 
-        ref={shapeRef}
-        className={shapeClass}
-      >
+      <div ref={shapeRef} className={shapeClass}>
         <div className={textContainerClass}>
           {dataName === 'proj' && (
             <>
-              {dataText === 'Prev' && <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 flex-shrink-0" />}
+              {dataText === 'Prev' && (
+                <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 flex-shrink-0" />
+              )}
               {dataText}
-              {dataText === 'Next' && <ChevronSVG className="w-3 h-auto ml-[5px] flex-shrink-0" />}
-              {(dataText === 'View' || dataText === 'Lens') && <UPArrowSVG className="w-5 h-auto ml-[5px] -mb-1 flex-shrink-0" />}
+              {dataText === 'Next' && (
+                <ChevronSVG className="w-3 h-auto ml-[5px] flex-shrink-0" />
+              )}
+              {(dataText === 'View' || dataText === 'Lens') && (
+                <UPArrowSVG className="w-5 h-auto ml-[5px] -mb-1 flex-shrink-0" />
+              )}
             </>
           )}
           {dataName === 'menu' && dataText}
