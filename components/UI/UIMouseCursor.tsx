@@ -51,6 +51,9 @@ export default function UIMouseCursor() {
 
   const pos = useRef({ x: -100, y: -100 })
   const mouseRef = useRef({ x: -100, y: -100 })
+  
+  // A lock flag to detach the cursor from the raw mouse and snap it onto a physical element
+  const isMagnetLocked = useRef(false)
 
   useEffect(() => {
     const handleTouch = () => setShowCursor(false)
@@ -58,10 +61,14 @@ export default function UIMouseCursor() {
     return () => window.removeEventListener('touchstart', handleTouch)
   }, [])
 
-  // Tween lagging 'pos' to real 'xpos', 'ypos'
+  // Tween lagging 'pos' to real 'mouseRef', 'ypos'
   useEffect(() => {
     if (!showCursor) return
-    mouseRef.current = { x: xpos, y: ypos }
+    
+    // Smoothly track normal mouse pos UNLESS locked onto a magnetic target
+    if (!isMagnetLocked.current) {
+      mouseRef.current = { x: xpos, y: ypos }
+    }
 
     // In case the cursor was just initialized, snap it to current position
     if (pos.current.x === -100 && pos.current.y === -100) {
@@ -71,8 +78,8 @@ export default function UIMouseCursor() {
     }
 
     gsap.to(pos.current, {
-      x: xpos,
-      y: ypos,
+      x: mouseRef.current.x,
+      y: mouseRef.current.y,
       duration: 0.8,
       ease: 'power4.out',
     })
@@ -157,31 +164,104 @@ export default function UIMouseCursor() {
     }
 
     const handleMagnetMove = (e: MouseEvent) => {
-      const magnetEl = (e.target as Element).closest('.magnet') as HTMLElement
-      if (magnetEl) {
-        const { clientX: x, clientY: y } = e
-        const rect = magnetEl.getBoundingClientRect()
+      // Support `.magnet-zone` for disjointed hover triggers, or default `.magnet` 
+      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet, [data-name="button"]') as HTMLElement
+      
+      if (magnetZone) {
+        // Find the specific physical target that translates (defaults to itself if no inner target exists)
+        const magnetTarget = (magnetZone.querySelector('.magnet-target') as HTMLElement) || magnetZone
+        
+        // 1. Check if the mouse is directly over the physical target
+        const isHoveringTarget = magnetTarget.contains(e.target as Node) || magnetZone === magnetTarget
 
-        // Offset relative to the magnet item
-        const offsetX = x - rect.left
-        const offsetY = y - rect.top
+        // 2. Cursor Lock
+        isMagnetLocked.current = true
+        const targetRect = magnetTarget.getBoundingClientRect()
+        mouseRef.current = {
+          x: targetRect.left + targetRect.width / 2,
+          y: targetRect.top + targetRect.height / 2
+        }
 
-        const move = 10
-        const xMove = (offsetX / rect.width) * (move * 2) - move
-        const yMove = (offsetY / rect.height) * (move * 2) - move
+        // 3. Physical Dragging
+        const inner = magnetTarget.querySelector('.magnet-inner')
 
-        magnetEl.style.transform = `translate(${xMove}px, ${yMove}px)`
+        if (isHoveringTarget) {
+          // Calculate distance from the original resting center of the target
+          const currentX = (gsap.getProperty(magnetTarget, 'x') as number) || 0
+          const currentY = (gsap.getProperty(magnetTarget, 'y') as number) || 0
+          
+          const centerX = (targetRect.left - currentX) + targetRect.width / 2
+          const centerY = (targetRect.top - currentY) + targetRect.height / 2
+          
+          const distanceX = e.clientX - centerX
+          const distanceY = e.clientY - centerY
+
+          gsap.to(magnetTarget, {
+            x: distanceX * 0.4,
+            y: distanceY * 0.4,
+            duration: 0.6,
+            ease: 'power3.out',
+            force3D: true
+          })
+
+          if (inner) {
+            gsap.to(inner, {
+               x: distanceX * 0.15,
+               y: distanceY * 0.15,
+               duration: 0.6,
+               ease: 'power3.out'
+            })
+          }
+        } else {
+          // Hovering the zone but outside the target itself -> reset physical position
+          gsap.to(magnetTarget, {
+            x: 0,
+            y: 0,
+            duration: 0.8,
+            ease: 'elastic.out(1, 0.4)'
+          })
+
+          if (inner) {
+            gsap.to(inner, {
+               x: 0,
+               y: 0,
+               duration: 0.8,
+               ease: 'elastic.out(1, 0.4)'
+            })
+          }
+        }
       }
     }
 
     const handleMagnetOut = (e: MouseEvent) => {
-      const magnetEl = (e.target as Element).closest('.magnet') as HTMLElement
+      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet, [data-name="button"]') as HTMLElement
       if (
-        magnetEl &&
+        magnetZone &&
         e.relatedTarget &&
-        !magnetEl.contains(e.relatedTarget as Node)
+        !magnetZone.contains(e.relatedTarget as Node)
       ) {
-        magnetEl.style.transform = ''
+        // Unlock the cursor so it gracefully returns to following the raw mouse
+        isMagnetLocked.current = false
+        
+        const magnetTarget = (magnetZone.querySelector('.magnet-target') as HTMLElement) || magnetZone
+
+        // Snap back instantly with dampening elasticity
+        gsap.to(magnetTarget, {
+          x: 0,
+          y: 0,
+          duration: 0.8,
+          ease: 'elastic.out(1, 0.4)'
+        })
+
+        const inner = magnetTarget.querySelector('.magnet-inner')
+        if (inner) {
+          gsap.to(inner, {
+            x: 0,
+            y: 0,
+            duration: 0.8,
+            ease: 'elastic.out(1, 0.4)'
+          })
+        }
       }
     }
 
@@ -217,6 +297,9 @@ export default function UIMouseCursor() {
   } else if (isOver && dataName === 'yo') {
     shapeClass += ' w-[70px] h-[70px] bg-black border-transparent text-white'
     textContainerClass += ' text-white'
+  } else if (isOver && dataName === 'burger') {
+    // Specifically styled to map to a burger icon overlay halo instead of totally vanishing
+    shapeClass += ' w-[64px] h-[64px] border-[2px] border-[#F26B50] bg-transparent opacity-100'
   } else if (isOver && dataName === 'button') {
     shapeClass += ' w-[0px] h-[0px] transition-none'
     textContainerClass += ' text-white'
