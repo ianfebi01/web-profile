@@ -10,22 +10,18 @@ export default function UIMouseCursor() {
   const cursorInnerRef = useRef<HTMLDivElement>(null)
   
   const [showCursor, setShowCursor] = useState(true)
-  const [isHovering, setIsHovering] = useState(false)
+  const [hoverType, setHoverType] = useState<'action' | 'magnet' | null>(null)
   const [hoverText, setHoverText] = useState('')
 
   // The lagging pos object we tween towards real mouse
-  const pos = useRef({ x: -100, y: -100 }) // Start offscreen
+  const pos = useRef({ x: -100, y: -100 }) 
   const mouseRef = useRef({ x: -100, y: -100 })
 
   // Disable on mobile/touch devices
   useEffect(() => {
-    const handleTouch = () => {
-      setShowCursor(false)
-    }
+    const handleTouch = () => setShowCursor(false)
     window.addEventListener('touchstart', handleTouch, { once: true })
-    return () => {
-      window.removeEventListener('touchstart', handleTouch)
-    }
+    return () => window.removeEventListener('touchstart', handleTouch)
   }, [])
 
   // Tween lagging 'pos' to real 'xpos', 'ypos'
@@ -33,7 +29,7 @@ export default function UIMouseCursor() {
     if (!showCursor) return
     mouseRef.current = { x: xpos, y: ypos }
     
-    // In case the cursor was just initialized, snap it to current position to avoid flying from top left
+    // In case the cursor was just initialized, snap it to current position
     if (pos.current.x === -100 && pos.current.y === -100) {
       pos.current.x = xpos
       pos.current.y = ypos
@@ -43,7 +39,7 @@ export default function UIMouseCursor() {
     gsap.to(pos.current, {
       x: xpos,
       y: ypos,
-      duration: 0.2,
+      duration: 0.8,
       ease: 'power4.out'
     })
   }, [xpos, ypos, showCursor])
@@ -65,19 +61,21 @@ export default function UIMouseCursor() {
       const velY = mouseRef.current.y - pos.current.y
       
       const distance = Math.hypot(velX, velY)
-      // Cap scale at a maximum value like 0.2
+      // Cap scale at a maximum value like 0.2 difference
       const scale = Math.min(distance * 0.002, 0.2)
       
       // Center cursor visually
       setX(pos.current.x)
       setY(pos.current.y)
 
-      if (!isHovering) {
+      if (!hoverType) {
+        // Squish effect for base cursor
         setScaleX(1 + scale)
         setScaleY(1 - scale)
         const angle = Math.atan2(velY, velX) * (180 / Math.PI)
         setRotation(angle)
       } else {
+        // Reset stretch when hovering over elements
         setScaleX(1)
         setScaleY(1)
         setRotation(0)
@@ -85,10 +83,8 @@ export default function UIMouseCursor() {
     }
 
     gsap.ticker.add(updateCursor)
-    return () => {
-      gsap.ticker.remove(updateCursor)
-    }
-  }, [showCursor, isHovering])
+    return () => gsap.ticker.remove(updateCursor)
+  }, [showCursor, hoverType])
 
   // Hover states for .action and .magnet
   useEffect(() => {
@@ -99,23 +95,39 @@ export default function UIMouseCursor() {
 
     const handleActionEnter = (e: Event) => {
       const target = e.currentTarget as HTMLElement
-      setIsHovering(true)
+      setHoverType('action')
       
-      const text = target.dataset.text || target.dataset.name || ''
+      const text = target.dataset.text || target.dataset.name || 'VIEW'
       setHoverText(text)
       
+      // Expand into a solid circle (thomasthorstensson style)
       gsap.to(cursorInnerRef.current, {
-        scale: 4,
+        scale: 2.2,
+        backgroundColor: '#000000',
+        borderColor: 'transparent',
         duration: 0.3,
         ease: 'power3.out'
       })
     }
 
     const handleActionLeave = () => {
-      setIsHovering(false)
+      setHoverType(null)
       setHoverText('')
+      
+      // Revert to hollow ring
       gsap.to(cursorInnerRef.current, {
         scale: 1,
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(0, 0, 0, 0.3)',
+        duration: 0.3,
+        ease: 'power3.out'
+      })
+    }
+
+    const handleMagnetEnter = () => {
+      setHoverType('magnet')
+      gsap.to(cursorInnerRef.current, {
+        scale: 0.5,
         duration: 0.3,
         ease: 'power3.out'
       })
@@ -140,7 +152,15 @@ export default function UIMouseCursor() {
     }
 
     const handleMagnetLeave = (e: Event) => {
+      setHoverType(null)
       const target = e.currentTarget as HTMLElement
+      
+      gsap.to(cursorInnerRef.current, {
+        scale: 1,
+        duration: 0.3,
+        ease: 'power3.out'
+      })
+
       gsap.to(target, {
         x: 0,
         y: 0,
@@ -155,8 +175,7 @@ export default function UIMouseCursor() {
     })
 
     magnets.forEach(el => {
-      // It is important to attach move/leave directly on the magnet component 
-      // so it resets gracefully when exiting the specific node!
+      el.addEventListener('mouseenter', handleMagnetEnter)
       el.addEventListener('mousemove', handleMagnetMove)
       el.addEventListener('mouseleave', handleMagnetLeave)
     })
@@ -168,6 +187,7 @@ export default function UIMouseCursor() {
       })
 
       magnets.forEach(el => {
+        el.removeEventListener('mouseenter', handleMagnetEnter)
         el.removeEventListener('mousemove', handleMagnetMove)
         el.removeEventListener('mouseleave', handleMagnetLeave)
       })
@@ -176,19 +196,18 @@ export default function UIMouseCursor() {
 
   if (!showCursor) return null
 
-  // Mix-blend difference is commonly used for these kinds of custom cursors against both dark and light modes
-  // pointer-events: none is extremely important here so it doesn't hook clicks.
+  // Pointer-events: none is extremely important here so it doesn't hook clicks.
   return (
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 pointer-events-none z-[99999] -translate-x-1/2 -translate-y-1/2 will-change-transform mix-blend-difference"
+      className="fixed top-0 left-0 pointer-events-none z-[999999] -translate-x-1/2 -translate-y-1/2 will-change-transform"
     >
       <div 
         ref={cursorInnerRef}
-        className="flex items-center justify-center w-5 h-5 rounded-full bg-white text-black font-medium text-[4px] will-change-transform text-center"
+        className="flex items-center justify-center w-10 h-10 rounded-full border-[1.5px] border-black/30 bg-transparent text-white font-medium text-[4px] will-change-transform text-center overflow-hidden"
       >
-        {isHovering && hoverText && (
-          <span className="opacity-100 whitespace-nowrap px-1">{hoverText}</span>
+        {hoverType === 'action' && hoverText && (
+          <span className="opacity-100 whitespace-nowrap px-1 tracking-widest">{hoverText}</span>
         )}
       </div>
     </div>
