@@ -129,7 +129,6 @@ const Navbar = ( { items, socials }: Props ) => {
               <LocaleSwitcher />
             </div>
 
-            {/* The globally extracted We Are Impress magnetic actuator */}
             <div
               className="magnet-zone flex items-center gap-4 p-4 -m-4 cursor-pointer group w-fit relative z-50"
               data-name="burger"

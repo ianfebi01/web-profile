@@ -150,6 +150,19 @@ export default function UIMouseCursor() {
   useEffect(() => {
     if (!showCursor) return
 
+    // Helper: fully reset all magnet targets back to resting position
+    const resetAllMagnets = () => {
+      isMagnetLocked.current = false
+      document.querySelectorAll('.magnet-zone, .magnet, [data-name="button"]').forEach((zone) => {
+        const magnetTarget = (zone.querySelector('.magnet-target') as HTMLElement) || zone as HTMLElement
+        gsap.to(magnetTarget, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)' })
+        const inner = magnetTarget.querySelector('.magnet-inner')
+        if (inner) {
+          gsap.to(inner, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)' })
+        }
+      })
+    }
+
     const handleMouseOver = (e: MouseEvent) => {
       // .action interaction
       const actionEl = (e.target as Element).closest(
@@ -166,14 +179,14 @@ export default function UIMouseCursor() {
       const actionEl = (e.target as Element).closest(
         '[data-name]',
       ) as HTMLElement
-      if (
-        actionEl &&
-        e.relatedTarget &&
-        !actionEl.contains(e.relatedTarget as Node)
-      ) {
-        setIsOver(false)
-        setDataName('')
-        setDataText('')
+      if (actionEl) {
+        // relatedTarget is null when the mouse leaves the window entirely
+        const leftElement = !e.relatedTarget || !actionEl.contains(e.relatedTarget as Node)
+        if (leftElement) {
+          setIsOver(false)
+          setDataName('')
+          setDataText('')
+        }
       }
     }
 
@@ -249,46 +262,59 @@ export default function UIMouseCursor() {
 
     const handleMagnetOut = (e: MouseEvent) => {
       const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet, [data-name="button"]') as HTMLElement
-      if (
-        magnetZone &&
-        e.relatedTarget &&
-        !magnetZone.contains(e.relatedTarget as Node)
-      ) {
-        // Unlock the cursor so it gracefully returns to following the raw mouse
-        isMagnetLocked.current = false
-        
-        const magnetTarget = (magnetZone.querySelector('.magnet-target') as HTMLElement) || magnetZone
+      if (magnetZone) {
+        // relatedTarget is null when the mouse leaves the window entirely
+        const leftZone = !e.relatedTarget || !magnetZone.contains(e.relatedTarget as Node)
+        if (leftZone) {
+          // Unlock the cursor so it gracefully returns to following the raw mouse
+          isMagnetLocked.current = false
+          
+          const magnetTarget = (magnetZone.querySelector('.magnet-target') as HTMLElement) || magnetZone
 
-        // Snap back instantly with dampening elasticity
-        gsap.to(magnetTarget, {
-          x: 0,
-          y: 0,
-          duration: 0.8,
-          ease: 'elastic.out(1, 0.4)'
-        })
-
-        const inner = magnetTarget.querySelector('.magnet-inner')
-        if (inner) {
-          gsap.to(inner, {
+          // Snap back instantly with dampening elasticity
+          gsap.to(magnetTarget, {
             x: 0,
             y: 0,
             duration: 0.8,
             ease: 'elastic.out(1, 0.4)'
           })
+
+          const inner = magnetTarget.querySelector('.magnet-inner')
+          if (inner) {
+            gsap.to(inner, {
+              x: 0,
+              y: 0,
+              duration: 0.8,
+              ease: 'elastic.out(1, 0.4)'
+            })
+          }
         }
       }
+    }
+
+    // Failsafe: when the mouse leaves the document viewport entirely (alt-tab, switch app),
+    // force-reset everything so nothing stays stuck when the user comes back
+    const handleDocumentLeave = () => {
+      setIsOver(false)
+      setDataName('')
+      setDataText('')
+      resetAllMagnets()
     }
 
     window.addEventListener('mouseover', handleMouseOver)
     window.addEventListener('mouseout', handleMouseOut)
     window.addEventListener('mousemove', handleMagnetMove)
     window.addEventListener('mouseout', handleMagnetOut)
+    document.documentElement.addEventListener('mouseleave', handleDocumentLeave)
+    window.addEventListener('blur', handleDocumentLeave)
 
     return () => {
       window.removeEventListener('mouseover', handleMouseOver)
       window.removeEventListener('mouseout', handleMouseOut)
       window.removeEventListener('mousemove', handleMagnetMove)
       window.removeEventListener('mouseout', handleMagnetOut)
+      document.documentElement.removeEventListener('mouseleave', handleDocumentLeave)
+      window.removeEventListener('blur', handleDocumentLeave)
     }
   }, [showCursor])
 
