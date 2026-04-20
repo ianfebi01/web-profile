@@ -320,7 +320,7 @@ export default function UIMouseCursor() {
 
   if (!showCursor || !mounted) return null
 
-  // Resolve Tailwind classes representing Thomas's exact states
+  // Shape class
   let shapeClass =
     'flex items-center justify-center rounded-full pointer-events-none origin-center will-change-transform shadow-md transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] backdrop-blur-md opacity-80 z-[9000] overflow-hidden '
   let textContainerClass =
