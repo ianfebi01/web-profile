@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import gsap from 'gsap'
 import { useMousePos } from '../../hooks/useMousePos'
 
@@ -54,11 +55,14 @@ export default function UIMouseCursor() {
   
   // A lock flag to detach the cursor from the raw mouse and snap it onto a physical element
   const isMagnetLocked = useRef(false)
+  
+  // State to safely manage client-side portal mounting in SSR
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    const handleTouch = () => setShowCursor(false)
-    window.addEventListener('touchstart', handleTouch, { once: true })
-    return () => window.removeEventListener('touchstart', handleTouch)
+    setMounted(true)
+    // Removed mobile touch-hide logic because Chrome DevTools mobile view incorrectly triggers
+    // `touchstart` when clicking the menu, permanently banishing the cursor!
   }, [])
 
   // Tween lagging 'pos' to real 'mouseRef', 'ypos'
@@ -278,7 +282,7 @@ export default function UIMouseCursor() {
     }
   }, [showCursor])
 
-  if (!showCursor) return null
+  if (!showCursor || !mounted) return null
 
   // Resolve Tailwind classes representing Thomas's exact states
   let shapeClass =
@@ -304,15 +308,15 @@ export default function UIMouseCursor() {
     shapeClass += ' w-[0px] h-[0px] transition-none'
     textContainerClass += ' text-white'
   } else {
-    // Default shape
-    // Thomas uses a 20px hollow circle with a subtle border and background
-    shapeClass += ' w-[20px] h-[20px] bg-black/80 border-[1px] border-white/20'
+    // Premium dynamic cursor: inverted visibility over ANY colored background!
+    shapeClass += ' w-[20px] h-[20px] bg-white border border-white mix-blend-difference'
   }
 
-  return (
+  return createPortal(
     <div
       ref={cursorRef}
-      className="fixed top-0 left-0 pointer-events-none z-[9000] font-mono text-[13px] font-normal"
+      style={{ zIndex: 9999999 }} // Injected CSS directly assures the browser composite strictly enforces absolute top priority!
+      className="fixed top-0 left-0 pointer-events-none font-mono text-[13px] font-normal"
     >
       <div ref={shapeRef} className={shapeClass}>
         <div className={textContainerClass}>
@@ -341,6 +345,7 @@ export default function UIMouseCursor() {
           {dataName === 'yo' && dataText}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }

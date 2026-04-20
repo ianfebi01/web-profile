@@ -137,7 +137,7 @@ export default function Preloader() {
       <div
         ref={preloaderRef}
         style={{ clipPath: 'url(#wave-clip)' }}
-        className="fixed inset-0 z-[99999] bg-[#F2F2F2] flex flex-col items-center justify-center text-black"
+        className="fixed inset-0 z-[99999] bg-white flex flex-col items-center justify-center text-black"
       >
         <div ref={contentRef} className="relative flex flex-col items-center justify-center w-full h-full">
           <h1 className="flex justify-center text-4xl md:text-6xl lg:text-8xl font-normal xs:tracking-tight sm:tracking-normal md:tracking-[0.1em] uppercase whitespace-nowrap px-4 w-full">
