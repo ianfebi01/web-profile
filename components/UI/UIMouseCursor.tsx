@@ -61,8 +61,18 @@ export default function UIMouseCursor() {
 
   useEffect(() => {
     setMounted(true)
-    // Removed mobile touch-hide logic because Chrome DevTools mobile view incorrectly triggers
-    // `touchstart` when clicking the menu, permanently banishing the cursor!
+    
+    // Detect touch device explicitly
+    if (typeof window !== 'undefined') {
+      const isTouchDevice = 
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 || 
+        window.matchMedia('(pointer: coarse)').matches
+
+      if (isTouchDevice || window.innerWidth <= 768) {
+        setShowCursor(false)
+      }
+    }
   }, [])
 
   // Tween lagging 'pos' to real 'mouseRef', 'ypos'
