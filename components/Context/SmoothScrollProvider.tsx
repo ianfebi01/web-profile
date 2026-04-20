@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import 'lenis/dist/lenis.css'
 import { ReactLenis, useLenis } from 'lenis/react'
+import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -13,6 +14,7 @@ export default function SmoothScrollProvider({
 }: {
   children: React.ReactNode
 }) {
+  const pathname = usePathname()
   const lenisRef = useRef<any>(null)
   const [isMobile, setIsMobile] = useState(false)
 
@@ -38,6 +40,10 @@ export default function SmoothScrollProvider({
   }, [])
 
   useLenis(ScrollTrigger.update)
+
+  useEffect(() => {
+    lenisRef.current?.lenis?.scrollTo(0, { immediate: true })
+  }, [pathname])
 
   return (
     <ReactLenis
