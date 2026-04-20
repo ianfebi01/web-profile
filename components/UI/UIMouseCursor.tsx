@@ -154,7 +154,7 @@ export default function UIMouseCursor() {
 
     gsap.ticker.add(loop)
     return () => gsap.ticker.remove(loop)
-  }, [showCursor, isOver])
+  }, [showCursor, isOver, mounted])
 
   // Event Delegation for `.action` and `.magnet` elements
   useEffect(() => {
