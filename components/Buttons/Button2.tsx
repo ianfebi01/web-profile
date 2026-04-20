@@ -46,6 +46,7 @@ const Button2: FunctionComponent<Props> = ( props ) => {
       type={type}
       disabled={disabled || loading}
       aria-label={ariaLabel}
+      data-name="button"
     >
       {loading ? <Spinner /> : ''}
 
