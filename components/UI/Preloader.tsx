@@ -137,7 +137,7 @@ export default function Preloader() {
       <div
         ref={preloaderRef}
         style={{ clipPath: 'url(#wave-clip)' }}
-        className="fixed inset-0 z-[99999] bg-white flex flex-col items-center justify-center text-black"
+        className="absolute inset-0 z-[99999] bg-dark flex flex-col items-center justify-center text-white"
       >
         <div ref={contentRef} className="relative flex flex-col items-center justify-center w-full h-full">
           <h1 className="flex justify-center text-4xl md:text-6xl lg:text-8xl font-normal xs:tracking-tight sm:tracking-normal md:tracking-[0.1em] uppercase whitespace-nowrap px-4 w-full">
@@ -158,7 +158,7 @@ export default function Preloader() {
             <span>{String(progress).padStart(3, '0')}</span>
             <svg 
               viewBox="0 0 24 24" 
-              className="w-[1.2em] h-[1.2em] stroke-black"
+              className="w-[1.2em] h-[1.2em] stroke-white"
               fill="none"
             >
               <line x1="6" y1="2" x2="18" y2="2" strokeWidth="2" />
@@ -166,8 +166,8 @@ export default function Preloader() {
               <line x1="2" y1="6" x2="2" y2="18" strokeWidth="2" />
               <line x1="22" y1="6" x2="22" y2="18" strokeWidth="2" />
               <line x1="2" y1="22" x2="22" y2="2" strokeWidth="2" />
-              <rect x="3" y="3" width="3" height="3" className="fill-black stroke-none" />
-              <rect x="18" y="18" width="3" height="3" className="fill-black stroke-none" />
+              <rect x="3" y="3" width="3" height="3" className="fill-white stroke-none" />
+              <rect x="18" y="18" width="3" height="3" className="fill-white stroke-none" />
             </svg>
           </div>
         </div>
