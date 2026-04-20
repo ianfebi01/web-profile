@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import gsap from 'gsap'
 import { useMousePos } from '../../hooks/useMousePos'
+import { usePathname } from 'next/navigation'
 
 // Inline SVG components from source
 const ChevronSVG = ({ className }: { className?: string }) => (
@@ -41,6 +42,7 @@ const UPArrowSVG = ({ className }: { className?: string }) => (
 )
 
 export default function UIMouseCursor() {
+  const pathname = usePathname()
   const { xpos, ypos } = useMousePos()
   const cursorRef = useRef<HTMLDivElement>(null)
   const shapeRef = useRef<HTMLDivElement>(null)
@@ -74,6 +76,14 @@ export default function UIMouseCursor() {
       }
     }
   }, [])
+
+  // Force reset cursor state on navigation to prevent styles getting stuck
+  useEffect(() => {
+    setIsOver(false)
+    setDataName('')
+    setDataText('')
+    isMagnetLocked.current = false
+  }, [pathname])
 
   // Tween lagging 'pos' to real 'mouseRef', 'ypos'
   useEffect(() => {
