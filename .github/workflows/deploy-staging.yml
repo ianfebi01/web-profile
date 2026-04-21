@@ -12,7 +12,7 @@ jobs:
     permissions:
       contents: read
       packages: write
-    environment: Staging
+    environment: Preview
 
     steps:
       - name: Set up SSH key
@@ -70,7 +70,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    environment: Staging
+    environment: Preview
 
     steps:
       - name: SSH into VPS and deploy
