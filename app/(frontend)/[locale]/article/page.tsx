@@ -3,12 +3,14 @@ import NoDataFound from '@/components/NoDataFound'
 import ArticleCard from '@/components/Cards/ArticleCard'
 import { Props } from '@/types'
 import { isPayloadReady } from '@/lib/is-payload-ready'
-import { getTranslations } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 
 export async function generateMetadata( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
+
+  setRequestLocale(locale)
 
   const t = await getTranslations( { locale, namespace : 'article' } )
 
@@ -37,6 +39,8 @@ export async function generateMetadata( props: Omit<Props, 'children'> ) {
 
 export default async function ArticlePage( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
+
+  setRequestLocale(locale)
 
   const t = await getTranslations( { locale, namespace : 'article' } )
 

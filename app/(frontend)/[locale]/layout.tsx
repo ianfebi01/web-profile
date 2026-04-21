@@ -17,6 +17,7 @@ import { Site } from '@/payload-types'
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 import Error from '@/app/error'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
+import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 
@@ -44,6 +45,8 @@ export default async function LocaleLayout( {
   if ( !hasLocale( routing.locales, locale ) ) {
     notFound()
   }
+
+  setRequestLocale(locale)
   
   const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
 
