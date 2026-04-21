@@ -3,6 +3,8 @@ import { getPayload } from 'payload'
 import configPromise from '@/app/payload.config'
 import { isPayloadReady } from '@/lib/is-payload-ready'
 
+export const dynamic = 'force-dynamic'
+
 type TLocale = {
   code: string
   url: string
