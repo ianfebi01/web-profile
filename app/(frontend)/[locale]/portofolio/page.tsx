@@ -2,7 +2,6 @@ import Header from '@/components/Layouts/Header'
 import NoDataFound from '@/components/NoDataFound'
 import PortofoliosWrapper from '@/components/PortofoliosWrapper'
 import { Props } from '@/types'
-import { isPayloadReady } from '@/lib/is-payload-ready'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -62,11 +61,9 @@ export default async function PortofolioPage(props: Omit<Props, 'children'>) {
 
   const responseData = { docs: [] as any[] }
 
-  if (isPayloadReady()) {
-    const data = await getPortofolios(locale as 'en' | 'id')
+  const data = await getPortofolios(locale as 'en' | 'id')
 
-    responseData.docs = data || []
-  }
+  responseData.docs = data || []
 
   return (
     <main>
