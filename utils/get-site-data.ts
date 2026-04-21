@@ -1,10 +1,18 @@
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { isPayloadReady } from '@/lib/is-payload-ready'
 
 export async function getSiteData( lang: string ) {
-  const payload = await getPayload({ config: configPromise })
+  if (!isPayloadReady()) {
+    return {
+      data: {
+        mainNavMenu: [],
+      },
+    }
+  }
   
   try {
+    const payload = await getPayload({ config: configPromise })
     const [siteData, menuData] = await Promise.all([
       payload.findGlobal({
         slug: 'site',

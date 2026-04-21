@@ -16,7 +16,7 @@ import {
   PortofolioSearch
 } from '../blocks/ContentComponents'
 
-import { revalidateTag } from 'next/cache'
+import { readLocalizedSlug, resolveLocales, revalidateContent } from '../lib/revalidate'
 
 export const Pages: CollectionConfig = {
   slug: 'pages',
@@ -27,15 +27,25 @@ export const Pages: CollectionConfig = {
     read: () => true, // Anyone can read published pages
   },
   hooks: {
-    afterChange: [({ doc }) => { 
-      // @ts-expect-error Next.js 15 canary typing mismatch
-      revalidateTag('pages'); 
-      return doc; 
+    afterChange: [({ doc, req }) => {
+      const locales = resolveLocales(req?.locale)
+      const paths = locales.flatMap((locale) => {
+        const slug = readLocalizedSlug(doc?.slug, locale)
+        return slug ? [`/${locale}/${slug}`] : []
+      })
+
+      revalidateContent({ tags: ['pages'], locales, paths })
+      return doc
     }],
-    afterDelete: [({ doc }) => { 
-      // @ts-expect-error Next.js 15 canary typing mismatch
-      revalidateTag('pages'); 
-      return doc; 
+    afterDelete: [({ doc, req }) => {
+      const locales = resolveLocales(req?.locale)
+      const paths = locales.flatMap((locale) => {
+        const slug = readLocalizedSlug(doc?.slug, locale)
+        return slug ? [`/${locale}/${slug}`] : []
+      })
+
+      revalidateContent({ tags: ['pages'], locales, paths })
+      return doc
     }],
   },
   fields: [

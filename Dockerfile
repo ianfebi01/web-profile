@@ -7,7 +7,11 @@ ARG DIR=usr/app
 
 FROM node:${VERSION} as builder
 # redeclare ARG because ARG not in build environment
-ARG DIR 
+ARG DIR
+ARG NEXT_PUBLIC_GOOGLE_ANALYTICS
+ARG NEXT_PUBLIC_BASE_URL
+ENV NEXT_PUBLIC_GOOGLE_ANALYTICS=$NEXT_PUBLIC_GOOGLE_ANALYTICS
+ENV NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
 WORKDIR /${DIR}
 COPY . .
 RUN npm install -g pnpm
@@ -18,8 +22,8 @@ FROM node:${VERSION} as runner
 # redeclare ARG because ARG not in build environment
 ARG DIR
 WORKDIR /${DIR}
-COPY --from=builder /${DIR}/public ./public
 COPY --from=builder /${DIR}/.next/standalone .
+COPY --from=builder /${DIR}/public ./public
 COPY --from=builder /${DIR}/.next/static ./.next/static
 
 EXPOSE 3000

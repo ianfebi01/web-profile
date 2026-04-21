@@ -22,14 +22,19 @@ export const getDetail = unstable_cache(
 
 export const getAllArticleSlugs = unstable_cache(
   async (): Promise<Article[] | null> => {
-    const payload = await getPayload({ config: configPromise })
-    const res = await payload.find({
-      collection: 'articles',
-      depth: 1,
-      limit: 1000,
-    })
-    if (res.docs.length === 0) return null
-    return res.docs
+    try {
+      const payload = await getPayload({ config: configPromise })
+      const res = await payload.find({
+        collection: 'articles',
+        depth: 1,
+        limit: 1000,
+      })
+      if (res.docs.length === 0) return null
+      return res.docs
+    } catch {
+      // Allow CI builds without DB/Payload secrets by skipping SSG params.
+      return null
+    }
   },
   ['all-article-slugs'],
   { tags: ['articles'] }

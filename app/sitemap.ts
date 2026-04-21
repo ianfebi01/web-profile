@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getPayload } from 'payload'
 import configPromise from '@/app/payload.config'
+import { isPayloadReady } from '@/lib/is-payload-ready'
 
 type TLocale = {
   code: string
@@ -25,6 +26,17 @@ export const locales: TLocale[] = [
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const dynamicRoutes: MetadataRoute.Sitemap = []
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/en` },
+    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/id` },
+    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/en/article` },
+    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/id/portofolio` },
+  ]
+
+  if (!isPayloadReady()) {
+    return staticRoutes
+  }
+
   const payload = await getPayload({ config: configPromise })
 
   const fetchCollection = async (collection: 'pages' | 'articles' | 'projects', sitePath: string) => {
@@ -67,13 +79,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
     })
   }
-
-  const staticRoutes: MetadataRoute.Sitemap = [
-    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/en` },
-    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/id` },
-    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/en/article` },
-    { url : `${process.env.NEXT_PUBLIC_BASE_URL}/id/portofolio` },
-  ]
 
   return [...staticRoutes, ...dynamicRoutes]
 }
