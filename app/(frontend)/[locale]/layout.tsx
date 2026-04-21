@@ -1,6 +1,7 @@
 import '@/assets/scss/main.scss'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import type { Metadata } from 'next'
+import { Source_Code_Pro } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import ReactQueryProvider from '@/components/Context/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
@@ -22,6 +23,11 @@ import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 
 config.autoAddCss = false
+
+const sourceCodePro = Source_Code_Pro({
+  subsets  : ['latin'],
+  variable : '--font-code',
+})
 
 export const metadata: Metadata = {
   title : 'Ian Febi S',
@@ -53,7 +59,7 @@ export default async function LocaleLayout( {
   const socialLinks = siteData?.data?.socialPlatformLinks ?? []
 
   return (
-    <html lang={locale} className="[scrollbar-gutter:stable]" suppressHydrationWarning>
+    <html lang={locale} className={`${sourceCodePro.variable} [scrollbar-gutter:stable]`} suppressHydrationWarning>
       <body suppressHydrationWarning={true}
         id="myportal"
       >

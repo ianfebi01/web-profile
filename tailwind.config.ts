@@ -49,7 +49,14 @@ const config: Config = {
           '"Segoe UI Symbol"',
         ],
         code : [
-          '"Source Code Pro"'
+          'var(--font-code)',
+          'ui-monospace',
+          'SFMono-Regular',
+          'Menlo',
+          'Monaco',
+          'Consolas',
+          'Liberation Mono',
+          'monospace',
         ]
       },
     },
