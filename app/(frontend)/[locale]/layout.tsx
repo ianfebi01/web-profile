@@ -49,6 +49,8 @@ export default async function LocaleLayout( {
   setRequestLocale(locale)
   
   const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
+  const navItems = siteData?.data?.mainNavMenu ?? []
+  const socialLinks = siteData?.data?.socialPlatformLinks ?? []
 
   return (
     <html lang={locale} className="[scrollbar-gutter:stable]" suppressHydrationWarning>
@@ -90,8 +92,8 @@ export default async function LocaleLayout( {
               />
               <div className="flex flex-col min-h-screen">
                 <Navbar
-                  items={siteData?.data?.mainNavMenu as any}
-                  socials={siteData?.data?.socialPlatformLinks as any}
+                  items={navItems as any}
+                  socials={socialLinks as any}
                 />
 
                 {children}

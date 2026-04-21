@@ -7,6 +7,7 @@ export async function getSiteData( lang: string ) {
     return {
       data: {
         mainNavMenu: [],
+        socialPlatformLinks: [],
       },
     }
   }
@@ -36,7 +37,12 @@ export async function getSiteData( lang: string ) {
     }
   } catch (error) {
     console.error('Failed to fetch site data:', error)
-    return { data: null }
+    return {
+      data: {
+        mainNavMenu: [],
+        socialPlatformLinks: [],
+      },
+    }
   }
 }
 
