@@ -48,6 +48,7 @@ jobs:
           build-args: |
             NEXT_PUBLIC_GOOGLE_ANALYTICS=${{ secrets.NEXT_PUBLIC_GOOGLE_ANALYTICS }}
             NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}
+            APP_ENV=${{ secrets.APP_ENV }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
