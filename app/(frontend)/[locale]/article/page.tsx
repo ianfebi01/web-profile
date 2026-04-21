@@ -6,6 +6,8 @@ import { isPayloadReady } from '@/lib/is-payload-ready'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { unstable_cache } from 'next/cache'
+import { Article } from '@/payload-types'
 
 export async function generateMetadata( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
@@ -37,6 +39,22 @@ export async function generateMetadata( props: Omit<Props, 'children'> ) {
   }
 }
 
+export const getArticles = unstable_cache(
+  async (locale: 'en' | 'id'): Promise<Article[] | null> => {
+    const payload = await getPayload({ config: configPromise })
+    const res = await payload.find({
+      collection: 'articles',
+      locale: locale as 'en' | 'id',
+      sort: '-createdAt',
+      depth: 2,
+    })
+    if (res.docs.length === 0) return null
+    return res.docs
+  },
+  ['articles'],
+  { tags: ['articles'] },
+)
+
 export default async function ArticlePage( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
 
@@ -47,15 +65,9 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
   const responseData = { docs: [] as any[] }
 
   if (isPayloadReady()) {
-    const payload = await getPayload({ config: configPromise })
-    const data = await payload.find({
-      collection: 'articles',
-      locale: locale as 'en' | 'id',
-      sort: '-createdAt',
-      depth: 2,
-    })
+    const data = await getArticles(locale as 'en' | 'id')
 
-    responseData.docs = data.docs
+    responseData.docs = data || []
   }
 
   return (
