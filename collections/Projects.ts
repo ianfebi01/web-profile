@@ -1,6 +1,6 @@
 import type { CollectionConfig } from 'payload'
 
-import { revalidateTag } from 'next/cache'
+import { readLocalizedSlug, resolveLocales, revalidateContent } from '../lib/revalidate'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
@@ -11,15 +11,29 @@ export const Projects: CollectionConfig = {
     read: () => true,
   },
   hooks: {
-    afterChange: [({ doc }) => { 
-      // @ts-expect-error Next.js 15 canary typing mismatch
-      revalidateTag('projects'); 
-      return doc; 
+    afterChange: [({ doc, req }) => {
+      const locales = resolveLocales(req?.locale)
+      const paths = locales.flatMap((locale) => {
+        const slug = readLocalizedSlug(doc?.slug, locale)
+        return slug
+          ? [`/${locale}/portofolio`, `/${locale}/portofolio/${slug}`]
+          : [`/${locale}/portofolio`]
+      })
+
+      revalidateContent({ tags: ['projects'], locales, paths })
+      return doc
     }],
-    afterDelete: [({ doc }) => { 
-      // @ts-expect-error Next.js 15 canary typing mismatch
-      revalidateTag('projects'); 
-      return doc; 
+    afterDelete: [({ doc, req }) => {
+      const locales = resolveLocales(req?.locale)
+      const paths = locales.flatMap((locale) => {
+        const slug = readLocalizedSlug(doc?.slug, locale)
+        return slug
+          ? [`/${locale}/portofolio`, `/${locale}/portofolio/${slug}`]
+          : [`/${locale}/portofolio`]
+      })
+
+      revalidateContent({ tags: ['projects'], locales, paths })
+      return doc
     }],
   },
   fields: [
