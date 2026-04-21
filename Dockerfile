@@ -22,8 +22,8 @@ FROM node:${VERSION} as runner
 # redeclare ARG because ARG not in build environment
 ARG DIR
 WORKDIR /${DIR}
-COPY --from=builder /${DIR}/public ./public
 COPY --from=builder /${DIR}/.next/standalone .
+COPY --from=builder /${DIR}/public ./public
 COPY --from=builder /${DIR}/.next/static ./.next/static
 
 EXPOSE 3000
