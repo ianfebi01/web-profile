@@ -2,6 +2,7 @@ import Header from '@/components/Layouts/Header'
 import NoDataFound from '@/components/NoDataFound'
 import PortofoliosWrapper from '@/components/PortofoliosWrapper'
 import { Props } from '@/types'
+import { isPayloadReady } from '@/lib/is-payload-ready'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -41,13 +42,19 @@ export default async function PortofolioPage( props: Omit<Props, 'children'> ) {
 
   const t = await getTranslations( { locale, namespace : 'portofolio' } )
 
-  const payload = await getPayload({ config: configPromise })
-  const responseData = await payload.find({
-    collection: 'projects',
-    locale: locale as 'en' | 'id',
-    sort: '-createdAt',
-    depth: 2,
-  })
+  const responseData = { docs: [] as any[] }
+
+  if (isPayloadReady()) {
+    const payload = await getPayload({ config: configPromise })
+    const data = await payload.find({
+      collection: 'projects',
+      locale: locale as 'en' | 'id',
+      sort: '-createdAt',
+      depth: 2,
+    })
+
+    responseData.docs = data.docs
+  }
 
   return (
     <main>

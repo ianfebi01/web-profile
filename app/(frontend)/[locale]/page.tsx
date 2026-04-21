@@ -5,6 +5,7 @@ import HeroesAndSections from "@/components/Parsers/HeroesAndSections";
 import { Locale } from "next-intl";
 import { getHomePage } from "@/utils/get-home-page";
 import { locales } from "@/i18n/config";
+import { isPayloadReady } from '@/lib/is-payload-ready'
 
 type Props = {
   params: Promise<{
@@ -16,6 +17,8 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 
 export async function generateMetadata(props: Props): Promise<Metadata> {
+  if (!isPayloadReady()) return FALLBACK_SEO;
+
   const params = await props.params;
   const homeGlobal = await getHomePage(params.locale);
 
@@ -85,6 +88,8 @@ export function generateStaticParams() {
 export const revalidate = 60; // ISR Support
 
 export default async function PageHome(props: Props) {
+  if (!isPayloadReady()) return null;
+
   const params = await props.params;
   const homeGlobal = await getHomePage(params.locale);
 

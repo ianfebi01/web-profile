@@ -2,6 +2,7 @@ import Header from '@/components/Layouts/Header'
 import NoDataFound from '@/components/NoDataFound'
 import ArticleCard from '@/components/Cards/ArticleCard'
 import { Props } from '@/types'
+import { isPayloadReady } from '@/lib/is-payload-ready'
 import { getTranslations } from 'next-intl/server'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -39,13 +40,19 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
 
   const t = await getTranslations( { locale, namespace : 'article' } )
 
-  const payload = await getPayload({ config: configPromise })
-  const responseData = await payload.find({
-    collection: 'articles',
-    locale: locale as 'en' | 'id',
-    sort: '-createdAt',
-    depth: 2,
-  })
+  const responseData = { docs: [] as any[] }
+
+  if (isPayloadReady()) {
+    const payload = await getPayload({ config: configPromise })
+    const data = await payload.find({
+      collection: 'articles',
+      locale: locale as 'en' | 'id',
+      sort: '-createdAt',
+      depth: 2,
+    })
+
+    responseData.docs = data.docs
+  }
 
   return (
     <main>
