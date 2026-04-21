@@ -2,6 +2,9 @@
     "back": "Back",
     "contact": "Contact",
     "search": "Search",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
     "read_more": "Read More",
     "no-data-found": "Data not found",
     "article": {

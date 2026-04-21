@@ -86,7 +86,8 @@ const TextField = ( {
               [
                 'focus:border-white/50 border-white/25',
                 touched && error && 'focus:border-red-500 border-red-500',
-              ]
+              ],
+              props.className
             )}
           />
         </>
@@ -112,7 +113,8 @@ const TextField = ( {
               'focus:border-white/50 border-white/25',
               touched && error && 'focus:border-red-500 border-red-500',
             ],
-            [type === 'password' && 'pr-4']
+            [type === 'password' && 'pr-4'],
+            props.className
           )}
         />
       )}

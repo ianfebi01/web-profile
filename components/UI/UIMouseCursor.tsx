@@ -163,7 +163,7 @@ export default function UIMouseCursor() {
     // Helper: fully reset all magnet targets back to resting position
     const resetAllMagnets = () => {
       isMagnetLocked.current = false
-      document.querySelectorAll('.magnet-zone, .magnet, [data-name="button"]').forEach((zone) => {
+      document.querySelectorAll('.magnet-zone, .magnet').forEach((zone) => {
         const magnetTarget = (zone.querySelector('.magnet-target') as HTMLElement) || zone as HTMLElement
         gsap.to(magnetTarget, { x: 0, y: 0, duration: 0.8, ease: 'elastic.out(1, 0.4)' })
         const inner = magnetTarget.querySelector('.magnet-inner')
@@ -202,7 +202,7 @@ export default function UIMouseCursor() {
 
     const handleMagnetMove = (e: MouseEvent) => {
       // Support `.magnet-zone` for disjointed hover triggers, or default `.magnet` 
-      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet, [data-name="button"]') as HTMLElement
+      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet') as HTMLElement
       
       if (magnetZone) {
         // Find the specific physical target that translates (defaults to itself if no inner target exists)
@@ -271,7 +271,7 @@ export default function UIMouseCursor() {
     }
 
     const handleMagnetOut = (e: MouseEvent) => {
-      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet, [data-name="button"]') as HTMLElement
+      const magnetZone = (e.target as Element).closest('.magnet-zone, .magnet') as HTMLElement
       if (magnetZone) {
         // relatedTarget is null when the mouse leaves the window entirely
         const leftZone = !e.relatedTarget || !magnetZone.contains(e.relatedTarget as Node)
@@ -350,7 +350,7 @@ export default function UIMouseCursor() {
   } else if (isOver && dataName === 'burger') {
     // Specifically styled to map to a burger icon overlay halo instead of totally vanishing
     shapeClass += ' w-[64px] h-[64px] border-[2px] border-[#F26B50] bg-transparent opacity-100'
-  } else if (isOver && dataName === 'button') {
+  } else if (isOver && ['button', 'input'].includes(dataName)) {
     shapeClass += ' w-[0px] h-[0px] transition-none'
     textContainerClass += ' text-white'
   } else {
