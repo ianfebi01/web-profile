@@ -2,6 +2,8 @@ import PortofolioListing from '@/components/Pages/Portofolio/Listing'
 import { Props } from '@/types'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(props: Omit<Props, 'children'>) {
   const { locale } = await props.params
 
