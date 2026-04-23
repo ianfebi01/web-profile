@@ -1696,7 +1696,7 @@ export interface ApiTransactionTransaction extends Schema.CollectionType {
 }
 
 declare module '@strapi/types' {
-  export module Shared {
+  export namespace Shared {
     export interface ContentTypes {
       'admin::permission': AdminPermission;
       'admin::user': AdminUser;

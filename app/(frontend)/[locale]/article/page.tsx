@@ -4,40 +4,40 @@ import { getTranslations, setRequestLocale } from 'next-intl/server'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(props: Omit<Props, 'children'>) {
+export async function generateMetadata( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
 
-  setRequestLocale(locale)
+  setRequestLocale( locale )
 
-  const t = await getTranslations({ locale, namespace: 'article' })
+  const t = await getTranslations( { locale, namespace : 'article' } )
 
-  const title = `${t('title')} | Ian Febi Sastrataruna`
-  const desc = t('desc')
+  const title = `${t( 'title' )} | Ian Febi Sastrataruna`
+  const desc = t( 'desc' )
 
   return {
-    title: title,
-    description: desc,
-    keywords: 'article',
+    title       : title,
+    description : desc,
+    keywords    : 'article',
 
-    openGraph: {
-      title: title,
-      description: desc,
-      siteName: 'Ian Febi Sastrataruna',
-      type: 'website',
+    openGraph : {
+      title       : title,
+      description : desc,
+      siteName    : 'Ian Febi Sastrataruna',
+      type        : 'website',
     },
-    twitter: {
-      card: 'summary',
-      site: '@ianfebi01',
-      title: title,
-      description: desc || '',
+    twitter : {
+      card        : 'summary',
+      site        : '@ianfebi01',
+      title       : title,
+      description : desc || '',
     },
   }
 }
 
-export default async function ArticlePage(props: Omit<Props, 'children'>) {
+export default async function ArticlePage( props: Omit<Props, 'children'> ) {
   const { locale } = await props.params
 
-  setRequestLocale(locale)
+  setRequestLocale( locale )
 
   return <ArticleListing />
 }

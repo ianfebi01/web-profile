@@ -13,8 +13,8 @@ const HeroesAndSections = ( { page }: Props ) => {
 
   return (
     <div>
-      {(heroes?.length || 0) > 0 && <Heroes banners={heroes as any} />}
-      {(sections?.length || 0) > 0 && (
+      {( heroes?.length || 0 ) > 0 && <Heroes banners={heroes as any} />}
+      {( sections?.length || 0 ) > 0 && (
         <Sections sections={sections}
           headingLevel={2}
         />

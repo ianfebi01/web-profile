@@ -6,14 +6,15 @@ import { unstable_cache } from 'next/cache'
 export const getAllPageSlugs = unstable_cache(
   async (): Promise<Page[] | null> => {
     try {
-      const payload = await getPayload({ config: configPromise })
-      const res = await payload.find({
-        collection: 'pages',
-        depth: 1,
-        limit: 1000,
-      })
+      const payload = await getPayload( { config : configPromise } )
+      const res = await payload.find( {
+        collection : 'pages',
+        depth      : 1,
+        limit      : 1000,
+      } )
 
-      if (res.docs.length === 0) return null
+      if ( res.docs.length === 0 ) return null
+      
       return res.docs
     } catch {
       // Allow CI builds without DB/Payload secrets by skipping SSG params.
@@ -21,5 +22,5 @@ export const getAllPageSlugs = unstable_cache(
     }
   },
   ['all-page-slugs'],
-  { tags: ['pages'] }
+  { tags : ['pages'] }
 )

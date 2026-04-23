@@ -35,51 +35,51 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url : `${process.env.NEXT_PUBLIC_BASE_URL}/id/portofolio` },
   ]
 
-  if (!isPayloadReady()) {
+  if ( !isPayloadReady() ) {
     return staticRoutes
   }
 
-  const payload = await getPayload({ config: configPromise })
+  const payload = await getPayload( { config : configPromise } )
 
-  const fetchCollection = async (collection: 'pages' | 'articles' | 'projects', sitePath: string) => {
-    const res = await payload.find({
+  const fetchCollection = async ( collection: 'pages' | 'articles' | 'projects', sitePath: string ) => {
+    const res = await payload.find( {
       collection,
-      depth: 0,
-      limit: 1000,
-    })
+      depth : 0,
+      limit : 1000,
+    } )
 
-    return res.docs.map(doc => ({
-      slug: doc.slug as string,
-      updatedAt: doc.updatedAt as string,
+    return res.docs.map( doc => ( {
+      slug      : doc.slug as string,
+      updatedAt : doc.updatedAt as string,
       sitePath,
-    }))
+    } ) )
   }
 
   const allContent = [
-    ...(await fetchCollection('pages', '')),
-    ...(await fetchCollection('articles', 'article')),
-    ...(await fetchCollection('projects', 'portofolio')),
+    ...( await fetchCollection( 'pages', '' ) ),
+    ...( await fetchCollection( 'articles', 'article' ) ),
+    ...( await fetchCollection( 'projects', 'portofolio' ) ),
   ]
 
-  for (const locale of locales) {
-    allContent.forEach((entry) => {
+  for ( const locale of locales ) {
+    allContent.forEach( ( entry ) => {
       const { slug, updatedAt, sitePath } = entry
 
-      if (slug === 'home') return
+      if ( slug === 'home' ) return
 
-      if (!(typeof slug === 'string' && /^[؀-ۿ|a-z|0-9|-]+$/.test(slug))) {
+      if ( !( typeof slug === 'string' && /^[؀-ۿ|a-z|0-9|-]+$/.test( slug ) ) ) {
         // Skip invalid slugs
         return
       }
 
-      const path = `/${sitePath}/${slug}`.replace(/\/\//g, '/')
+      const path = `/${sitePath}/${slug}`.replace( /\/\//g, '/' )
       const url = `${locale.url}${path}`
 
-      dynamicRoutes.push({
+      dynamicRoutes.push( {
         url,
-        lastModified: new Date(updatedAt),
-      })
-    })
+        lastModified : new Date( updatedAt ),
+      } )
+    } )
   }
 
   return [...staticRoutes, ...dynamicRoutes]

@@ -8,7 +8,7 @@ interface Props {
 const Accordian: React.FC<Props> = ( { sectionData } ) => {
   return (
     <div className="max-w-3xl mx-auto">
-      <Accordion items={(sectionData.items as any) || []} />
+      <Accordion items={( sectionData.items as any ) || []} />
     </div>
   )
 }

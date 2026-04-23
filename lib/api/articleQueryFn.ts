@@ -4,31 +4,33 @@ import configPromise from '@/app/payload.config'
 import { unstable_cache } from 'next/cache'
 
 export const getDetail = unstable_cache(
-  async (slug: string | number, locale: string = 'en'): Promise<Article | null> => {
-    const payload = await getPayload({ config: configPromise })
-    const res = await payload.find({
-      collection: 'articles',
-      where: { slug: { equals: slug } },
-      locale: locale as 'en' | 'id',
-      depth: 2,
-    })
-    if (res.docs.length === 0) return null
+  async ( slug: string | number, locale: string = 'en' ): Promise<Article | null> => {
+    const payload = await getPayload( { config : configPromise } )
+    const res = await payload.find( {
+      collection : 'articles',
+      where      : { slug : { equals : slug } },
+      locale     : locale as 'en' | 'id',
+      depth      : 2,
+    } )
+    if ( res.docs.length === 0 ) return null
+    
     return res.docs[0]
   },
   ['article-detail'],
-  { tags: ['articles'] }
+  { tags : ['articles'] }
 )
 
 export const getAllArticleSlugs = unstable_cache(
   async (): Promise<Article[] | null> => {
     try {
-      const payload = await getPayload({ config: configPromise })
-      const res = await payload.find({
-        collection: 'articles',
-        depth: 1,
-        limit: 1000,
-      })
-      if (res.docs.length === 0) return null
+      const payload = await getPayload( { config : configPromise } )
+      const res = await payload.find( {
+        collection : 'articles',
+        depth      : 1,
+        limit      : 1000,
+      } )
+      if ( res.docs.length === 0 ) return null
+      
       return res.docs
     } catch {
       // Allow CI builds without DB/Payload secrets by skipping SSG params.
@@ -36,5 +38,5 @@ export const getAllArticleSlugs = unstable_cache(
     }
   },
   ['all-article-slugs'],
-  { tags: ['articles'] }
+  { tags : ['articles'] }
 )

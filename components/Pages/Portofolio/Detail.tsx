@@ -32,12 +32,12 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4 w-full mx-auto">
               {data?.gallery?.length && (
-                <GaleryCarousel data={data.gallery.map((g: any) => g.image)} />
+                <GaleryCarousel data={data.gallery.map( ( g: any ) => g.image )} />
               )}
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row gap-2 flex-wrap">
                   {!!data?.createdAt && (
-                    <Chip label={new Date(data.createdAt).toLocaleDateString()}
+                    <Chip label={new Date( data.createdAt ).toLocaleDateString()}
                       bg="dark-secondary"
                     />
                   )}

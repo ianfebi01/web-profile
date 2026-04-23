@@ -35,7 +35,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                 <>
                   <Image
                     className="hidden object-cover object-center w-full h-full md:block"
-                    src={imageUrl(data.heroImage as any, 'xlarge') || ''}
+                    src={imageUrl( data.heroImage as any, 'xlarge' ) || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}
@@ -44,7 +44,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                   />
                   <Image
                     className="object-cover object-center w-full h-full md:hidden"
-                    src={imageUrl(data.heroImage as any, 'small') || ''}
+                    src={imageUrl( data.heroImage as any, 'small' ) || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}
@@ -59,7 +59,7 @@ const Detail = ( { data, isFetching }: Props ) => {
 
             <div className="flex flex-col w-full gap-4">
               {!!data?.createdAt && (
-                <Chip label={new Date(data.createdAt).toLocaleDateString()}
+                <Chip label={new Date( data.createdAt ).toLocaleDateString()}
                   bg="dark-secondary"
                 />
               )}

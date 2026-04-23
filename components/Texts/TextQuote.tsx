@@ -22,7 +22,7 @@ const TextQuote: FunctionComponent<Props> = ( { quote } ) => {
   return (
     <div ref={textRef}>
       <motion.p
-        {...({
+        {...( {
           variants : {
             hidden : {
               opacity : 0,
@@ -33,14 +33,14 @@ const TextQuote: FunctionComponent<Props> = ( { quote } ) => {
               scale   : 1,
             },
           },
-          initial : "hidden",
+          initial    : "hidden",
           transition : {
             type   : 'spring',
             bounce : 0.5,
           },
-          animate : textControll,
+          animate   : textControll,
           className : "text-base md:text-2xl font-medium text-center",
-        } as any)}
+        } as any )}
       >
         {quote}
       </motion.p>

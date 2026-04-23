@@ -8,7 +8,7 @@ const constructNavUrl = ( navItem: NavItemType | any ) => {
   if ( navItem?.page && typeof navItem.page === 'object' && ( navItem.page as Page )?.slug ) {
     url = `/${( navItem.page as Page )?.slug}`
   } else {
-    url = parseUrl(navItem?.url || '')
+    url = parseUrl( navItem?.url || '' )
   }
   if ( navItem?.pageAnchor ) {
     url = url + '#' + navItem.pageAnchor

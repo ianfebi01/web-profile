@@ -3,21 +3,21 @@
 type Props = {
   currentPage: number
   totalPages: number
-  onPageChange: (page: number) => void
+  onPageChange: ( page: number ) => void
   previousLabel: string
   nextLabel: string
   pageLabel: string
 }
 
-const PaginationControls = ({
+const PaginationControls = ( {
   currentPage,
   totalPages,
   onPageChange,
   previousLabel,
   nextLabel,
   pageLabel,
-}: Props) => {
-  if (totalPages <= 1) {
+}: Props ) => {
+  if ( totalPages <= 1 ) {
     return null
   }
 
@@ -29,7 +29,7 @@ const PaginationControls = ({
       <div className="flex gap-3">
         <button
           type="button"
-          onClick={() => onPageChange(currentPage - 1)}
+          onClick={() => onPageChange( currentPage - 1 )}
           disabled={currentPage <= 1}
           className="button button-secondary disabled:cursor-not-allowed disabled:opacity-50"
         >
@@ -37,7 +37,7 @@ const PaginationControls = ({
         </button>
         <button
           type="button"
-          onClick={() => onPageChange(currentPage + 1)}
+          onClick={() => onPageChange( currentPage + 1 )}
           disabled={currentPage >= totalPages}
           className="button button-secondary disabled:cursor-not-allowed disabled:opacity-50"
         >

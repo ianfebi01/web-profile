@@ -17,7 +17,7 @@ const ButtonGroup: React.FC<ButtonGroupProps> = ( { buttons = [] } ) => {
         <Link
           key={index}
           className={cn( 'button button-primary' )}
-          href={parseUrl(button?.url)}
+          href={parseUrl( button?.url )}
           target={button?.newTab ? '_blank' : undefined}
           rel={button?.newTab ? 'noopener noreferrer' : undefined}
         >

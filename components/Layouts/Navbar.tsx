@@ -41,9 +41,9 @@ const Navbar = ( { items, socials }: Props ) => {
   const itemsRefs = useRef<HTMLButtonElement[] | HTMLDivElement[] | null[]>( [] )
 
   // Animate stagger items flawlessly when opening the new unified drawer
-  useEffect(() => {
-    const targets = itemsRefs.current.filter(Boolean) as HTMLElement[]
-    if (isOpen) {
+  useEffect( () => {
+    const targets = itemsRefs.current.filter( Boolean ) as HTMLElement[]
+    if ( isOpen ) {
       gsap.fromTo( targets, 
         { opacity : 0, y : 50 },
         {
@@ -58,11 +58,11 @@ const Navbar = ( { items, socials }: Props ) => {
     } else {
       gsap.set( targets, { opacity : 0, y : 50 } )
     }
-  }, [isOpen])
+  }, [isOpen] )
 
   // Instantly force the Navbar to be visible when the menu is toggled open!
-  useEffect(() => {
-    if (isOpen && isHiddenRef.current) {
+  useEffect( () => {
+    if ( isOpen && isHiddenRef.current ) {
       isHiddenRef.current = false
       gsap.to( navbarRef.current, {
         y        : 0,
@@ -71,15 +71,15 @@ const Navbar = ( { items, socials }: Props ) => {
         ease     : 'power2.out',
       } )
     }
-  }, [isOpen])
+  }, [isOpen] )
 
-  useLenis(({ scroll, direction }) => {
+  useLenis( ( { scroll, direction } ) => {
     // Never hide the Navbar header while the integrated mobile drawer is actively open
-    if (isOpen) return
+    if ( isOpen ) return
 
     if ( scroll < 100 || direction === -1 ) {
       // Show navbar if it's currently hidden
-      if (isHiddenRef.current) {
+      if ( isHiddenRef.current ) {
         isHiddenRef.current = false
         gsap.to( navbarRef.current, {
           y        : 0,
@@ -90,7 +90,7 @@ const Navbar = ( { items, socials }: Props ) => {
       }
     } else if ( direction === 1 && scroll > 100 ) {
       // Hide navbar completely up past its bounds
-      if (!isHiddenRef.current) {
+      if ( !isHiddenRef.current ) {
         isHiddenRef.current = true
         gsap.to( navbarRef.current, {
           y        : -100,
@@ -100,7 +100,7 @@ const Navbar = ( { items, socials }: Props ) => {
         } )
       }
     }
-  })
+  } )
 
   return (
     <>
@@ -116,7 +116,10 @@ const Navbar = ( { items, socials }: Props ) => {
         )}
       >
         <div className="flex items-center justify-between h-full px-6 md:px-12 mx-auto max-w-[1600px] pointer-events-auto pt-6">
-          <Link href={'/'} onClick={() => setIsOpen( false )} className="relative z-50">
+          <Link href={'/'}
+            onClick={() => setIsOpen( false )}
+            className="relative z-50"
+          >
             <Image src="/Logo.svg"
               alt="Logo image"
               width={45}
@@ -125,14 +128,14 @@ const Navbar = ( { items, socials }: Props ) => {
           </Link>
           
           <div className="flex items-center gap-6">
-            <div className={cn("hidden sm:block transition-opacity duration-300", isOpen ? "opacity-0 pointer-events-none" : "opacity-100")}>
+            <div className={cn( "hidden sm:block transition-opacity duration-300", isOpen ? "opacity-0 pointer-events-none" : "opacity-100" )}>
               <LocaleSwitcher />
             </div>
 
             <div
               className="magnet-zone flex items-center gap-4 p-4 -m-4 cursor-pointer group w-fit relative z-50"
               data-name="burger"
-              onClick={() => setIsOpen(!isOpen)}
+              onClick={() => setIsOpen( !isOpen )}
             >
               <span className="text-[15px] font-bold text-white group-hover:text-[#F26B50] transition-colors hidden sm:block pointer-events-none mt-1">
                 Menu
@@ -149,19 +152,22 @@ const Navbar = ( { items, socials }: Props ) => {
                     isOpen 
                       ? "left-0 w-[26px] h-[2px] rotate-45 rounded-sm" 
                       : "left-0 w-1.5 h-1.5 rounded-full group-hover/target:translate-x-[10px]"
-                  )}></span>
+                  )}
+                  ></span>
                   
                   <span className={cn(
                     "absolute transition-all duration-300 ease-out bg-white z-10",
                     isOpen ? "w-0 h-0 opacity-0" : "w-1.5 h-1.5 rounded-full"
-                  )}></span>
+                  )}
+                  ></span>
                   
                   <span className={cn(
                     "absolute transition-all duration-300 ease-out bg-white",
                     isOpen 
                       ? "right-0 w-[26px] h-[2px] -rotate-45 rounded-sm" 
                       : "right-0 w-1.5 h-1.5 rounded-full group-hover/target:-translate-x-[10px]"
-                  )}></span>
+                  )}
+                  ></span>
                 </div>
               </button>
             </div>
@@ -186,7 +192,7 @@ const Navbar = ( { items, socials }: Props ) => {
             "absolute inset-0 bg-black/20 backdrop-blur-sm transition-opacity duration-500",
             isOpen ? "opacity-100" : "opacity-0"
           )}
-          onClick={() => setIsOpen(false)}
+          onClick={() => setIsOpen( false )}
         />
 
         {/* Elegant Slide-In Panel */}
@@ -205,7 +211,7 @@ const Navbar = ( { items, socials }: Props ) => {
                       <div
                         key={key}
                         ref={el => {
-                          (itemsRefs.current[key] = el);
+                          ( itemsRefs.current[key] = el );
                         }}
                         className="opacity-0 translate-y-[50px] will-change-transform"
                       >
@@ -219,9 +225,9 @@ const Navbar = ( { items, socials }: Props ) => {
                               >
                                 <dt>
                                   <Disclosure.Button className="flex items-start justify-between w-full text-left text-white">
-                                    {(!item.navItem?.url && !item.navItem?.page) ? (
-                                      <div className={cn('h3 pl-4 no-underline cursor-default')}>
-                                          {item.categoryName}
+                                    {( !item.navItem?.url && !item.navItem?.page ) ? (
+                                      <div className={cn( 'h3 pl-4 no-underline cursor-default' )}>
+                                        {item.categoryName}
                                       </div>
                                     ) : (
                                       <Link
@@ -236,7 +242,7 @@ const Navbar = ( { items, socials }: Props ) => {
                                         tabIndex={
                                           !constructNavUrl( item.navItem ) ? -1 : undefined
                                         }
-                                        onClick={() => setIsOpen(false)}
+                                        onClick={() => setIsOpen( false )}
                                       >
                                         {item.categoryName}
                                       </Link>
@@ -266,16 +272,16 @@ const Navbar = ( { items, socials }: Props ) => {
                                       <div className="px-4 my-4 text-xs lg:text-[1.1rem] ml-4">
                                         <div className="flex flex-col gap-4">
                                           {item.navItems?.map(
-                                            (subItem: NavItemType, indexSubitem: number) => (
+                                            ( subItem: NavItemType, indexSubitem: number ) => (
                                               <Link
                                                 key={indexSubitem}
-                                                href={constructNavUrl(subItem)}
+                                                href={constructNavUrl( subItem )}
                                                 className="block m-0 no-underline p underline-offset-4 decoration-2 hover:underline"
                                                 target={subItem?.newTab ? '_blank' : undefined}
                                                 rel={subItem?.newTab ? 'noopener noreferrer' : undefined}
                                                 onClick={() => setIsOpen( false )}
                                               >
-                                                {subItem?.name || (subItem.page as Page)?.title}
+                                                {subItem?.name || ( subItem.page as Page )?.title}
                                               </Link>
                                             )
                                           )}
@@ -287,7 +293,7 @@ const Navbar = ( { items, socials }: Props ) => {
                               </dl>
                             )}
                           </Disclosure>
-                        ) : (!!item.categoryName && (item.navItem?.url || item.navItem?.page)) ? (
+                        ) : ( !!item.categoryName && ( item.navItem?.url || item.navItem?.page ) ) ? (
                           <Link
                             href={constructNavUrl( item.navItem ) || ''}
                             className={cn(
@@ -323,7 +329,7 @@ const Navbar = ( { items, socials }: Props ) => {
               {socials.map( ( item, index ) => (
                 <button
                   ref={el => {
-                    (itemsRefs.current[items.length + index] = el);
+                    ( itemsRefs.current[items.length + index] = el );
                   }}
                   onClick={() => openNewTab( item.url )}
                   className={cn(

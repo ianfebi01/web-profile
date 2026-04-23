@@ -24,10 +24,10 @@ import { routing } from '@/i18n/routing'
 
 config.autoAddCss = false
 
-const sourceCodePro = Source_Code_Pro({
+const sourceCodePro = Source_Code_Pro( {
   subsets  : ['latin'],
   variable : '--font-code',
-})
+} )
 
 export const metadata: Metadata = {
   title : 'Ian Febi S',
@@ -52,14 +52,17 @@ export default async function LocaleLayout( {
     notFound()
   }
 
-  setRequestLocale(locale)
+  setRequestLocale( locale )
   
   const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
   const navItems = siteData?.data?.mainNavMenu ?? []
   const socialLinks = siteData?.data?.socialPlatformLinks ?? []
 
   return (
-    <html lang={locale} className={`${sourceCodePro.variable} [scrollbar-gutter:stable]`} suppressHydrationWarning>
+    <html lang={locale}
+      className={`${sourceCodePro.variable} [scrollbar-gutter:stable]`}
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning={true}
         id="myportal"
       >
@@ -69,47 +72,47 @@ export default async function LocaleLayout( {
             <Preloader />
             <UIMouseCursor />
             <ReactQueryProvider>
-            <NextIntlClientProvider>
-              <NextTopLoader
-                color="#F26B50"
-                initialPosition={0.08}
-                crawlSpeed={200}
-                height={3}
-                crawl={true}
-                showSpinner={false}
-                easing="ease"
-                speed={200}
-                shadow="0 0 10px #F26B50,0 0 5px #F26B50"
-              />
-              <Toaster
-                toastOptions={{
-                // icon : (
-                // 	<div className="text-20" data-cy="modal-information-icon">
-                // 		<ModalInformationIcon />
-                // 	</div>
-                // ),
-                  position  : 'top-right',
-                  className : 'bg-white text-dark text-md',
-                  style     : {
-                    boxShadow : '0px 4px 10px rgba(0, 0, 0, 0.1)',
-                    height    : '44px',
-                  },
-                }}
-              />
-              <div className="flex flex-col min-h-screen">
-                <Navbar
-                  items={navItems as any}
-                  socials={socialLinks as any}
+              <NextIntlClientProvider>
+                <NextTopLoader
+                  color="#F26B50"
+                  initialPosition={0.08}
+                  crawlSpeed={200}
+                  height={3}
+                  crawl={true}
+                  showSpinner={false}
+                  easing="ease"
+                  speed={200}
+                  shadow="0 0 10px #F26B50,0 0 5px #F26B50"
                 />
+                <Toaster
+                  toastOptions={{
+                    // icon : (
+                    // 	<div className="text-20" data-cy="modal-information-icon">
+                    // 		<ModalInformationIcon />
+                    // 	</div>
+                    // ),
+                    position  : 'top-right',
+                    className : 'bg-white text-dark text-md',
+                    style     : {
+                      boxShadow : '0px 4px 10px rgba(0, 0, 0, 0.1)',
+                      height    : '44px',
+                    },
+                  }}
+                />
+                <div className="flex flex-col min-h-screen">
+                  <Navbar
+                    items={navItems as any}
+                    socials={socialLinks as any}
+                  />
 
-                {children}
+                  {children}
           
-                <SectionProvider>
-                  <Footer />
-                </SectionProvider>
-              </div>
-            </NextIntlClientProvider>
-          </ReactQueryProvider>
+                  <SectionProvider>
+                    <Footer />
+                  </SectionProvider>
+                </div>
+              </NextIntlClientProvider>
+            </ReactQueryProvider>
           </SmoothScrollProvider>
         </ErrorBoundary>
       </body>

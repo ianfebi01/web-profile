@@ -18,9 +18,9 @@ type Props = {
   }>
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
-  setRequestLocale(params.locale)
+  setRequestLocale( params.locale )
   const data = await getDetail( params.slug, params.locale )
 
   const title = data?.title || FALLBACK_SEO.title
@@ -66,7 +66,7 @@ export default async function ArticlePage(
   }
 ) {
   const params = await props.params;
-  setRequestLocale(params.locale)
+  setRequestLocale( params.locale )
   const data = await getDetail( params.slug, params.locale );
 
   return (

@@ -23,5 +23,5 @@ export const componentMap: Record<string, React.FC<{ sectionData: any }>> = {
   'content-components.quote'                 : Quote,
   'content-components.simple-cards'          : SimpleCards,
   'content-components.text-left-image-right' : TextLeftImageRight,
-  'content-components.accordian' : Accordian,
+  'content-components.accordian'             : Accordian,
 }

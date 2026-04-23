@@ -84,7 +84,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
           theme={color === 'bg-white' ? 'light' : 'dark'}
           className="backdrop-blur-md shadow-sm"
         >
-          {(data as any).year}
+          {( data as any ).year}
         </Button>
         <div className="flex items-center justify-center gap-2 ml-auto">
           {showEditButton ? (
@@ -170,7 +170,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={imageUrl(data.thumbnail as any, 'small') || ''}
+                  src={imageUrl( data.thumbnail as any, 'small' ) || ''}
                   alt={data.title}
                   fill
                   priority
@@ -236,7 +236,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={imageUrl(data.thumbnail as any, 'small') || ''}
+                  src={imageUrl( data.thumbnail as any, 'small' ) || ''}
                   alt={data.title}
                   fill
                   priority

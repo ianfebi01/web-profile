@@ -22,7 +22,7 @@ const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
       className="absolute inset-y-0 my-auto h-fit sm:translate-y-28 md:translate-y-8"
     >
       <motion.div
-        {...({
+        {...( {
           variants : {
             hidden : {
               opacity : 0,
@@ -33,15 +33,15 @@ const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
               y       : 0,
             },
           },
-          initial : "hidden",
-          animate : textControl,
+          initial    : "hidden",
+          animate    : textControl,
           transition : {
             duration : 0.3,
             delay    : 0.6,
             ease     : easeOut,
           },
           className : "  invisible  sm:visible flex w-full left-0 gap-2",
-        } as any)}
+        } as any )}
       >
         <div className="grow-[1] w-full shrink-[1] ">
           {openToWork &&

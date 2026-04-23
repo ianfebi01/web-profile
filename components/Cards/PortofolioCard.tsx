@@ -11,7 +11,7 @@ interface PortofolioCardProps {
   portofolio: Project | any;
 }
 
-const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
+const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
   return (
     <Link
       href={`/portofolio/${portofolio.slug}`}
@@ -42,10 +42,10 @@ const PortofolioCard = ({ portofolio }: PortofolioCardProps) => {
           {portofolio.title}
         </h3>
 
-        {!!getPlainText(portofolio.description || '') && (
+        {!!getPlainText( portofolio.description || '' ) && (
           <div className="xxl:text-xl">
             <p className="m-0 line-clamp-3 text-white/80">
-              {getPlainText(portofolio.description || '')}
+              {getPlainText( portofolio.description || '' )}
             </p>
           </div>
         )}

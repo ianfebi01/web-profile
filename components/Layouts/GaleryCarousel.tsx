@@ -21,7 +21,7 @@ import imageLoader from '@/lib/constans/image-loader'
 import { Media } from '@/payload-types'
 
 interface Props {
-  data: (string | Media)[]
+  data: ( string | Media )[]
 }
 
 const GaleryCarousel: React.FC<Props> = ( { data } ) => {

@@ -98,7 +98,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                         buttonsVariation === 'secondary' ||
                         bgColour === 'blue-dark',
                     } )}
-                    href={parseUrl(button.url)}
+                    href={parseUrl( button.url )}
                     target={button.newTab ? '_blank' : undefined}
                     rel={button.newTab ? 'noopener noreferrer' : undefined}
                   >

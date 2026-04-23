@@ -22,7 +22,7 @@ type Props = {
   }>
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
   const { locale } = await params
   setRequestLocale( locale )
@@ -44,8 +44,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       images      : data?.thumbnail
         ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
         : [],
-      type        : 'article',
-      authors     : ['Ian Febi Sastrataruna'],
+      type    : 'article',
+      authors : ['Ian Febi Sastrataruna'],
     },
     twitter : {
       card        : 'summary',
@@ -81,7 +81,9 @@ export default async function PortofolioPage(
 
   return (
     <main className="grow-[1] flex flex-col">
-      <Detail data={data} latestPortofolios={latestPortofolios} />
+      <Detail data={data}
+        latestPortofolios={latestPortofolios}
+      />
     </main>
   )
 }

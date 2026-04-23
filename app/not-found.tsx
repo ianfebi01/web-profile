@@ -7,7 +7,9 @@ export default function NotFound() {
   const router = useRouter()
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en"
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
         <div className="h-screen flex flex-col items-center justify-center relative">
           <div className="absolute container w-full h-full z-10">
