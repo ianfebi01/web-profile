@@ -15,8 +15,10 @@
       "javascript",
       "javascriptreact",
       "html",
-      "typescriptreact"
+      "typescriptreact",
+      "typescript"
     ],
     "nuxt.isNuxtApp": false,
+    "eslint.useFlatConfig": true
   }
   

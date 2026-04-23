@@ -44,24 +44,8 @@ const config = [
           next      : 'return',
         },
       ],
-      'newline-before-return'   : 'error',
-      'object-curly-spacing'    : ['error', 'always'],
-      'no-console'              : 'error',
-      'no-multiple-empty-lines' : [
-        'error',
-        {
-          max    : 1,
-          maxEOF : 0,
-        },
-      ],
-      'react/react-in-jsx-scope'     : 'off',
-      'react/jsx-max-props-per-line' : [
-        1,
-        {
-          maximum : 1,
-        },
-      ],
-      'react/jsx-closing-bracket-location' : 1,
+      'newline-before-return' : 'error',
+      'object-curly-spacing'  : ['error', 'always'],
     },
   },
 ]
