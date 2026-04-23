@@ -17,7 +17,6 @@ const SearchField = ( {
   value,
   onChange,
   placeholder,
-  resetLabel,
   debounceMs = 350,
 }: Props ) => {
   const [inputValue, setInputValue] = useState( value )

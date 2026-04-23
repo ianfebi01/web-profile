@@ -56,7 +56,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       images      : [
         {
           url : metadata?.image?.url
-            ? imageUrl( metadata?.image?.url as any, "thumbnail" ) || ""
+            ? imageUrl( metadata?.image?.url as any ) || ""
             : "",
         },
       ],
@@ -69,7 +69,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       images      : [
         {
           url : metadata?.image?.url
-            ? imageUrl( metadata?.image?.url as any, "thumbnail" ) || ""
+            ? imageUrl( metadata?.image?.url as any ) || ""
             : "",
         },
       ],

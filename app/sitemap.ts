@@ -10,11 +10,6 @@ type TLocale = {
   url: string
 }
 
-type TResponse = {
-  slug: string
-  updatedAt: string
-}
-
 export const locales: TLocale[] = [
   {
     code : 'en',

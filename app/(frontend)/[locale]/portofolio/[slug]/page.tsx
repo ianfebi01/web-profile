@@ -6,11 +6,6 @@ import {
 } from '@/lib/api/portofolioQueryFn'
 import { Project } from '@/payload-types'
 import imageUrl from '@/utils/imageUrl'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
 import { Metadata } from 'next'
 import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
@@ -42,7 +37,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       url         : canonicalURL,
       siteName    : title,
       images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.thumbnail ) || '' }]
         : [],
       type    : 'article',
       authors : ['Ian Febi Sastrataruna'],
@@ -53,7 +48,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       title,
       description : desc,
       images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.thumbnail ) || '' }]
         : [],
     },
   }

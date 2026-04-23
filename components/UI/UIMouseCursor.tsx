@@ -61,29 +61,39 @@ export default function UIMouseCursor() {
   // State to safely manage client-side portal mounting in SSR
   const [mounted, setMounted] = useState( false )
 
-  useEffect( () => {
-    setMounted( true )
-    
-    // Detect touch device explicitly
-    if ( typeof window !== 'undefined' ) {
-      const isTouchDevice = 
-        'ontouchstart' in window || 
-        navigator.maxTouchPoints > 0 || 
-        window.matchMedia( '(pointer: coarse)' ).matches
-
-      if ( isTouchDevice || window.innerWidth <= 768 ) {
-        setShowCursor( false )
-      }
-    }
-  }, [] )
-
-  // Force reset cursor state on navigation to prevent styles getting stuck
-  useEffect( () => {
+  // Derived State: Reset cursor state immediately when the pathname changes 
+  // (React official pattern to avoid cascading renders in useEffect)
+  const [prevPathname, setPrevPathname] = useState( pathname )
+  if ( pathname !== prevPathname ) {
+    setPrevPathname( pathname )
     setIsOver( false )
     setDataName( '' )
     setDataText( '' )
+  }
+
+  // Ref updates must happen in an effect, not during render
+  useEffect( () => {
     isMagnetLocked.current = false
   }, [pathname] )
+
+  useEffect( () => {
+    // Safely mount portal in next tick to avoid cascading render warning
+    requestAnimationFrame( () => {
+      setMounted( true )
+      
+      // Detect touch device explicitly
+      if ( typeof window !== 'undefined' ) {
+        const isTouchDevice = 
+          'ontouchstart' in window || 
+          navigator.maxTouchPoints > 0 || 
+          window.matchMedia( '(pointer: coarse)' ).matches
+
+        if ( isTouchDevice || window.innerWidth <= 768 ) {
+          setShowCursor( false )
+        }
+      }
+    } )
+  }, [] )
 
   // Tween lagging 'pos' to real 'mouseRef', 'ypos'
   useEffect( () => {

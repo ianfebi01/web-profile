@@ -3,11 +3,6 @@ import { getAllArticleSlugs, getDetail } from '@/lib/api/articleQueryFn'
 import { Article } from '@/payload-types'
 import { FALLBACK_SEO } from '@/utils/constants'
 import imageUrl from '@/utils/imageUrl'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
 import { Metadata } from 'next'
 import { setRequestLocale } from 'next-intl/server'
 
@@ -37,7 +32,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       siteName    : 'Ian Febi Sastrataruna',
       type        : 'article',
       images      : data?.heroImage
-        ? [{ url : imageUrl( data.heroImage, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.heroImage ) || '' }]
         : [],
       authors : ['Ian Febi Sastrataruna'],
     },

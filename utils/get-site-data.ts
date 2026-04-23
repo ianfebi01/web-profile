@@ -36,6 +36,7 @@ export async function getSiteData( lang: string ) {
       } 
     }
   } catch ( error ) {
+    // eslint-disable-next-line no-console
     console.error( 'Failed to fetch site data:', error )
     
     return {
