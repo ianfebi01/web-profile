@@ -3,8 +3,8 @@ import configPromise from '@payload-config'
 import ArticleCard from '../Cards/ArticleCard'
 import NoDataFound from '../NoDataFound'
 import { Link } from '@/i18n/navigation'
-import Button2 from '../Buttons/Button2'
 import { getLocale } from 'next-intl/server'
+import Button from '../Buttons/Button'
 
 const ArticleSearch = async () => {
   const locale = await getLocale()
@@ -31,11 +31,11 @@ const ArticleSearch = async () => {
       <Link className="no-underline"
         href={'/article'}
       >
-        <Button2 variant="secondary"
+        <Button variant="secondary"
           className="w-fit"
         >
           Show more
-        </Button2>
+        </Button>
       </Link>
     </div>
   )

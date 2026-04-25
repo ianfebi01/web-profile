@@ -2,7 +2,7 @@ import { getPayload } from 'payload'
 import configPromise from '@payload-config'
 import NoDataFound from '../NoDataFound'
 import { Link } from '@/i18n/navigation'
-import Button2 from '../Buttons/Button2'
+import Button from '../Buttons/Button'
 import PortofoliosWrapper from '../PortofoliosWrapper'
 import { getLocale } from 'next-intl/server'
 
@@ -25,11 +25,11 @@ const PortofolioSearch = async () => {
       <Link className="no-underline"
         href={'/portofolio'}
       >
-        <Button2 variant="secondary"
+        <Button variant="secondary"
           className="w-fit"
         >
           Show more
-        </Button2>
+        </Button>
       </Link>
     </div>
   )
