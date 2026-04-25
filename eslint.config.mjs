@@ -3,6 +3,9 @@ import tsEslint from 'typescript-eslint'
 import reactPlugin from 'eslint-plugin-react'
 
 const config = [
+  {
+    ignores : ['app/(payload)/admin/importMap.js'],
+  },
   ...nextConfigVitals,
   ...tsEslint.configs.recommended,
   {

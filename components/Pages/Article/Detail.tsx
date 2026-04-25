@@ -4,10 +4,10 @@ import imageUrl from '@/utils/imageUrl'
 import Markdown from '@/components/Parsers/Markdown'
 import imageLoader from '@/lib/constans/image-loader'
 import SkeletonDetail from '../Portofolio/SkeletonDetail'
-import Header from '@/components/Layouts/Header'
 import Chip from '@/components/Chip'
 import { useTranslations } from 'next-intl'
 import { Article } from '@/payload-types'
+import PageTitle from '@/components/Layouts/PageTitle'
 
 interface Props {
   data: Article | null
@@ -26,7 +26,7 @@ const Detail = ( { data, isFetching }: Props ) => {
         <SkeletonDetail />
       ) : (
         <div className="w-full h-full grow-[1] max-w-5xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
-          <Header text={t( 'back' )}
+          <PageTitle text={t( 'back' )}
             link={'/article'}
           />
           <div className="flex flex-col w-full max-w-3xl gap-4 mx-auto">
@@ -35,7 +35,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                 <>
                   <Image
                     className="hidden object-cover object-center w-full h-full md:block"
-                    src={imageUrl( data.heroImage as any, 'xlarge' ) || ''}
+                    src={imageUrl( data.heroImage ) || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}
@@ -44,7 +44,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                   />
                   <Image
                     className="object-cover object-center w-full h-full md:hidden"
-                    src={imageUrl( data.heroImage as any, 'small' ) || ''}
+                    src={imageUrl( data.heroImage ) || ''}
                     fill
                     sizes="auto"
                     alt={`${data.title} Image`}

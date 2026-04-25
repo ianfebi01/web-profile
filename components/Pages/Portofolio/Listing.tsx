@@ -3,12 +3,12 @@
 import { useState, startTransition } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useQuery } from '@tanstack/react-query'
-import Header from '@/components/Layouts/Header'
 import NoDataFound from '@/components/NoDataFound'
 import PortofoliosWrapper from '@/components/PortofoliosWrapper'
 import SearchField from '@/components/Inputs/SearchField'
 import PaginationControls from '@/components/UI/PaginationControls'
 import { fetchPortofolios } from '@/lib/api/portofolioListClient'
+import PageTitle from '@/components/Layouts/PageTitle'
 
 const PortofolioListing = () => {
   const locale = useLocale()
@@ -38,7 +38,7 @@ const PortofolioListing = () => {
         className="h-fit bg-dark"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-20 sm:mt-20 flex flex-col gap-4">
-          <Header text={tPortofolio( 'title' )}
+          <PageTitle text={tPortofolio( 'title' )}
             link={'/'}
           />
           <SearchField

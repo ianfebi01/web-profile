@@ -8,7 +8,7 @@ interface Props {
   text: string
   link?: Url
 }
-const Header: FunctionComponent<Props> = ( props ) => {
+const PageTitle: FunctionComponent<Props> = ( props ) => {
   const { text, link } = props
 
   return (
@@ -31,4 +31,4 @@ const Header: FunctionComponent<Props> = ( props ) => {
   )
 }
 
-export default Header
+export default PageTitle
