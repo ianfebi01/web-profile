@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Image from 'next/image'
 import { Link } from '@/i18n/navigation'
@@ -8,7 +8,11 @@ import { cn } from '@/lib/utils'
 import { useLenis } from 'lenis/react'
 import LocaleSwitcher from './LocaleSwitcher'
 import HeaderPanel from './HeaderPanel'
-import { NavCategoryType, SocialLinksType } from '@/types/header'
+import {
+  MenuAnchorType,
+  NavCategoryType,
+  SocialLinksType,
+} from '@/types/header'
 
 interface Props {
   items: NavCategoryType[]
@@ -17,9 +21,24 @@ interface Props {
 
 const Header = ( { items, socials }: Props ) => {
   const [isOpen, setIsOpen] = useState( false )
+  const [menuAnchor, setMenuAnchor] = useState<MenuAnchorType | null>( null )
   const navbarRef = useRef<HTMLElement>( null )
+  const menuTriggerRef = useRef<HTMLDivElement>( null )
   const isHiddenRef = useRef( false )
   const itemsRefs = useRef<HTMLButtonElement[] | HTMLDivElement[] | null[]>( [] )
+
+  const syncMenuAnchor = useCallback( () => {
+    if ( !menuTriggerRef.current ) return
+
+    const rect = menuTriggerRef.current.getBoundingClientRect()
+
+    setMenuAnchor( {
+      top    : rect.top,
+      right  : window.innerWidth - rect.right,
+      width  : rect.width,
+      height : rect.height,
+    } )
+  }, [] )
 
   // Animate stagger items flawlessly when opening the new unified drawer
   useEffect( () => {
@@ -52,7 +71,25 @@ const Header = ( { items, socials }: Props ) => {
         ease     : 'power2.out',
       } )
     }
-  }, [isOpen] )
+
+    syncMenuAnchor()
+  }, [isOpen, syncMenuAnchor] )
+
+  useEffect( () => {
+    syncMenuAnchor()
+
+    if ( !menuTriggerRef.current ) return
+
+    const resizeObserver = new ResizeObserver( syncMenuAnchor )
+
+    resizeObserver.observe( menuTriggerRef.current )
+    window.addEventListener( 'resize', syncMenuAnchor )
+
+    return () => {
+      resizeObserver.disconnect()
+      window.removeEventListener( 'resize', syncMenuAnchor )
+    }
+  }, [syncMenuAnchor] )
 
   useLenis( ( { scroll, direction } ) => {
     // Never hide the Navbar header while the integrated mobile drawer is actively open
@@ -84,7 +121,7 @@ const Header = ( { items, socials }: Props ) => {
   } )
 
   return (
-    <>
+    <><pre>{JSON.stringify( menuAnchor, null, 2 )}</pre>
       <nav
         ref={navbarRef}
         className={cn(
@@ -110,6 +147,7 @@ const Header = ( { items, socials }: Props ) => {
             </div>
 
             <div
+              ref={menuTriggerRef}
               className="magnet-zone flex items-center gap-4 p-4 -m-4 cursor-pointer group w-fit relative z-50"
               data-name="burger"
               onClick={() => setIsOpen( !isOpen )}
@@ -157,6 +195,7 @@ const Header = ( { items, socials }: Props ) => {
         items={items}
         socials={socials}
         itemsRefs={itemsRefs}
+        menuAnchor={menuAnchor}
         setIsOpen={setIsOpen}
       />
     </>

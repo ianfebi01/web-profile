@@ -8,6 +8,7 @@ import { Page } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
 import { cn, openNewTab } from '@/lib/utils'
 import {
+  MenuAnchorType,
   NavCategoryType,
   NavItemType,
   SocialLinksType,
@@ -18,6 +19,7 @@ interface Props {
   isOpen: boolean
   items: NavCategoryType[]
   socials: SocialLinksType
+  menuAnchor: MenuAnchorType | null
   itemsRefs: MutableRefObject<
     ( HTMLButtonElement | HTMLDivElement | null )[]
   >
@@ -28,9 +30,17 @@ const HeaderPanel = ( {
   isOpen,
   items,
   socials,
+  menuAnchor,
   itemsRefs,
   setIsOpen,
 }: Props ) => {
+  const panelTop = menuAnchor ? Math.max( menuAnchor.top, 16 ) : 16
+  const panelRight = menuAnchor ? Math.max( menuAnchor.right, 16 ) : 16
+  const panelMaxHeight = `calc(100vh - ${panelTop}px - 16px)`
+  const transformOrigin = menuAnchor
+    ? `calc(100% - 16px) ${menuAnchor.height / 2}px`
+    : 'top right'
+
   return (
     <div
       className={cn(
@@ -49,15 +59,26 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute top-4 right-4 w-full sm:max-w-md bg-blue-dark bg-dark pt-28 px-6 lg:px-8 overflow-y-auto flex flex-col transform transition-transform duration-500 ease-[cubic-bezier(0.7,0,0.3,1)] h-fit',
-          isOpen ? 'translate-x-0' : 'translate-x-full'
+          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-28 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-[2rem] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          isOpen
+            ? 'scale-100'
+            : 'scale-[0]'
         )}
+        style={{
+          top             : `${panelTop}px`,
+          right           : `${panelRight}px`,
+          maxHeight       : panelMaxHeight,
+          transformOrigin : transformOrigin,
+        }}
       >
-        <div className="flex mt-6 grow">
+        <div className={cn( "flex mt-6 grow transition-opacity duration-300", isOpen ? "opacity-100" : "opacity-0" )}>
           <div className="flex flex-col items-center justify-center mb-6 overflow-hidden text-xl font-bold text-white grow">
             <div className="flex w-full mt-6 grow">
               <div className="flex flex-col w-full gap-4 py-6">
-                <div className="flex flex-col w-full h-full gap-4 text-white">
+                <div className={cn(
+                  "flex flex-col w-full h-full gap-4 text-white",
+                )}
+                >
                   {items?.map( ( item, key ) => (
                     <div
                       key={key}

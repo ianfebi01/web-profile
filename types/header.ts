@@ -16,3 +16,10 @@ export interface NavCategoryType {
 }
 
 export type SocialLinksType = NonNullable<Site['socialPlatformLinks']>
+
+export interface MenuAnchorType {
+  top: number
+  right: number
+  width: number
+  height: number
+}
