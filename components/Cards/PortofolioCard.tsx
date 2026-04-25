@@ -25,7 +25,6 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
           src={
             imageUrl(
               portofolio.thumbnail,
-              "original",
             ) || ""
           }
           fill

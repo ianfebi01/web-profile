@@ -56,7 +56,7 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
               <div className="relative aspect-video overflow-hidden mb-8 bg-dark-secondary rounded-lg">
                 <Image
                   alt={`Image ${index}`}
-                  src={imageUrl( item, 'original' ) || ''}
+                  src={imageUrl( item ) || ''}
                   fill
                   style={{
                     objectFit : 'contain',

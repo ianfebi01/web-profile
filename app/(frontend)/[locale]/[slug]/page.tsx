@@ -50,7 +50,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       siteName    : 'Ian Febi Sastrataruna', // Replace with your site name
       type        : 'website', // or "article"
       images      : metadata?.image?.url
-        ? [{ url : imageUrl( metadata?.image?.url as any, 'medium' ) || '' }]
+        ? [{ url : imageUrl( metadata?.image?.url as any ) || '' }]
         : [], // Add Open Graph image
     },
     twitter : {
@@ -59,7 +59,7 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       title       : metadata?.title || page?.title || FALLBACK_SEO.title || null,
       description : metadata?.description || FALLBACK_SEO.description || '',
       images      : metadata?.image?.url
-        ? [{ url : imageUrl( metadata?.image?.url as any, 'medium' ) || '' }]
+        ? [{ url : imageUrl( metadata?.image?.url as any ) || '' }]
         : [], // Twitter image
     },
   }

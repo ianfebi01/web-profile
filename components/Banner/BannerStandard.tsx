@@ -25,8 +25,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
           !isVideo( sectionData.background )
             ? {
               background : `url(${imageUrl(
-                sectionData.background,
-                'small'
+                sectionData.background
               )}) no-repeat center center / cover`,
             }
             : undefined
@@ -39,7 +38,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
               sources={[
                 {
                   location :
-                      imageUrl( sectionData.background, 'original' ) || '',
+                      imageUrl( sectionData.background ) || '',
                   codec : ( sectionData.background as any )?.mimeType || '',
                 },
               ]}
@@ -86,8 +85,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
           !isVideo( sectionData.background )
             ? {
               background : `url(${imageUrl(
-                sectionData.background,
-                'small'
+                sectionData.background
               )}) no-repeat center center / cover`,
             }
             : undefined
@@ -100,7 +98,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
               sources={[
                 {
                   location :
-                      imageUrl( sectionData.background, 'original' ) || '',
+                      imageUrl( sectionData.background ) || '',
                   codec : ( ( sectionData.background as any )?.mimeType ) || '',
                 },
               ]}

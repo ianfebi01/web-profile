@@ -44,7 +44,7 @@ const Gallery: React.FC<Props> = ( { sectionData } ) => {
               <div className="relative w-full overflow-hidden aspect-square">
                 {item.image && (
                   <Image
-                    src={imageUrl( item?.image, 'medium' ) || ''}
+                    src={imageUrl( item?.image ) || ''}
                     alt={`Image-${index}`}
                     className="object-contain object-center w-full h-full"
                     placeholder={imageLoader}

@@ -34,7 +34,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
         'h-full sm:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.3%-1.5rem)]',
       )}
     >
-      {!!imageUrl( data.heroImage, 'original' ) && (
+      {!!imageUrl( data.heroImage ) && (
         <div
           className={cn(
             'w-full shrink-0 overflow-hidden relative',
@@ -42,7 +42,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
           )}
         >
           <Image
-            src={imageUrl( data.heroImage, 'original' ) || ''}
+            src={imageUrl( data.heroImage ) || ''}
             alt={`${data.title} Picture`}
             className="object-cover object-top w-full h-full"
             loading="lazy"
