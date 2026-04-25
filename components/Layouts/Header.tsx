@@ -26,6 +26,7 @@ const Header = ( { items, socials }: Props ) => {
   const menuTriggerRef = useRef<HTMLDivElement>( null )
   const isHiddenRef = useRef( false )
   const itemsRefs = useRef<HTMLButtonElement[] | HTMLDivElement[] | null[]>( [] )
+  const itemsCount = items.length
 
   const syncMenuAnchor = useCallback( () => {
     if ( !menuTriggerRef.current ) return
@@ -42,7 +43,7 @@ const Header = ( { items, socials }: Props ) => {
 
   // Animate stagger items flawlessly when opening the new unified drawer
   useEffect( () => {
-    const targets = itemsRefs.current.filter( Boolean ) as HTMLElement[]
+    const targets = itemsRefs.current.slice( 0, itemsCount ).filter( Boolean ) as HTMLElement[]
     if ( isOpen ) {
       gsap.fromTo( targets, 
         { opacity : 0, y : 50 },
@@ -58,7 +59,7 @@ const Header = ( { items, socials }: Props ) => {
     } else {
       gsap.set( targets, { opacity : 0, y : 50 } )
     }
-  }, [isOpen] )
+  }, [isOpen, itemsCount] )
 
   // Instantly force the Navbar to be visible when the menu is toggled open!
   useEffect( () => {

@@ -2,17 +2,11 @@
 
 import { MutableRefObject } from 'react'
 import { Disclosure, Transition } from '@headlessui/react'
-import {
-  faGithub,
-  faInstagram,
-  faLinkedinIn,
-} from '@fortawesome/free-brands-svg-icons'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { Page } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
-import { cn, openNewTab } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import {
   MenuAnchorType,
   NavCategoryType,
@@ -20,6 +14,7 @@ import {
   SocialLinksType,
 } from '@/types/header'
 import constructNavUrl from '@/utils/construct-nav-url'
+import HeaderPanelSocial from './HeaderPanelSocial'
 
 interface Props {
   isOpen: boolean
@@ -46,21 +41,6 @@ const HeaderPanel = ( {
   const transformOrigin = menuAnchor
     ? `calc(100% - 16px) ${menuAnchor.height / 2}px`
     : 'top right'
-
-  const getSocialIcon = ( platform?: string ) => {
-    switch ( platform?.toLowerCase() ) {
-    case 'instagram':
-      return faInstagram
-    case 'linkedin':
-      return faLinkedinIn
-    case 'github':
-      return faGithub
-    case 'email':
-      return faEnvelope
-    default:
-      return null
-    }
-  }
 
   return (
     <div
@@ -236,37 +216,15 @@ const HeaderPanel = ( {
             </div>
 
             <div className="mt-6 flex items-center gap-4">
-              {socials.map( ( item, index ) => {
-                const icon = getSocialIcon( item.platform )
-
-                return (
-                  <button
-                    ref={( el ) => {
-                      itemsRefs.current[items.length + index] = el
-                    }}
-                    onClick={() => openNewTab( item.url )}
-                    className={cn(
-                      'opacity-0 translate-y-[50px] will-change-transform',
-                      'flex size-12 items-center justify-center text-white hover:text-orange transition-all duration-300 focus:outline-none focus-visible:ring-0 focus:border-none outline-none focus:outline-0',
-                    )}
-                    data-name='button'
-                    aria-label={item.platform}
-                    title={item.platform}
-                    tabIndex={-1}
-                    key={index}
-                  >
-                    {icon ? (
-                      <FontAwesomeIcon icon={icon}
-                        size="lg"
-                      />
-                    ) : (
-                      <span className="text-sm font-bold uppercase">
-                        {item.platform?.slice( 0, 2 )}
-                      </span>
-                    )}
-                  </button>
-                )
-              } )}
+              {socials.map( ( item, index ) => (
+                <HeaderPanelSocial
+                  key={index}
+                  item={item}
+                  transitionEnabled
+                  transitionIn={isOpen}
+                  transitionDelay={0.2 + ( items.length * 0.1 ) + ( index * 0.1 )}
+                />
+              ) )}
             </div>
           </div>
         </div>
