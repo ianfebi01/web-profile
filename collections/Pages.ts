@@ -13,7 +13,8 @@ import {
   FeaturedExperiences,
   IconTexts,
   ArticleSearch,
-  PortofolioSearch
+  PortofolioSearch,
+  MainBanner
 } from '../blocks/ContentComponents'
 
 import { readLocalizedSlug, resolveLocales, revalidateContent } from '../lib/revalidate'
@@ -77,6 +78,7 @@ export const Pages: CollectionConfig = {
       blocks    : [
         ProfileBanner,
         BannerStandard,
+        MainBanner
       ],
     },
     {

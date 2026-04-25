@@ -90,7 +90,23 @@ export const ProfileBanner: Block = {
   imageURL      : svgURI( '<circle cx="300" cy="120" r="50" fill="#e2e8f0"/><rect x="200" y="190" width="200" height="20" rx="10" fill="#94a3b8"/><rect x="150" y="230" width="300" height="15" rx="7" fill="#cbd5e1"/>' ),
   imageAltText  : 'Profile Banner',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } }
+    { name : 'title', type : 'text', }
+  ],
+}
+
+export const MainBanner: Block = {
+  slug          : 'banner-components.main-banner',
+  interfaceName : 'MainBannerBlock',
+  labels        : { singular : 'Main Banner', plural : 'Main Banners' },
+  imageURL      : svgURI( '<circle cx="300" cy="120" r="50" fill="#e2e8f0"/><rect x="200" y="190" width="200" height="20" rx="10" fill="#94a3b8"/><rect x="150" y="230" width="300" height="15" rx="7" fill="#cbd5e1"/>' ),
+  imageAltText  : 'Main Banner',
+  fields        : [
+    { name : 'heading1', type : 'text', required : true, },
+    { name : 'heading2', type : 'text', required : true, },
+    { name : 'heading3', type : 'text', required : true, },
+    { name : 'heading4', type : 'text', required : true, },
+    { name : 'description', type : 'text', required : true, },
+    { name : 'skills', type : 'relationship', relationTo : 'skills', hasMany : true, },
   ],
 }
 
@@ -114,7 +130,7 @@ export const BodyCopy: Block = {
   labels        : { singular : 'Body Copy', plural : 'Body Copies' },
   imageURL      : svgURI( '<rect x="100" y="100" width="400" height="20" rx="10" fill="#94a3b8"/><rect x="100" y="150" width="350" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="200" width="380" height="20" rx="10" fill="#cbd5e1"/><rect x="100" y="250" width="200" height="20" rx="10" fill="#cbd5e1"/>' ),
   imageAltText  : 'Body Copy',
-  fields        : [ { name : 'content', type : 'richText' }, SectionSettingsFields ],
+  fields        : [{ name : 'content', type : 'richText' }, SectionSettingsFields],
 }
 
 export const TextLeftImageRight: Block = {
@@ -177,7 +193,7 @@ export const Divider: Block = {
   imageURL      : svgURI( '<line x1="100" y1="200" x2="500" y2="200" stroke="#cbd5e1" stroke-width="8" stroke-linecap="round"/>' ),
   imageAltText  : 'Divider',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } },
+    { name : 'title', type : 'text', },
     SectionSettingsFields,
   ],
 }
@@ -220,7 +236,7 @@ export const FeaturedPortofolios: Block = {
   imageURL      : svgURI( '<rect x="100" y="50" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="320" y="50" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="100" y="220" width="180" height="130" rx="15" fill="#e2e8f0"/><rect x="320" y="220" width="180" height="130" rx="15" fill="#e2e8f0"/>' ),
   imageAltText  : 'Featured Portfolios',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } },
+    { name : 'title', type : 'text', },
     SectionSettingsFields,
   ],
 }
@@ -232,7 +248,7 @@ export const FeaturedExperiences: Block = {
   imageURL      : svgURI( '<circle cx="150" cy="100" r="15" fill="#94a3b8"/><line x1="150" y1="115" x2="150" y2="185" stroke="#cbd5e1" stroke-width="4"/><circle cx="150" cy="200" r="15" fill="#94a3b8"/><line x1="150" y1="215" x2="150" y2="285" stroke="#cbd5e1" stroke-width="4"/><circle cx="150" cy="300" r="15" fill="#94a3b8"/><rect x="200" y="90" width="250" height="20" rx="10" fill="#e2e8f0"/><rect x="200" y="190" width="250" height="20" rx="10" fill="#e2e8f0"/><rect x="200" y="290" width="250" height="20" rx="10" fill="#e2e8f0"/>' ),
   imageAltText  : 'Featured Experiences',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } },
+    { name : 'title', type : 'text', },
     SectionSettingsFields,
   ],
 }
@@ -266,7 +282,7 @@ export const ArticleSearch: Block = {
   imageURL      : svgURI( '<rect x="100" y="80" width="400" height="50" rx="25" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="4"/><circle cx="460" cy="105" r="12" stroke="#94a3b8" stroke-width="4" fill="none"/><line x1="468" y1="113" x2="478" y2="123" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><rect x="100" y="180" width="400" height="80" rx="10" fill="#e2e8f0" stroke="#e2e8f0" stroke-width="4"/><rect x="100" y="280" width="400" height="80" rx="10" fill="#e2e8f0" stroke="#e2e8f0" stroke-width="4"/>' ),
   imageAltText  : 'Article Search',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } },
+    { name : 'title', type : 'text', },
     SectionSettingsFields,
   ],
 }
@@ -278,7 +294,7 @@ export const PortofolioSearch: Block = {
   imageURL      : svgURI( '<rect x="100" y="80" width="400" height="50" rx="25" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="4"/><circle cx="460" cy="105" r="12" stroke="#94a3b8" stroke-width="4" fill="none"/><line x1="468" y1="113" x2="478" y2="123" stroke="#94a3b8" stroke-width="4" stroke-linecap="round"/><rect x="100" y="180" width="180" height="120" rx="10" fill="#e2e8f0"/><rect x="320" y="180" width="180" height="120" rx="10" fill="#e2e8f0"/>' ),
   imageAltText  : 'Portfolio Search',
   fields        : [
-    { name : 'title', type : 'text', admin : { hidden : true } },
+    { name : 'title', type : 'text', },
     SectionSettingsFields,
   ],
 }

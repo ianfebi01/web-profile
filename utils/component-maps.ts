@@ -1,4 +1,5 @@
 import BannerStandard from '@/components/Banner/BannerStandard'
+import MainBanner from '@/components/Banner/MainBanner'
 import ProfileBanner from '@/components/Banner/ProfileBanner'
 import Accordian from '@/components/Content/Accordian'
 import ArticleSearch from '@/components/Content/ArticleSearch'
@@ -14,6 +15,7 @@ import TextLeftImageRight from '@/components/Content/TextLeftImageRight'
 export const componentMap: Record<string, React.FC<{ sectionData: any }>> = {
   'banner-components.banner-standard'        : BannerStandard,
   'banner-components.profile-banner'         : ProfileBanner,
+  'banner-components.main-banner'            : MainBanner,
   'content-components.article-search'        : ArticleSearch,
   'content-components.body-copy'             : BodyCopy,
   'content-components.featured-experiences'  : FeaturedExperiences,

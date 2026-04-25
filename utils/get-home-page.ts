@@ -8,7 +8,7 @@ const getHomePageCached = unstable_cache(
     const homePage = await payload.findGlobal( {
       slug   : 'home-page',
       locale : lang as 'en' | 'id',
-      depth  : 2,
+      depth  : 3,
     } )
     
     return homePage

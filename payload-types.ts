@@ -284,7 +284,7 @@ export interface Page {
   id: string;
   title: string;
   slug: string;
-  banner?: (ProfileBannerBlock | BannerStandardBlock)[] | null;
+  banner?: (ProfileBannerBlock | BannerStandardBlock | MainBannerBlock)[] | null;
   blocks?:
     | (
         | BodyCopyBlock
@@ -342,6 +342,21 @@ export interface BannerStandardBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'banner-components.banner-standard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MainBannerBlock".
+ */
+export interface MainBannerBlock {
+  heading1: string;
+  heading2: string;
+  heading3: string;
+  heading4: string;
+  description: string;
+  skills?: (string | Skill)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'banner-components.main-banner';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1016,6 +1031,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         'banner-components.profile-banner'?: T | ProfileBannerBlockSelect<T>;
         'banner-components.banner-standard'?: T | BannerStandardBlockSelect<T>;
+        'banner-components.main-banner'?: T | MainBannerBlockSelect<T>;
       };
   blocks?:
     | T
@@ -1069,6 +1085,20 @@ export interface BannerStandardBlockSelect<T extends boolean = true> {
         style?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MainBannerBlock_select".
+ */
+export interface MainBannerBlockSelect<T extends boolean = true> {
+  heading1?: T;
+  heading2?: T;
+  heading3?: T;
+  heading4?: T;
+  description?: T;
+  skills?: T;
   id?: T;
   blockName?: T;
 }
