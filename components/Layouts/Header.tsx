@@ -121,7 +121,7 @@ const Header = ( { items, socials }: Props ) => {
   } )
 
   return (
-    <><pre>{JSON.stringify( menuAnchor, null, 2 )}</pre>
+    <>
       <nav
         ref={navbarRef}
         className={cn(
