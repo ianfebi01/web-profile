@@ -33,7 +33,7 @@ interface Props {
   socials: NonNullable<Site['socialPlatformLinks']>
 }
 
-const Navbar = ( { items, socials }: Props ) => {
+const Header = ( { items, socials }: Props ) => {
   const [isOpen, setIsOpen] = useState( false )
   const navbarRef = useRef<HTMLElement>( null )
   const isHiddenRef = useRef( false )
@@ -350,4 +350,4 @@ const Navbar = ( { items, socials }: Props ) => {
   )
 }
 
-export default Navbar
+export default Header

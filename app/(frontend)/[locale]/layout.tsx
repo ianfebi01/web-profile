@@ -7,7 +7,6 @@ import ReactQueryProvider from '@/components/Context/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
 import GoogleAnalytics from '@/components/GoogleAnalytics'
 import NextTopLoader from 'nextjs-toploader'
-import Navbar from '@/components/Layouts/Navbar'
 import Preloader from '@/components/UI/Preloader'
 import UIMouseCursor from '@/components/UI/UIMouseCursor'
 import SectionProvider from '@/components/Context/SectionProvider'
@@ -21,6 +20,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import Header from '@/components/Layouts/Header'
 
 config.autoAddCss = false
 
@@ -100,9 +100,9 @@ export default async function LocaleLayout( {
                   }}
                 />
                 <div className="flex flex-col min-h-screen">
-                  <Navbar
-                    items={navItems as any}
-                    socials={socialLinks as any}
+                  <Header
+                    items={navItems}
+                    socials={socialLinks}
                   />
 
                   {children}

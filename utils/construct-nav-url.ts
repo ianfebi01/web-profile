@@ -1,5 +1,5 @@
 import { Page } from "@/payload-types"
-import { NavItemType } from "@/components/Layouts/Navbar"
+import { NavItemType } from "@/components/Layouts/Header"
 import { parseUrl } from "./parse-url"
 
 const constructNavUrl = ( navItem: NavItemType | any ) => {
