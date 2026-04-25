@@ -1,8 +1,8 @@
 import { Page } from "@/payload-types"
-import { NavItemType } from "@/components/Layouts/Header"
+import { NavItemType } from "@/types/header"
 import { parseUrl } from "./parse-url"
 
-const constructNavUrl = ( navItem: NavItemType | any ) => {
+const constructNavUrl = ( navItem?: NavItemType | null ) => {
   let url: string = ''
   
   if ( navItem?.page && typeof navItem.page === 'object' && ( navItem.page as Page )?.slug ) {
