@@ -4,7 +4,7 @@ import React from 'react';
 import Markdown from './Parsers/Markdown'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import imageUrl from '@/utils/imageUrl'
-import { TextLeftImageRightBlock, Media } from '@/payload-types'
+import { Media } from '@/payload-types'
 import { parseUrl } from '@/utils/parse-url'
 import Link from 'next/link'
 import imageLoader from '@/lib/constans/image-loader'
@@ -98,7 +98,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                         buttonsVariation === 'secondary' ||
                         bgColour === 'blue-dark',
                     } )}
-                    href={parseUrl(button.url)}
+                    href={parseUrl( button.url )}
                     target={button.newTab ? '_blank' : undefined}
                     rel={button.newTab ? 'noopener noreferrer' : undefined}
                   >
@@ -133,7 +133,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
               <div className="aspect-square md:aspect-video lg:aspect-[1/0.7] lg:h-full lg:w-full overflow-hidden relative z-[1]">
                 <Image
                   loading="lazy"
-                  src={imageUrl( image, 'small' ) || ''}
+                  src={imageUrl( image ) || ''}
                   alt="Image Content"
                   placeholder={imageLoader}
                   className={cn( {
@@ -148,7 +148,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                 />
                 <Image
                   loading="lazy"
-                  src={imageUrl( image, 'xlarge' ) || ''}
+                  src={imageUrl( image ) || ''}
                   alt="Image Content"
                   placeholder={imageLoader}
                   className={cn( {

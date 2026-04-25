@@ -3,11 +3,6 @@ import { getAllArticleSlugs, getDetail } from '@/lib/api/articleQueryFn'
 import { Article } from '@/payload-types'
 import { FALLBACK_SEO } from '@/utils/constants'
 import imageUrl from '@/utils/imageUrl'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
 import { Metadata } from 'next'
 import { setRequestLocale } from 'next-intl/server'
 
@@ -18,9 +13,9 @@ type Props = {
   }>
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
-  setRequestLocale(params.locale)
+  setRequestLocale( params.locale )
   const data = await getDetail( params.slug, params.locale )
 
   const title = data?.title || FALLBACK_SEO.title
@@ -37,7 +32,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       siteName    : 'Ian Febi Sastrataruna',
       type        : 'article',
       images      : data?.heroImage
-        ? [{ url : imageUrl( data.heroImage, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.heroImage ) || '' }]
         : [],
       authors : ['Ian Febi Sastrataruna'],
     },
@@ -66,7 +61,7 @@ export default async function ArticlePage(
   }
 ) {
   const params = await props.params;
-  setRequestLocale(params.locale)
+  setRequestLocale( params.locale )
   const data = await getDetail( params.slug, params.locale );
 
   return (

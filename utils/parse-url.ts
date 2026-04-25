@@ -1,27 +1,27 @@
-export const parseUrl = (url?: string | null): string => {
-  if (!url) return '#'
+export const parseUrl = ( url?: string | null ): string => {
+  if ( !url ) return '#'
 
   // If it's a relative path, mailto, tel, or already has a protocol, return as is
   if (
-    url.startsWith('/') ||
-    url.startsWith('#') ||
-    url.startsWith('mailto:') ||
-    url.startsWith('tel:') ||
-    /^https?:\/\//i.test(url)
+    url.startsWith( '/' ) ||
+    url.startsWith( '#' ) ||
+    url.startsWith( 'mailto:' ) ||
+    url.startsWith( 'tel:' ) ||
+    /^https?:\/\//i.test( url )
   ) {
     return url
   }
 
   // Handle common external domains that users might type without http://
   if (
-    url.startsWith('wa.me/') ||
-    url.startsWith('www.') ||
-    url.includes('.com') ||
-    url.includes('.id') ||
-    url.includes('.net') ||
-    url.includes('.org') ||
-    url.includes('.io') ||
-    url.includes('.co')
+    url.startsWith( 'wa.me/' ) ||
+    url.startsWith( 'www.' ) ||
+    url.includes( '.com' ) ||
+    url.includes( '.id' ) ||
+    url.includes( '.net' ) ||
+    url.includes( '.org' ) ||
+    url.includes( '.io' ) ||
+    url.includes( '.co' )
   ) {
     return `https://${url}`
   }

@@ -6,11 +6,6 @@ import {
 } from '@/lib/api/portofolioQueryFn'
 import { Project } from '@/payload-types'
 import imageUrl from '@/utils/imageUrl'
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from '@tanstack/react-query'
 import { Metadata } from 'next'
 import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
@@ -22,7 +17,7 @@ type Props = {
   }>
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
   const { locale } = await params
   setRequestLocale( locale )
@@ -42,10 +37,10 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       url         : canonicalURL,
       siteName    : title,
       images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.thumbnail ) || '' }]
         : [],
-      type        : 'article',
-      authors     : ['Ian Febi Sastrataruna'],
+      type    : 'article',
+      authors : ['Ian Febi Sastrataruna'],
     },
     twitter : {
       card        : 'summary',
@@ -53,7 +48,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
       title,
       description : desc,
       images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail, 'thumbnail' ) || '' }]
+        ? [{ url : imageUrl( data.thumbnail ) || '' }]
         : [],
     },
   }
@@ -81,7 +76,9 @@ export default async function PortofolioPage(
 
   return (
     <main className="grow-[1] flex flex-col">
-      <Detail data={data} latestPortofolios={latestPortofolios} />
+      <Detail data={data}
+        latestPortofolios={latestPortofolios}
+      />
     </main>
   )
 }

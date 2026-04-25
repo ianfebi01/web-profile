@@ -19,19 +19,19 @@ export async function generateStaticParams() {
 
   return (
     slugs?.map( ( slug: Page ) => ( {
-      slug   : slug.slug,
+      slug : slug.slug,
       // locale routing might need handling depending on next-intl implementation, defaulting to both
-    } ) ).flatMap(s => [{...s, locale: 'en'}, {...s, locale: 'id'}]) || []
+    } ) ).flatMap( s => [{ ...s, locale : 'en' }, { ...s, locale : 'id' }] ) || []
   )
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
+export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
   const pages = await getPageBySlug( params.slug, params.locale )
 
-  if (pages.docs?.length === 0) return FALLBACK_SEO;
+  if ( pages.docs?.length === 0 ) return FALLBACK_SEO;
   const page = pages.docs[0];
-  const metadata = (page as any)?.meta; // payload-plugin-seo defaults to 'meta'
+  const metadata = ( page as any )?.meta; // payload-plugin-seo defaults to 'meta'
 
   const canonicalURL = metadata?.canonicalURL || `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}/${params.slug}`;
 
@@ -54,11 +54,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
         : [], // Add Open Graph image
     },
     twitter : {
-      card  : 'summary',
-      site  : '@ianfebi01',
-      title : metadata?.title || page?.title || FALLBACK_SEO.title || null,
+      card        : 'summary',
+      site        : '@ianfebi01',
+      title       : metadata?.title || page?.title || FALLBACK_SEO.title || null,
       description : metadata?.description || FALLBACK_SEO.description || '',
-      images : metadata?.image?.url
+      images      : metadata?.image?.url
         ? [{ url : imageUrl( metadata?.image?.url as any, 'medium' ) || '' }]
         : [], // Twitter image
     },
@@ -67,15 +67,15 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
 export const revalidate = 60; // ISR Support
 
-export default async function PageRoute(props: Props) {
+export default async function PageRoute( props: Props ) {
   const params = await props.params;
   const pages = await getPageBySlug( params.slug || 'home-id', params.locale )
   if ( pages.docs?.length === 0 ) return notFound()
 
   const payloadPage = pages.docs[0]
   const payloadToStrapiFormat = {
-    banner: (payloadPage as any).banner || [],
-    blocks: payloadPage.blocks || []
+    banner : ( payloadPage as any ).banner || [],
+    blocks : payloadPage.blocks || []
   }
 
   return <HeroesAndSections page={payloadToStrapiFormat as any} />

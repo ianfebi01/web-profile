@@ -13,7 +13,7 @@ const Section: React.FC<Props> = ( {
   buttonsVariation = 'primary',
 } ) => {
   const bgColour =
-    (sectionData.sectionSettings?.bgColour as any)?.name ||
+    ( sectionData.sectionSettings?.bgColour as any )?.name ||
     sectionData.sectionSettings?.bgColour || ''
 
   return (
@@ -22,7 +22,7 @@ const Section: React.FC<Props> = ( {
       fullWidthBgImage={sectionData.fullWidthBgImage || false}
       reverse={sectionData.reverse || false}
       fullWidth={sectionData.fullWidth || false}
-      buttons={(sectionData.buttons as any) || []}
+      buttons={( sectionData.buttons as any ) || []}
       bodyCopy={sectionData.bodyCopy}
       biggerColumn={sectionData.biggerColumn as 'image' | 'content' | undefined}
       buttonsVariation={buttonsVariation}

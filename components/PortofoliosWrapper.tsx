@@ -42,10 +42,10 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
     >
       {portofolios?.map( ( item, i ) => (
         <div ref={el => {
-          (cards.current[i] = el);
+          ( cards.current[i] = el );
         }}
-          key={item.slug}
-          className='translate-y-[75px] opacity-0'
+        key={item.slug}
+        className='translate-y-[75px] opacity-0'
         >
           <PortofolioCard portofolio={item} />
         </div>

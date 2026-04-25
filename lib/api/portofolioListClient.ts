@@ -16,35 +16,35 @@ type FetchPortofoliosParams = {
   limit?: number
 }
 
-export async function fetchPortofolios({
+export async function fetchPortofolios( {
   locale,
   page,
   searchTerm,
   limit = 9,
-}: FetchPortofoliosParams): Promise<PayloadListResponse<Project>> {
-  const params = new URLSearchParams({
+}: FetchPortofoliosParams ): Promise<PayloadListResponse<Project>> {
+  const params = new URLSearchParams( {
     locale,
-    depth: '2',
-    sort: '-createdAt',
-    limit: String(limit),
-    page: String(page),
-  })
+    depth : '2',
+    sort  : '-createdAt',
+    limit : String( limit ),
+    page  : String( page ),
+  } )
 
   const normalizedSearchTerm = searchTerm.trim()
 
-  if (normalizedSearchTerm) {
-    params.append('where[or][0][title][like]', normalizedSearchTerm)
-    params.append('where[or][1][description][like]', normalizedSearchTerm)
-    params.append('where[or][2][content][like]', normalizedSearchTerm)
+  if ( normalizedSearchTerm ) {
+    params.append( 'where[or][0][title][like]', normalizedSearchTerm )
+    params.append( 'where[or][1][description][like]', normalizedSearchTerm )
+    params.append( 'where[or][2][content][like]', normalizedSearchTerm )
   }
 
-  const response = await fetch(`/api/projects?${params.toString()}`)
+  const response = await fetch( `/api/projects?${params.toString()}` )
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch projects')
+  if ( !response.ok ) {
+    throw new Error( 'Failed to fetch projects' )
   }
 
-  const data = (await response.json()) as PayloadListResponse<Project>
+  const data = ( await response.json() ) as PayloadListResponse<Project>
 
   return data
 }

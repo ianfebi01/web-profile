@@ -7,43 +7,44 @@ import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin( ScrollTrigger )
 
-export default function SmoothScrollProvider({
+export default function SmoothScrollProvider( {
   children,
 }: {
   children: React.ReactNode
-}) {
+} ) {
   const pathname = usePathname()
-  const lenisRef = useRef<any>(null)
-  const [isMobile, setIsMobile] = useState(false)
+  const lenisRef = useRef<any>( null )
+  const [isMobile, setIsMobile] = useState( false )
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+  useEffect( () => {
+    const checkMobile = () => setIsMobile( window.innerWidth < 768 )
     checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
+    window.addEventListener( 'resize', checkMobile )
+    
+    return () => window.removeEventListener( 'resize', checkMobile )
+  }, [] )
 
-  useEffect(() => {
-    function update(time: number) {
+  useEffect( () => {
+    function update( time: number ) {
       // gsap ticker gives time in seconds, let's multiply by 1000 to get ms.
-      lenisRef.current?.lenis?.raf(time * 1000)
+      lenisRef.current?.lenis?.raf( time * 1000 )
     }
 
-    gsap.ticker.add(update)
-    gsap.ticker.lagSmoothing(0)
+    gsap.ticker.add( update )
+    gsap.ticker.lagSmoothing( 0 )
 
     return () => {
-      gsap.ticker.remove(update)
+      gsap.ticker.remove( update )
     }
-  }, [])
+  }, [] )
 
-  useLenis(ScrollTrigger.update)
+  useLenis( ScrollTrigger.update )
 
-  useEffect(() => {
-    lenisRef.current?.lenis?.scrollTo(0, { immediate: true })
-  }, [pathname])
+  useEffect( () => {
+    lenisRef.current?.lenis?.scrollTo( 0, { immediate : true } )
+  }, [pathname] )
 
   return (
     <ReactLenis
@@ -51,14 +52,14 @@ export default function SmoothScrollProvider({
       ref={lenisRef}
       autoRaf={false}
       options={{
-        syncTouch: true,
-        touchMultiplier: isMobile ? 1 : 1.2,
-        wheelMultiplier: 1,
-        duration: isMobile ? 1.4 : 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
+        syncTouch          : true,
+        touchMultiplier    : isMobile ? 1 : 1.2,
+        wheelMultiplier    : 1,
+        duration           : isMobile ? 1.4 : 1.2,
+        easing             : ( t ) => Math.min( 1, 1.001 - Math.pow( 2, -10 * t ) ),
+        orientation        : 'vertical',
+        gestureOrientation : 'vertical',
+        smoothWheel        : true,
       }}
     >
       {children}

@@ -18,10 +18,10 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
         className={cn(
           'relative overflow-x-clip min-h-screen xxl:min-h-[710px] items-center',
           'flex md:hidden',
-          !(sectionData.background) && 'bg-grey'
+          !( sectionData.background ) && 'bg-grey'
         )}
         style={
-          !!(sectionData.background) &&
+          !!( sectionData.background ) &&
           !isVideo( sectionData.background )
             ? {
               background : `url(${imageUrl(
@@ -32,7 +32,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             : undefined
         }
       >
-        {!!(sectionData.background) &&
+        {!!( sectionData.background ) &&
           isVideo( sectionData.background ) && (
           <div className="absolute w-full h-full">
             <VideoPlayer
@@ -40,7 +40,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
                 {
                   location :
                       imageUrl( sectionData.background, 'original' ) || '',
-                  codec : (sectionData.background as any)?.mimeType || '',
+                  codec : ( sectionData.background as any )?.mimeType || '',
                 },
               ]}
               isPlaying={true}
@@ -79,10 +79,10 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
         className={cn(
           'relative overflow-x-clip min-h-screen xxl:min-h-[710px] items-center',
           'hidden md:flex',
-          !(sectionData.background) && 'bg-grey'
+          !( sectionData.background ) && 'bg-grey'
         )}
         style={
-          !!(sectionData.background) &&
+          !!( sectionData.background ) &&
           !isVideo( sectionData.background )
             ? {
               background : `url(${imageUrl(
@@ -93,7 +93,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             : undefined
         }
       >
-        {!!(sectionData.background) &&
+        {!!( sectionData.background ) &&
           isVideo( sectionData.background ) && (
           <div className="absolute w-full h-full">
             <VideoPlayer
@@ -101,7 +101,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
                 {
                   location :
                       imageUrl( sectionData.background, 'original' ) || '',
-                  codec : ((sectionData.background as any)?.mimeType) || '',
+                  codec : ( ( sectionData.background as any )?.mimeType ) || '',
                 },
               ]}
               isPlaying={true}

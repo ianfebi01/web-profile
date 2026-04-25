@@ -4,7 +4,7 @@ import '@/assets/scss/main.scss'
 import Button from '@/components/Buttons/Button'
 import Image from 'next/image'
 
-export default function Error({ error, reset }: { error?: Error; reset?: () => void }) {
+export default function Error( { reset }: { error?: Error; reset?: () => void } ) {
   return (
     <div className="h-screen flex flex-col items-center justify-center relative">
       <div className="absolute container w-full h-full z-10">

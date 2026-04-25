@@ -47,7 +47,7 @@ const AnimationProvider: FunctionComponent<Props> = ( {
       className="h-full"
     >
       <motion.div
-        {...({
+        {...( {
           variants : {
             hidden : {
               opacity : 0,
@@ -58,15 +58,15 @@ const AnimationProvider: FunctionComponent<Props> = ( {
               y       : 0,
             },
           },
-          initial: 'hidden',
-          animate: animationControl,
-          transition: {
+          initial    : 'hidden',
+          animate    : animationControl,
+          transition : {
             duration : 0.3,
             delay    : delay,
             ease     : easeOut,
           },
-          className: className,
-        } as any)}
+          className : className,
+        } as any )}
       >
         {children}
       </motion.div>

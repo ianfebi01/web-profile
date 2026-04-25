@@ -25,7 +25,7 @@ const PersonImage: FunctionComponent<Props> = ( { image } ) => {
       className="absolute bottom-0 mx-auto inset-x-0 w-fit"
     >
       <motion.div
-        {...({
+        {...( {
           variants : {
             hidden : {
               opacity : 0,
@@ -36,14 +36,14 @@ const PersonImage: FunctionComponent<Props> = ( { image } ) => {
               y       : 0,
             },
           },
-          initial : "hidden",
-          animate : personImageControl,
+          initial    : "hidden",
+          animate    : personImageControl,
           transition : {
             duration : 0.5,
             ease     : easeInOut,
           },
           className : 'w-[261px] h-[391px] relative',
-        } as any)}
+        } as any )}
       >
         <Image src={image}
           alt="Profile image"

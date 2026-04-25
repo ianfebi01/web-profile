@@ -48,6 +48,19 @@ const config: Config = {
           '"Segoe UI Emoji"',
           '"Segoe UI Symbol"',
         ],
+        montserrat : [
+          'Montserrat',
+          'Arial',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+        ],
         code : [
           'var(--font-code)',
           'ui-monospace',
@@ -57,7 +70,7 @@ const config: Config = {
           'Consolas',
           'Liberation Mono',
           'monospace',
-        ]
+        ],
       },
     },
   },

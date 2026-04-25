@@ -4,7 +4,7 @@ import { FunctionComponent, useEffect, useRef } from 'react'
 import { useInView, useAnimation } from 'framer-motion'
 import AnimationProvider from '@/components/Context/AnimationProvider'
 import { cn } from '@/lib/utils'
-import Button from '../Buttons/Button'
+import Button from '@/components/Buttons/Button'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useRouter } from 'nextjs-toploader/app'
@@ -74,26 +74,31 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
       <div className="flex gap-2 absolute top-0 w-full opacity-0 -translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 group-hover:delay-300 delay-300  transition-default px-4 py-2 z-10">
         <Button
           disabled
-          theme={color === 'bg-white' ? 'light' : 'dark'}
+          variant={color === 'bg-white' ? 'secondary' : 'primary'}
           className="backdrop-blur-md shadow-sm"
         >
           {data.title}
         </Button>
         <Button
           disabled
-          theme={color === 'bg-white' ? 'light' : 'dark'}
+          variant={color === 'bg-white' ? 'secondary' : 'primary'}
           className="backdrop-blur-md shadow-sm"
         >
-          {(data as any).year}
+          {( data as any ).year}
         </Button>
         <div className="flex items-center justify-center gap-2 ml-auto">
           {showEditButton ? (
             <Button
               variant="icon"
-              theme={color === 'bg-white' ? 'light' : 'dark'}
-              className="backdrop-blur-md shadow-sm"
+              className={cn(
+                'backdrop-blur-md shadow-sm',
+                color === 'bg-white' && 'bg-dark-secondary text-white'
+              )}
               disabled={disabled || loading}
-              onClick={() => onClickEdit()}
+              onClick={( e ) => {
+                e.stopPropagation()
+                onClickEdit()
+              }}
             >
               <FontAwesomeIcon icon={faPen}
                 size="sm"
@@ -105,10 +110,15 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
           {showDeleteButton ? (
             <Button
               variant="icon"
-              theme={color === 'bg-white' ? 'light' : 'dark'}
-              className="backdrop-blur-md shadow-sm"
+              className={cn(
+                'backdrop-blur-md shadow-sm',
+                color === 'bg-white' && 'bg-dark-secondary text-white'
+              )}
               disabled={disabled || loading}
-              onClick={() => onClickDelete()}
+              onClick={( e ) => {
+                e.stopPropagation()
+                onClickDelete()
+              }}
             >
               <FontAwesomeIcon icon={faTrash}
                 size="sm"
@@ -154,7 +164,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                 >
                   <Image
                     src={
-                      imageUrl( item.image as any, 'thumbnail' ) || ''
+                      imageUrl( item.image ) || ''
                     }
                     style={{
                       objectFit : 'contain',
@@ -170,7 +180,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={imageUrl(data.thumbnail as any, 'small') || ''}
+                  src={imageUrl( data.thumbnail ) || ''}
                   alt={data.title}
                   fill
                   priority
@@ -217,8 +227,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                   <Image
                     src={
                       imageUrl(
-                        item.image,
-                        'thumbnail'
+                        item.image
                       ) || ''
                     }
                     fill
@@ -236,7 +245,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
             <div className="basis-1/2 h-full">
               <div className={cn( 'w-full h-full relative' )}>
                 <Image
-                  src={imageUrl(data.thumbnail as any, 'small') || ''}
+                  src={imageUrl( data.thumbnail ) || ''}
                   alt={data.title}
                   fill
                   priority

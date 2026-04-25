@@ -7,44 +7,45 @@ import TextField from '@/components/Inputs/TextField'
 
 type Props = {
   value: string
-  onChange: (value: string) => void
+  onChange: ( value: string ) => void
   placeholder: string
   resetLabel: string
   debounceMs?: number
 }
 
-const SearchField = ({
+const SearchField = ( {
   value,
   onChange,
   placeholder,
-  resetLabel,
   debounceMs = 350,
-}: Props) => {
-  const [inputValue, setInputValue] = useState(value)
+}: Props ) => {
+  const [inputValue, setInputValue] = useState( value )
 
-  useEffect(() => {
-    setInputValue(value)
-  }, [value])
+  useEffect( () => {
+    setInputValue( value )
+  }, [value] )
 
-  useEffect(() => {
-    if (inputValue === value) {
+  useEffect( () => {
+    if ( inputValue === value ) {
       return
     }
 
-    const timeoutId = window.setTimeout(() => {
-      onChange(inputValue)
-    }, debounceMs)
+    const timeoutId = window.setTimeout( () => {
+      onChange( inputValue )
+    }, debounceMs )
 
-    return () => window.clearTimeout(timeoutId)
-  }, [debounceMs, inputValue, onChange, value])
+    return () => window.clearTimeout( timeoutId )
+  }, [debounceMs, inputValue, onChange, value] )
 
   const handleReset = () => {
-    setInputValue('')
-    onChange('')
+    setInputValue( '' )
+    onChange( '' )
   }
 
   return (
-    <div className="max-w-md" data-name="input">
+    <div className="max-w-md"
+      data-name="input"
+    >
       <div className="w-full relative">
         <TextField
           type="text"

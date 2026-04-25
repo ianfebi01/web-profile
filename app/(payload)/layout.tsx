@@ -13,17 +13,21 @@ type Args = {
   children: React.ReactNode
 }
 
-const serverFunction: ServerFunctionClient = async function (args) {
+const serverFunction: ServerFunctionClient = async function ( args ) {
   'use server'
-  return handleServerFunctions({
+  
+  return handleServerFunctions( {
     ...args,
     config,
     importMap,
-  })
+  } )
 }
 
-const Layout = ({ children }: Args) => (
-  <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
+const Layout = ( { children }: Args ) => (
+  <RootLayout config={config}
+    importMap={importMap}
+    serverFunction={serverFunction}
+  >
     {children}
   </RootLayout>
 )

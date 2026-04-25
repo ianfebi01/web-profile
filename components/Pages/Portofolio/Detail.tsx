@@ -1,12 +1,12 @@
 'use client'
 import SkeletonDetail from './SkeletonDetail'
 import Chip from '@/components/Chip'
-import Header from '@/components/Layouts/Header'
 import Markdown from '@/components/Parsers/Markdown'
 import GaleryCarousel from '@/components/Layouts/GaleryCarousel'
 import { useTranslations } from 'next-intl'
 import PortofolioCard from '@/components/Cards/PortofolioCard'
 import { Project } from '@/payload-types'
+import PageTitle from '@/components/Layouts/PageTitle'
 
 interface Props {
   data: Project | null
@@ -26,18 +26,18 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
         <SkeletonDetail />
       ) : (
         <div className="w-full h-full grow-[1] max-w-3xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
-          <Header text={data?.title || ''}
+          <PageTitle text={data?.title || ''}
             link={'/portofolio'}
           />
           <div className="flex flex-col gap-8">
             <div className="flex flex-col gap-4 w-full mx-auto">
               {data?.gallery?.length && (
-                <GaleryCarousel data={data.gallery.map((g: any) => g.image)} />
+                <GaleryCarousel data={data.gallery.map( ( g: any ) => g.image )} />
               )}
               <div className="flex flex-col gap-4">
                 <div className="flex flex-row gap-2 flex-wrap">
                   {!!data?.createdAt && (
-                    <Chip label={new Date(data.createdAt).toLocaleDateString()}
+                    <Chip label={new Date( data.createdAt ).toLocaleDateString()}
                       bg="dark-secondary"
                     />
                   )}

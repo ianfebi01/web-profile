@@ -1,13 +1,15 @@
 'use client'
 import '@/assets/scss/main.scss'
-import Button2 from '@/components/Buttons/Button2'
+import Button from '@/components/Buttons/Button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 export default function NotFound() {
   const router = useRouter()
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en"
+      suppressHydrationWarning
+    >
       <body suppressHydrationWarning>
         <div className="h-screen flex flex-col items-center justify-center relative">
           <div className="absolute container w-full h-full z-10">
@@ -32,7 +34,7 @@ export default function NotFound() {
             </div>
 
             <h2 className="text-xl mb-4">Look like you&apos;ve got lost...</h2>
-            <Button2
+            <Button
               variant="primary"
               onClick={
                 // Attempt to recover by trying to re-render the segment
@@ -40,7 +42,7 @@ export default function NotFound() {
               }
             >
               Back to home
-            </Button2>
+            </Button>
           </article>
         </div>
       </body>
