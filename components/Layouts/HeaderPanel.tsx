@@ -49,7 +49,7 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute inset-y-0 right-0 w-full sm:max-w-sm bg-blue-dark bg-dark pt-28 px-6 lg:px-8 overflow-y-auto flex flex-col transform transition-transform duration-500 ease-[cubic-bezier(0.7,0,0.3,1)]',
+          'absolute top-4 right-4 w-full sm:max-w-md bg-blue-dark bg-dark pt-28 px-6 lg:px-8 overflow-y-auto flex flex-col transform transition-transform duration-500 ease-[cubic-bezier(0.7,0,0.3,1)] h-fit',
           isOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
@@ -119,10 +119,14 @@ const HeaderPanel = ( {
                                 </dt>
                                 <dd>
                                   <Transition
-                                    enterFrom="transform max-h-0 opacity-0"
-                                    enterTo="transform max-h-[500px] opacity-100 duration-500 ease-out"
-                                    leaveFrom="transform max-h-[500px] opacity-100"
-                                    leaveTo="transform max-h-0 opacity-0 duration-500 ease-out"
+                                    show={open}
+                                    className={'overflow-clip'}
+                                    enter="transition-all duration-500 ease-in-out"
+                                    enterFrom="max-h-0"
+                                    enterTo="max-h-[500px]"
+                                    leave="transition-all duration-500 ease-in-out"
+                                    leaveFrom="max-h-[500px]"
+                                    leaveTo="max-h-0 "
                                   >
                                     <Disclosure.Panel
                                       as="div"
