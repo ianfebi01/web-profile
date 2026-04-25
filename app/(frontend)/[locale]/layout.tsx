@@ -69,7 +69,7 @@ export default async function LocaleLayout( {
         <GoogleAnalytics />
         <ErrorBoundary errorComponent={Error}>
           <SmoothScrollProvider>
-            <Preloader />
+            {/* <Preloader /> */}
             <UIMouseCursor />
             <ReactQueryProvider>
               <NextIntlClientProvider>
