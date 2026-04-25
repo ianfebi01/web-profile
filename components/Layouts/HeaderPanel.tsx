@@ -2,6 +2,12 @@
 
 import { MutableRefObject } from 'react'
 import { Disclosure, Transition } from '@headlessui/react'
+import {
+  faGithub,
+  faInstagram,
+  faLinkedinIn,
+} from '@fortawesome/free-brands-svg-icons'
+import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { Page } from '@/payload-types'
@@ -41,6 +47,21 @@ const HeaderPanel = ( {
     ? `calc(100% - 16px) ${menuAnchor.height / 2}px`
     : 'top right'
 
+  const getSocialIcon = ( platform?: string ) => {
+    switch ( platform?.toLowerCase() ) {
+    case 'instagram':
+      return faInstagram
+    case 'linkedin':
+      return faLinkedinIn
+    case 'github':
+      return faGithub
+    case 'email':
+      return faEnvelope
+    default:
+      return null
+    }
+  }
+
   return (
     <div
       className={cn(
@@ -59,7 +80,7 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-28 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-[2rem] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-[2rem] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           isOpen
             ? 'scale-100'
             : 'scale-[0]'
@@ -214,23 +235,39 @@ const HeaderPanel = ( {
               </div>
             </div>
 
-            {socials.map( ( item, index ) => (
-              <button
-                ref={( el ) => {
-                  itemsRefs.current[items.length + index] = el
-                }}
-                onClick={() => openNewTab( item.url )}
-                className={cn(
-                  'opacity-0 translate-y-[50px] will-change-transform',
-                  'flex items-center rounded-lg overflow-hidden mt-4',
-                  'focus:outline-none focus-visible:ring-0'
-                )}
-                tabIndex={-1}
-                key={index}
-              >
-                <p className="m-0 h3">{item.platform}</p>
-              </button>
-            ) )}
+            <div className="mt-6 flex items-center gap-4">
+              {socials.map( ( item, index ) => {
+                const icon = getSocialIcon( item.platform )
+
+                return (
+                  <button
+                    ref={( el ) => {
+                      itemsRefs.current[items.length + index] = el
+                    }}
+                    onClick={() => openNewTab( item.url )}
+                    className={cn(
+                      'opacity-0 translate-y-[50px] will-change-transform',
+                      'flex size-12 items-center justify-center text-white hover:text-orange transition-all duration-300 focus:outline-none focus-visible:ring-0 focus:border-none outline-none focus:outline-0',
+                    )}
+                    data-name='button'
+                    aria-label={item.platform}
+                    title={item.platform}
+                    tabIndex={-1}
+                    key={index}
+                  >
+                    {icon ? (
+                      <FontAwesomeIcon icon={icon}
+                        size="lg"
+                      />
+                    ) : (
+                      <span className="text-sm font-bold uppercase">
+                        {item.platform?.slice( 0, 2 )}
+                      </span>
+                    )}
+                  </button>
+                )
+              } )}
+            </div>
           </div>
         </div>
       </div>
