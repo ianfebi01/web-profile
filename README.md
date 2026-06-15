@@ -10,7 +10,7 @@
 
 <br />
 
-# 🌐 Ian Febi Sastrataruna — Personal Portfolio
+# Ian Febi Sastrataruna — Personal Portfolio
 
 A blazing-fast, fully internationalized personal portfolio & blog built with **Next.js 16 App Router** and **Payload CMS 3.x** as the headless content engine. Features on-demand ISR, tag-based cache revalidation, and a rich content editing experience.
 
@@ -18,22 +18,22 @@ A blazing-fast, fully internationalized personal portfolio & blog built with **N
 
 ---
 
-## ✨ Features
+## Features
 
-- ⚡ **Next.js 16** with App Router & React Server Components
-- 🧠 **Payload CMS 3.x** — self-hosted headless CMS with a polished admin UI
-- 🌍 **Fully internationalized** — English (en) & Indonesian (id) via `next-intl`
-- 🎨 **Tailwind CSS** with a custom design system
-- 🖼️ **Cloudinary** for optimized image delivery & transformations
-- 🎬 **Rich animations** — Framer Motion, GSAP, Lenis smooth scrolling, Swiper carousels
-- 📝 **Lexical rich-text editor** with SEO plugin inside Payload
-- 📊 **ApexCharts** — interactive charts for skill visualizations
-- 🐳 **Docker-ready** — multi-stage builds with standalone output
-- 🔁 **ISR with on-demand revalidation** — instant cache purges when content changes
+- **Next.js 16** with App Router & React Server Components
+- **Payload CMS 3.x** — self-hosted headless CMS with a polished admin UI
+- **Fully internationalized** — English (en) & Indonesian (id) via `next-intl`
+- **Tailwind CSS** with a custom design system
+- **Cloudinary** for optimized image delivery & transformations
+- **Rich animations** — Framer Motion, GSAP, Lenis smooth scrolling, Swiper carousels
+- **Lexical rich-text editor** with SEO plugin inside Payload
+- **ApexCharts** — interactive charts for skill visualizations
+- **Docker-ready** — multi-stage builds with standalone output
+- **ISR with on-demand revalidation** — instant cache purges when content changes
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 | Layer | Technology |
 |---|---|
@@ -54,7 +54,7 @@ A blazing-fast, fully internationalized personal portfolio & blog built with **N
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -107,7 +107,7 @@ pnpm payload
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
 Production-ready multi-stage Docker build with `output: 'standalone'`.
 
@@ -132,7 +132,7 @@ The Dockerfile uses two stages:
 
 ---
 
-## 🔁 ISR & Cache Revalidation Architecture
+## ISR & Cache Revalidation Architecture
 
 This project leverages Next.js **Incremental Static Regeneration (ISR)** with **on-demand tag/path-based revalidation** to keep cached pages fresh without a full rebuild.
 
@@ -204,7 +204,7 @@ This ensures **instant content updates** — as soon as you hit "Save" in Payloa
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ├── app/                    # Next.js App Router
@@ -235,7 +235,7 @@ This ensures **instant content updates** — as soon as you hit "Save" in Payloa
 
 ---
 
-## 📜 Scripts
+## Scripts
 
 | Command | Description |
 |---|---|
@@ -249,12 +249,12 @@ This ensures **instant content updates** — as soon as you hit "Save" in Payloa
 
 ---
 
-## 🌍 Internationalization
+## Internationalization
 
 The site supports **English** (`en`) and **Indonesian** (`id`) using `next-intl`. All Payload collections use localized fields — editors can write content in both languages from the admin panel. The middleware in `i18n/routing.ts` handles automatic locale detection and redirects.
 
 ---
 
-## 📄 License
+## License
 
 MIT © [Ian Febi Sastrataruna](https://www.ianfebisastrataruna.my.id)
