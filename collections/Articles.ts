@@ -54,23 +54,27 @@ export const Articles: CollectionConfig = {
       },
     },
     {
-      name : 'introText',
-      type : 'textarea',
+      name      : 'introText',
+      type      : 'textarea',
+      localized : true,
     },
     {
-      name : 'content',
-      type : 'textarea',
+      name      : 'content',
+      type      : 'textarea',
+      localized : true,
     },
     {
       name       : 'heroImage',
       type       : 'upload',
       relationTo : 'media',
+      localized  : true,
     },
     {
       name       : 'tags',
       type       : 'relationship',
       relationTo : 'tags',
       hasMany    : true,
+      localized  : true,
     },
     // Skipping 'category' as product-category and mm-category were removed, 
     // unless you want a new generic 'Categories' collection later.
