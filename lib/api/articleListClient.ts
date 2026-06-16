@@ -30,6 +30,12 @@ export async function fetchArticles( {
     page  : String( page ),
   } )
 
+  // Disable locale fallback so articles without content in the current locale are excluded
+  params.append( 'fallback-locale', 'false' )
+
+  // Filter to only articles that have a title in the current locale (uses MongoDB dot notation for localized fields)
+  params.append( `where[title.${locale}][exists]`, 'true' )
+
   const normalizedSearchTerm = searchTerm.trim()
 
   if ( normalizedSearchTerm ) {

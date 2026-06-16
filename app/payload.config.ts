@@ -22,7 +22,7 @@ export default buildConfig( {
   localization : {
     locales       : ['en', 'id'], // Matching your next-intl locales
     defaultLocale : 'en',
-    fallback      : true, // If a translation is missing, it will fall back to English
+    fallback      : false, // If a translation is missing, it will fall back to English
   },
 
   // Define and configure your collections in this array
