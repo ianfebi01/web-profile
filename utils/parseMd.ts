@@ -36,6 +36,9 @@ const linkTokenizer = {
 }
 
 const renderer = new Renderer()
+renderer.codespan = ( { text }: { text: string } ) => {
+  return `<code class="hljs inline-code">${text}</code>`
+}
 const marked = new Marked(
   markedHighlight( {
     emptyLangClass : 'hljs',

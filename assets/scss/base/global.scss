@@ -148,5 +148,10 @@
             @apply my-1;
         }
 
+        // Inline code styling
+        code.inline-code {
+            @apply bg-[#282c34] text-[#abb2bf] px-1.5 py-0.5 rounded text-sm font-mono break-all;
+        }
+
     }
 }
