@@ -2,10 +2,10 @@
 # docker stop coNext & docker image rm -f next & docker build -t next . && docker run -it --rm -dp 3000:3000 --name coNext next && docker exec -it coNext sh
 
 # Start Dockerfile
-ARG VERSION=alpine3.17
+ARG VERSION=22-alpine
 ARG DIR=usr/app
 
-FROM node:${VERSION} as builder
+FROM node:${VERSION} AS builder
 # redeclare ARG because ARG not in build environment
 ARG DIR
 ARG NEXT_PUBLIC_GOOGLE_ANALYTICS
@@ -21,7 +21,7 @@ RUN npm install -g pnpm
 RUN pnpm install
 RUN pnpm build
 
-FROM node:${VERSION} as runner
+FROM node:${VERSION} AS runner
 # redeclare ARG because ARG not in build environment
 ARG DIR
 WORKDIR /${DIR}
