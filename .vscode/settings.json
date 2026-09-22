@@ -19,6 +19,10 @@
       "typescript"
     ],
     "nuxt.isNuxtApp": false,
+    // The bundled PostCSS validator predates CSS cascade layers, so it flags
+    // valid `@import '...' layer(...)` (required by Tailwind v4) as errors.
+    "postcss.validate": false,
+    "css.lint.unknownAtRules": "ignore",
     "eslint.useFlatConfig": true
   }
   

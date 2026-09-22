@@ -77,8 +77,4 @@ layer(base);
   body {
     @apply bg-dark text-white text-xs;
   }
-
-  p {
-    @apply leading-5;
-  }
 }
