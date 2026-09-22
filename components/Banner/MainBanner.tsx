@@ -95,7 +95,7 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
       ref={sectionRef}
       id="home"
       className={cn(
-        'max-w-7xl px-6 lg:px-8 bg-dark relative overflow-clip h-screen pt-28',
+        'max-w-7xl px-6 lg:px-8 bg-dark relative overflow-clip h-screen pt-28 mx-auto',
       )}
     >
       <div
@@ -106,7 +106,7 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
         <div className="flex-1 w-full flex items-center md:justify-center">
           <div
             ref={squareRef}
-            className="bg-gradient-to-r from-orange via-orange/80 to-orange/20 aspect-square h-80 relative p-1 translate-y-6 opacity-0 scale-90 origin-bottom-right"
+            className="bg-linear-to-r from-orange via-orange/80 to-orange/20 aspect-square h-80 relative p-1 translate-y-6 opacity-0 scale-90 origin-bottom-right"
           >
             <div className="w-full h-full bg-dark"></div>
             <span

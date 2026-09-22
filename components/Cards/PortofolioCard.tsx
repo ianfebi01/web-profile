@@ -17,7 +17,7 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
       href={`/portofolio/${portofolio.slug}`}
       data-name="proj"
       data-text="View"
-      className="bg-dark-secondary rounded-lg w-full overflow-hidden flex flex-col !no-underline group h-full"
+      className="bg-dark-secondary rounded-lg w-full overflow-hidden flex flex-col no-underline! group h-full"
     >
       <div className="relative w-full overflow-hidden aspect-video shrink-0 bg bg-dark/50">
         <Image

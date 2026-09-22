@@ -127,7 +127,7 @@ const Header = ( { items, socials }: Props ) => {
       <nav
         ref={navbarRef}
         className={cn(
-          'fixed top-0 w-full h-24 z-[100] transition-colors duration-500 pointer-events-none',
+          'fixed top-0 w-full h-24 z-100 transition-colors duration-500 pointer-events-none',
           isOpen ? 'bg-transparent' : 'bg-transparent'
         )}
       >

@@ -1,5 +1,5 @@
 'use client'
-import '@/assets/scss/main.scss'
+import '@/assets/css/main.css'
 import Button from '@/components/Buttons/Button'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'

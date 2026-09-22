@@ -55,7 +55,7 @@ const ArticleListing = () => {
               {Array.from( { length : 6 } ).map( ( _, index ) => (
                 <div
                   key={index}
-                  className="aspect-[4/5] rounded-lg bg-dark-secondary animate-pulse"
+                  className="aspect-4/5 rounded-lg bg-dark-secondary animate-pulse"
                 />
               ) )}
             </div>

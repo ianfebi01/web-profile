@@ -20,12 +20,12 @@ const Detail = ( { data, isFetching }: Props ) => {
   return (
     <section
       id="portofolio"
-      className="w-full flex flex-col items-center bg-dark grow-[1]"
+      className="w-full flex flex-col items-center bg-dark grow"
     >
       {isFetching || !data ? (
         <SkeletonDetail />
       ) : (
-        <div className="w-full h-full grow-[1] max-w-5xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
+        <div className="w-full h-full grow max-w-5xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
           <PageTitle text={t( 'back' )}
             link={'/article'}
           />

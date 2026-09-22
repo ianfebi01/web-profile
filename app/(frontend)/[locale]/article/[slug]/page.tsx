@@ -65,7 +65,7 @@ export default async function ArticlePage(
   const data = await getDetail( params.slug, params.locale );
 
   return (
-    <main className="grow-[1] flex flex-col">
+    <main className="grow flex flex-col">
       <Detail data={data} />
     </main>
   )

@@ -1,7 +1,6 @@
 'use client'
 import {
   useState,
-  useEffect,
   useMemo,
   createElement,
   FunctionComponent,
@@ -9,7 +8,7 @@ import {
 } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { format } from 'date-fns'
+import { format, type Locale } from 'date-fns'
 import { id, enUS } from 'date-fns/locale'
 import { ISelectedRange, Placement, TActivatorProps } from '@/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -51,15 +50,7 @@ const DateRangePicker = ( {
   const locale = useLocale()
   const dateLocale = locale === 'id' ? id : enUS
 
-  const [state, setState] = useState<ISelectedRange>( {
-    startDate : null,
-    endDate   : null,
-  } )
-
-  useEffect( () => {
-    setState( value )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [] )
+  const [state, setState] = useState<ISelectedRange>( value )
 
   const handleChange = ( [startDate, endDate]: Array<Date | null> ) => {
     setState( { startDate, endDate } )

@@ -107,7 +107,7 @@ const Modal: FunctionComponent<Props> = ( props ) => {
                         `px-4 pt-4 text-xl text-left max-w-7xl mx-auto w-full`,
                         [
                           !desciption && [
-                            border && 'border-b-[1px] border-white/25 pb-4',
+                            border && 'border-b border-white/25 pb-4',
                           ],
                         ]
                       )}
@@ -120,7 +120,7 @@ const Modal: FunctionComponent<Props> = ( props ) => {
                   {desciption && variant !== 'warning' ? (
                     <Dialog.Description
                       className={cn( 'px-4 pb-4 max-w-7xl mx-auto w-full', [
-                        border && 'border-b-[1px] border-white/25',
+                        border && 'border-b border-white/25',
                       ] )}
                     >
                       {desciption}
@@ -134,7 +134,7 @@ const Modal: FunctionComponent<Props> = ( props ) => {
                       [
                         border &&
                           variant !== 'warning' &&
-                          'border-b-[1px] border-white/25',
+                          'border-b border-white/25',
                         !border && 'pb-0',
                         variant === 'warning' && 'pb-0',
                         variant === 'fullscreen' && 'grow',

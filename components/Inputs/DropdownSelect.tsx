@@ -64,7 +64,7 @@ export default function DropdownSelect( {
             leaveFrom="transform scale-100 opacity-100"
             leaveTo="transform scale-95 opacity-0"
           >
-            <Menu.Items className="absolute left-0 mt-2 origin-top-left bg-dark shadow-2xl focus:outline-none w-full z-[11] rounded overflow-hidden">
+            <Menu.Items className="absolute left-0 mt-2 origin-top-left bg-dark shadow-2xl focus:outline-none w-full z-11 rounded overflow-hidden">
               <div className="divide-y divide-white-overlay-2 max-h-[250px] overflow-y-auto">
                 {options.length ? (
                   options.map( ( item, index ) => (

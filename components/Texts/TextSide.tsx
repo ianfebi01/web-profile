@@ -43,7 +43,7 @@ const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
           className : "  invisible  sm:visible flex w-full left-0 gap-2",
         } as any )}
       >
-        <div className="grow-[1] w-full shrink-[1] ">
+        <div className="grow w-full shrink ">
           {openToWork &&
 					<>
 					  <h2 className="text-xl text-orange font-bold">Open to Work</h2>
@@ -53,8 +53,8 @@ const TextSide: FunctionComponent<Props> = ( { openToWork } ) => {
 					</>
           }
         </div>
-        <div className="grow-[1] w-[275px] shrink-0" />
-        <div className=" grow-[1] w-full srink-[1]  ">
+        <div className="grow w-[275px] shrink-0" />
+        <div className=" grow w-full srink-[1]  ">
           <h2 className="text-xl text-orange font-bold">
             			Front End Web Developer
           </h2>

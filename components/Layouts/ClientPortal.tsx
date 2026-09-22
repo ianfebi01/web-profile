@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useCallback, useSyncExternalStore } from 'react'
 import { createPortal } from 'react-dom'
 type ClientPortalInterface = {
   children: React.ReactNode
@@ -8,13 +8,18 @@ type ClientPortalInterface = {
   selector: string
 }
 
-const ClientPortal = ( { children, selector, show }: ClientPortalInterface ) => {
-  const [element, setElement] = useState<Element | null>( null )
+// The portal target lives outside React, so read it as an external store
+// rather than syncing it into state from an effect.
+const subscribe = () => () => {}
+const getServerSnapshot = () => null
 
-  useEffect( () => {
-    setElement( document.getElementById( selector ) )
-  }, [selector] )
-  
+const ClientPortal = ( { children, selector, show }: ClientPortalInterface ) => {
+  const getSnapshot = useCallback(
+    () => document.getElementById( selector ),
+    [selector]
+  )
+  const element = useSyncExternalStore( subscribe, getSnapshot, getServerSnapshot )
+
   return show && element ? createPortal( children, element ) : null
 }
 

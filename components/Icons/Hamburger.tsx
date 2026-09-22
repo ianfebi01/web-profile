@@ -1,5 +1,5 @@
 'use client'
-import '@/assets/scss/components/hamburger.scss'
+import '@/assets/css/components/hamburger.css'
 import { Dispatch, SetStateAction } from 'react'
 
 interface Props {

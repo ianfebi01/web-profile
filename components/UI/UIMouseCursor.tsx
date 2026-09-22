@@ -344,13 +344,13 @@ export default function UIMouseCursor() {
 
   // Shape class
   let shapeClass =
-    'flex items-center justify-center rounded-full pointer-events-none origin-center will-change-transform shadow-md transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] backdrop-blur-md opacity-80 z-[9000] overflow-hidden '
+    'flex items-center justify-center rounded-full pointer-events-none origin-center will-change-transform shadow-md transition-all duration-1000 ease-[cubic-bezier(0.075,0.82,0.165,1)] backdrop-blur-md opacity-80 z-9000 overflow-hidden '
   let textContainerClass =
     'flex items-center justify-center whitespace-nowrap opacity-100 font-normal '
 
   if ( isOver && ( dataName === 'proj' || dataName === 'reel' ) ) {
     shapeClass +=
-      ' w-[80px] h-[80px] bg-[#222222] border-transparent text-white'
+      ' w-[80px] h-[80px] bg-dark border-transparent text-white'
     textContainerClass += ' text-white'
   } else if ( isOver && dataName === 'menu' ) {
     shapeClass +=
@@ -361,9 +361,9 @@ export default function UIMouseCursor() {
     textContainerClass += ' text-white'
   } else if ( isOver && dataName === 'burger' ) {
     // Specifically styled to map to a burger icon overlay halo instead of totally vanishing
-    shapeClass += ' w-[64px] h-[64px] border-[2px] border-[#F26B50] bg-transparent opacity-100'
+    shapeClass += ' w-[64px] h-[64px] border-2 border-orange bg-transparent'
   } else if ( isOver && ['button', 'input'].includes( dataName ) ) {
-    shapeClass += ' w-[0px] h-[0px] transition-none'
+    shapeClass += ' w-0 h-0 transition-none'
     textContainerClass += ' text-white'
   } else {
     // Premium dynamic cursor: inverted visibility over ANY colored background!
@@ -383,23 +383,23 @@ export default function UIMouseCursor() {
           {dataName === 'proj' && (
             <>
               {dataText === 'Prev' && (
-                <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 flex-shrink-0" />
+                <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 shrink-0" />
               )}
               {dataText}
               {dataText === 'Next' && (
-                <ChevronSVG className="w-3 h-auto ml-[5px] flex-shrink-0" />
+                <ChevronSVG className="w-3 h-auto ml-[5px] shrink-0" />
               )}
               {( dataText === 'View' || dataText === 'Lens' ) && (
-                <UPArrowSVG className="w-5 h-auto ml-[5px] -mb-1 flex-shrink-0" />
+                <UPArrowSVG className="w-5 h-auto ml-[5px] -mb-1 shrink-0" />
               )}
             </>
           )}
           {dataName === 'menu' && dataText}
           {dataName === 'reel' && (
             <>
-              <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 flex-shrink-0" />
+              <ChevronSVG className="w-3 h-auto mr-[5px] rotate-180 shrink-0" />
               {dataText}
-              <ChevronSVG className="w-3 h-auto ml-[5px] flex-shrink-0" />
+              <ChevronSVG className="w-3 h-auto ml-[5px] shrink-0" />
             </>
           )}
           {dataName === 'yo' && dataText}

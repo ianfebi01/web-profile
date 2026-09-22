@@ -75,7 +75,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
     <section
       ref={sectionRef}
       id="home"
-      className={cn( "main__section !px-0 sm:px-0 md:px-0 bg-dark relative overflow-clip" )}
+      className={cn( "main__section px-0! sm:px-0 md:px-0 bg-dark relative overflow-clip" )}
     >
       <Shape myposy={0} />
 
@@ -136,7 +136,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
       {/* Content */}
       <div
         ref={contentRef}
-        className="w-full grow-[1] max-w-3xl relative overflow-hidden mt-32 mb-20 flex flex-col gap-4 sm:px-4 px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0"
+        className="w-full grow max-w-3xl relative overflow-hidden mt-32 mb-20 flex flex-col gap-4 sm:px-4 px-4 md:px-4 lg:px-0 xl:px-0 2xl:px-0"
       >
         <h1 className="text-center m-0">{sectionData.name}</h1>
         <div
@@ -202,7 +202,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
       </div>
 
       {/* Shadow inset bottom */}
-      <div className="absolute w-full bottom-0 bg-gradient-to-t from-dark/100 to-transparent h-1/3 z-0 pointer-events-none">
+      <div className="absolute w-full bottom-0 bg-linear-to-t from-dark to-transparent h-1/3 z-0 pointer-events-none">
       </div>
     </section>
   );

@@ -55,16 +55,16 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             {sectionData.heading && (
               <h1
                 className={cn(
-                  'font-extra-bold mt-0 w-fit text-white relative z-[1]',
+                  'font-extra-bold mt-0 w-fit text-white relative z-1',
                   'text-3xl lg:text-5xl xxl:text-[4.35rem] xxl:leading-[4.5rem]',
-                  'drop-shadow-20-0.5'
+                  'drop-shadow-20-0_5'
                 )}
               >
                 {sectionData.heading}
               </h1>
             )}
             {!!sectionData.description && (
-              <div className="drop-shadow-20-0.5">
+              <div className="drop-shadow-20-0_5">
                 <Markdown content={sectionData.description} />
               </div>
             )}
@@ -115,16 +115,16 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             {sectionData.heading && (
               <h1
                 className={cn(
-                  'font-extra-bold mt-0 w-fit text-white relative z-[1]',
+                  'font-extra-bold mt-0 w-fit text-white relative z-1',
                   'text-3xl lg:text-5xl xxl:text-[4.35rem] xxl:leading-[4.5rem]',
-                  'drop-shadow-20-0.5'
+                  'drop-shadow-20-0_5'
                 )}
               >
                 {sectionData.heading}
               </h1>
             )}
             {!!sectionData.description && (
-              <div className="drop-shadow-20-0.5">
+              <div className="drop-shadow-20-0_5">
                 <Markdown content={sectionData.description} />
               </div>
             )}

@@ -127,7 +127,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="bg-dark px-4 py-6 rounded-lg divide-y-[1px] divide-white-overlay-2">
+      <div className="bg-dark px-4 py-6 rounded-lg divide-y divide-white-overlay-2">
         {transformedData.map( ( item, index ) => (
           <div
             key={item.companyName}

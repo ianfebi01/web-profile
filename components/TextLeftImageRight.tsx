@@ -130,7 +130,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
             } )}
           >
             <div className="relative w-full h-full">
-              <div className="aspect-square md:aspect-video lg:aspect-[1/0.7] lg:h-full lg:w-full overflow-hidden relative z-[1]">
+              <div className="aspect-square md:aspect-video lg:aspect-[1/0.7] lg:h-full lg:w-full overflow-hidden relative z-1">
                 <Image
                   loading="lazy"
                   src={imageUrl( image ) || ''}

@@ -1,4 +1,4 @@
-import '@/assets/scss/main.scss'
+import '@/assets/css/main.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import type { Metadata } from 'next'
 import { Source_Code_Pro } from 'next/font/google'
@@ -25,7 +25,7 @@ config.autoAddCss = false
 
 const sourceCodePro = Source_Code_Pro( {
   subsets  : ['latin'],
-  variable : '--font-code',
+  variable : '--font-code-family',
 } )
 
 export const metadata: Metadata = {
@@ -59,7 +59,7 @@ export default async function LocaleLayout( {
 
   return (
     <html lang={locale}
-      className={`${sourceCodePro.variable} [scrollbar-gutter:stable]`}
+      className={`${sourceCodePro.variable} scrollbar-gutter-stable`}
       suppressHydrationWarning
     >
       <body suppressHydrationWarning={true}

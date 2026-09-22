@@ -11,7 +11,7 @@ const NoDataFound = ( { size = 'lg' }: Props ) => {
   const t = useTranslations()
 
   return (
-    <div className="w-full flex-grow flex flex-col gap-6 items-center justify-center">
+    <div className="w-full grow flex flex-col gap-6 items-center justify-center">
       <div
         className={cn( 'relative', [
           size === 'xs' && 'w-20 h-20',

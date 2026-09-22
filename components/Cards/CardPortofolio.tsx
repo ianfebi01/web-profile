@@ -153,7 +153,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                 }}
               ></div>
             </div>
-            <div className="grow-[1]" />
+            <div className="grow" />
             <div className="flex gap-1">
               {( data.skills as Skill[] )?.map( ( item, i ) => (
                 <div
@@ -215,7 +215,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                 }}
               ></div>
             </div>
-            <div className="grow-[1]" />
+            <div className="grow" />
             <div className="flex gap-1">
               {( data.skills as Skill[] )?.map( ( item, i ) => (
                 <div
