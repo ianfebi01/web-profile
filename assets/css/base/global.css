@@ -145,5 +145,18 @@
     code.inline-code {
       @apply bg-[#282c34] text-[#abb2bf] px-1.5 py-0.5 rounded-sm font-mono break-all;
     }
+
+    table {
+      @apply border-collapse border border-white-overlay-2;
+
+      td,
+      th {
+        @apply px-4 py-2 align-text-top border border-white-overlay-2;
+      }
+
+      th {
+        @apply text-left;
+      }
+    }
   }
 }
