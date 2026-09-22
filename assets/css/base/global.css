@@ -113,11 +113,11 @@
 
     h1,
     h2 {
-      @apply text-xl sm:text-2xl md:text-3xl;
+      @apply text-xl md:text-2xl;
     }
 
     h4 {
-      @apply text-base 2xl:text-[1.375rem];
+      @apply text-base 2xl:text-xl;
     }
 
     p,
@@ -143,7 +143,7 @@
 
     /* Inline code styling */
     code.inline-code {
-      @apply bg-[#282c34] text-[#abb2bf] px-1.5 py-0.5 rounded-sm font-mono break-all;
+      @apply bg-[#282c34] text-[#abb2bf] text-[0.875em] px-1.5 py-0.5 rounded-sm font-mono break-all;
     }
 
     table {
