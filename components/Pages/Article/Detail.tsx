@@ -64,7 +64,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                 />
               )}
               {!!data?.content && (
-                <div className="flex flex-col gap-4 p-4 border border-none rounded-lg bg-dark-secondary text-white/90">
+                <div className="flex flex-col text-white">
                   <Markdown content={data.content} />
                 </div>
               )}

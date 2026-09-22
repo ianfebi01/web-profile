@@ -36,7 +36,7 @@
 
   h1,
   .h1 {
-    @apply text-xl sm:text-2xl md:text-3xl mt-16 font-bold;
+    @apply text-xl sm:text-2xl md:text-3xl font-bold;
   }
 
   h2,
@@ -56,7 +56,7 @@
 
   p,
   .p {
-    @apply text-xs xl:text-sm 2xl:text-base font-normal my-4;
+    @apply text-xs xl:text-sm 2xl:text-base font-normal;
 
     &:last-child {
       @apply mb-0;
@@ -71,7 +71,6 @@
   h2,
   h3,
   h4 {
-    @apply mb-2;
 
     &:last-child {
       @apply mb-0;
@@ -103,12 +102,16 @@
   }
 
   .body-copy {
+    h1 {
+      @apply mt-16;
+    }
+    
     h1,
     h2,
     h3,
     h4,
     h5 {
-      @apply font-primary my-4;
+      @apply font-primary mt-11;
     }
 
     h1,
@@ -120,9 +123,8 @@
       @apply text-base 2xl:text-xl;
     }
 
-    p,
-    li {
-      @apply text-sm 2xl:text-base font-normal my-4;
+    p {
+      @apply text-sm 2xl:text-base font-normal mt-6.5 sm:mt-10;
     }
 
     a {
@@ -138,12 +140,41 @@
     }
 
     li {
-      @apply my-1;
+      @apply text-sm 2xl:text-base font-normal mt-4 sm:mt-5;
+    }
+
+    /*
+    * Reduce spacing when paragraph follows a heading.
+    */
+    h1 + p,
+    h2 + p,
+    h3 + p,
+    h4 + p,
+    h5 + p,
+    h1 + ul,
+    h2 + ul,
+    h3 + ul,
+    h4 + ul,
+    h5 + ul,
+    h1 + .table-wrapper,
+    h2 + .table-wrapper,
+    h3 + .table-wrapper,
+    h4 + .table-wrapper,
+    h5 + .table-wrapper {
+      @apply mt-3 sm:mt-4;
+    }
+
+    hr {
+      @apply my-3 sm:my-4;
     }
 
     /* Inline code styling */
     code.inline-code {
       @apply bg-[#282c34] text-[#abb2bf] text-[0.875em] px-1.5 py-0.5 rounded-sm font-mono break-all;
+    }
+
+    .table-wrapper {
+      @apply overflow-x-auto mt-6.5 sm:mt-10;
     }
 
     table {
