@@ -54,7 +54,7 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-4xl transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-4xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           isOpen
             ? 'scale-100'
             : 'scale-[0]'
