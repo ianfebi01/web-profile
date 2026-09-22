@@ -95,7 +95,7 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
       ref={sectionRef}
       id="home"
       className={cn(
-        'max-w-7xl px-6 lg:px-8 bg-dark relative overflow-clip h-screen pt-28',
+        'max-w-7xl px-6 lg:px-8 bg-dark relative overflow-clip h-screen pt-28 mx-auto',
       )}
     >
       <div
