@@ -1,7 +1,6 @@
 'use client'
 import {
   useState,
-  useEffect,
   useMemo,
   createElement,
   FunctionComponent,
@@ -35,7 +34,7 @@ interface Props {
   position?: Placement
   isTableFilter?: boolean
   handleCommitted?: ( val: Date | null ) => void
-  boundaryRef?: React.RefObject<HTMLElement | null>
+  boundaryElement?: HTMLElement | null
 }
 
 const SingleDatePicker = ( {
@@ -47,19 +46,14 @@ const SingleDatePicker = ( {
   isTableFilter = false,
   setValue,
   handleCommitted,
-  boundaryRef
+  boundaryElement
 }: Props ) => {
   const t = useTranslations()
   const locale = useLocale()
 
   const dateLocale = locale === 'id' ? id : enUS
 
-  const [state, setState] = useState<Date | null>( null )
-
-  useEffect( () => {
-    setState( value )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [] )
+  const [state, setState] = useState<Date | null>( value )
 
   const handleChange = ( newDate: Date | null ) => {
     setState( newDate ) // No need for an endDate in single date picker
@@ -103,7 +97,7 @@ const SingleDatePicker = ( {
         options : {
           boundary :
             typeof window !== 'undefined'
-              ?  boundaryRef?.current || ( document.body as Element )
+              ? boundaryElement || ( document.body as Element )
               : undefined,
         },
       },

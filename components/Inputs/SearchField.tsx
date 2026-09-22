@@ -20,10 +20,13 @@ const SearchField = ( {
   debounceMs = 350,
 }: Props ) => {
   const [inputValue, setInputValue] = useState( value )
+  const [lastValue, setLastValue] = useState( value )
 
-  useEffect( () => {
+  // Re-sync with the committed value during render instead of from an effect.
+  if ( value !== lastValue ) {
+    setLastValue( value )
     setInputValue( value )
-  }, [value] )
+  }
 
   useEffect( () => {
     if ( inputValue === value ) {

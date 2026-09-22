@@ -1,10 +1,24 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useSyncExternalStore } from 'react'
 import gsap from 'gsap'
 import { useLenis } from 'lenis/react'
 
+// Read the user agent as an external store so bots skip the preloader without
+// a synchronous setState in an effect.
+const subscribeToUserAgent = () => () => {}
+const getIsBot = () =>
+  /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speedcurve/i.test(
+    navigator.userAgent
+  )
+const getIsBotOnServer = () => false
+
 export default function Preloader() {
+  const isBot = useSyncExternalStore(
+    subscribeToUserAgent,
+    getIsBot,
+    getIsBotOnServer
+  )
   const [isLoading, setIsLoading] = useState( true )
   const [progress, setProgress] = useState( 0 )
   
@@ -15,11 +29,9 @@ export default function Preloader() {
 
   useEffect( () => {
     // 1. Instantly skip for Lighthouse and bots to guarantee 100 PageSpeed
-    const isBot = typeof navigator !== 'undefined' && /bot|googlebot|crawler|spider|robot|crawling|lighthouse|speedcurve/i.test( navigator.userAgent )
     if ( isBot ) {
-      setIsLoading( false )
       if ( lenis ) lenis.start()
-      
+
       return
     }
 
@@ -124,9 +136,9 @@ export default function Preloader() {
     return () => {
       window.removeEventListener( 'load', handleLoad )
     }
-  }, [lenis] )
+  }, [lenis, isBot] )
 
-  if ( !isLoading ) return null
+  if ( isBot || !isLoading ) return null
 
   const nameText = "Ian Febi S.".split( '' )
   // target indices: I(0), F(4), S(9), .(10)
@@ -158,7 +170,7 @@ export default function Preloader() {
         <div ref={contentRef}
           className="relative flex flex-col items-center justify-center w-full h-full"
         >
-          <h1 className="flex justify-center text-4xl md:text-6xl lg:text-8xl font-normal xs:tracking-tight sm:tracking-normal md:tracking-[0.1em] uppercase whitespace-nowrap px-4 w-full">
+          <h1 className="flex justify-center text-4xl md:text-6xl lg:text-8xl font-normal xs:tracking-tight sm:tracking-normal md:tracking-widest uppercase whitespace-nowrap px-4 w-full">
             {nameText.map( ( char, i ) => {
               const isTarget = targetIndices.includes( i )
               

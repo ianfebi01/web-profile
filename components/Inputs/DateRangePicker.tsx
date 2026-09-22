@@ -1,7 +1,6 @@
 'use client'
 import {
   useState,
-  useEffect,
   useMemo,
   createElement,
   FunctionComponent,
@@ -51,15 +50,7 @@ const DateRangePicker = ( {
   const locale = useLocale()
   const dateLocale = locale === 'id' ? id : enUS
 
-  const [state, setState] = useState<ISelectedRange>( {
-    startDate : null,
-    endDate   : null,
-  } )
-
-  useEffect( () => {
-    setState( value )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [] )
+  const [state, setState] = useState<ISelectedRange>( value )
 
   const handleChange = ( [startDate, endDate]: Array<Date | null> ) => {
     setState( { startDate, endDate } )
