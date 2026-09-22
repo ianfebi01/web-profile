@@ -26,7 +26,7 @@ interface Props {
 
 const GaleryCarousel: React.FC<Props> = ( { data } ) => {
   return (
-    <ul className="w-full !m-0 relative">
+    <ul className="w-full m-0! relative">
       <Swiper
         navigation={{
           prevEl : `.btn-prev`,
@@ -77,12 +77,12 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
         ) )}
       </Swiper>
       <div className="aspect-video absolute w-full top-0 hidden min-[1156px]:block">
-        <button className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0.5">
+        <button className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
           <FontAwesomeIcon icon={faCircleChevronLeft}
             size="2xl"
           />
         </button>
-        <button className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0.5">
+        <button className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
           <FontAwesomeIcon icon={faCircleChevronRight}
             size="2xl"
           />
@@ -93,7 +93,7 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
           <button className="btn-prev size-6 text-white/90 min-[1156px]:hidden">
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
-          <div className="paginationEL leading-none !translate-x-0"></div>
+          <div className="paginationEL leading-none translate-x-0!"></div>
           <button className="btn-next size-6 text-white/90 min-[1156px]:hidden">
             <FontAwesomeIcon icon={faChevronRight} />
           </button>

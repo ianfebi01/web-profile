@@ -17,7 +17,7 @@ const HeaderMenuButton = forwardRef<HTMLDivElement, Props>(
         data-name="burger"
         onClick={onClick}
       >
-        <span className="text-[15px] font-bold text-white group-hover:text-[#F26B50] transition-colors hidden sm:block pointer-events-none mt-1">
+        <span className="text-[15px] font-bold text-white group-hover:text-orange transition-colors hidden sm:block pointer-events-none mt-1">
           Menu
         </span>
 
@@ -45,7 +45,7 @@ const HeaderMenuButton = forwardRef<HTMLDivElement, Props>(
               'absolute transition-all duration-300 ease-out bg-white',
               isOpen
                 ? 'right-0 w-[26px] h-[2px] -rotate-45 rounded-sm'
-                : 'right-0 w-1.5 h-1.5 rounded-full group-hover/target:-translate-x-[10px]'
+                : 'right-0 w-1.5 h-1.5 rounded-full group-hover/target:translate-x-[-10px]'
             )}
             ></span>
           </div>

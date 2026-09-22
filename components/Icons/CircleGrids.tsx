@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react'
 import { gsap } from 'gsap'
-import '@/assets/scss/components/circle-grids.scss'
+import '@/assets/css/components/circle-grids.css'
 
 // Expose replay method to parent
 export interface CircleGridsHandle {

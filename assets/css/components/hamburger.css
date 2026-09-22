@@ -1,0 +1,65 @@
+@reference "../main.css";
+
+.hamburger input {
+  display: none;
+}
+
+.hamburger label {
+  @apply relative flex h-10 aspect-square cursor-pointer;
+}
+
+.hamburger.menu--2 label {
+  bottom: 0;
+  left: 0;
+}
+
+.hamburger path {
+  fill: none;
+  stroke: #f1f1f1;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  --length: 24;
+  --offset: -38;
+  stroke-dasharray: var(--length) var(--total-length);
+  stroke-dashoffset: var(--offset);
+  transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.hamburger.cross input:checked + svg {
+  & .line--1,
+  & .line--3 {
+    --length: 22.627416998;
+  }
+
+  & .line--2 {
+    --length: 0;
+  }
+}
+
+.hamburger.menu--2 {
+  & .line--1,
+  & .line--3 {
+    --total-length: 111.22813415527344;
+    --offset: -50.22813415527344;
+  }
+
+  & .line--2 {
+    --total-length: 99;
+  }
+
+  & input:checked + svg {
+    & path {
+      transform: translateX(30px);
+    }
+
+    & .line--1,
+    & .line--3 {
+      --offset: -16.9705627485;
+    }
+
+    & .line--2 {
+      --offset: -20;
+    }
+  }
+}

@@ -27,7 +27,7 @@ const Gallery: React.FC<Props> = ( { sectionData } ) => {
           <Link
             key={index}
             className={cn(
-              'flex flex-col items-center p-4 gap-4 basis-full md:basis-[calc(100%/2-1.5rem)] lg:basis-[calc(100%/3-1.5rem)] !text-inherit no-underline cursor-default pointer-events-none',
+              'flex flex-col items-center p-4 gap-4 basis-full md:basis-[calc(100%/2-1.5rem)] lg:basis-[calc(100%/3-1.5rem)] text-inherit! no-underline cursor-default pointer-events-none',
               item?.link &&
                 'hover:shadow-xl cursor-pointer transition-all duration-300 ease-in-out pointer-events-auto'
             )}

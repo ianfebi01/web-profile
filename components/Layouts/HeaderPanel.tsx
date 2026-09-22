@@ -39,7 +39,7 @@ const HeaderPanel = ( {
   return (
     <div
       className={cn(
-        'fixed inset-0 z-[80] transition-all duration-500',
+        'fixed inset-0 z-80 transition-all duration-500',
         isOpen ? 'pointer-events-auto' : 'pointer-events-none'
       )}
       aria-hidden={!isOpen}
@@ -54,7 +54,7 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-[2rem] transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-4xl transition-[transform,opacity] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           isOpen
             ? 'scale-100'
             : 'scale-[0]'

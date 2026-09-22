@@ -105,7 +105,7 @@ const getSection = (
                     className={cn( 'font-extra-bold normal-case', {
                       'drop-shadow-md' :
                         sectionData?.sectionSettings?.textDropShadow,
-                      'text-3xl md:text-[2.25rem] md:leading-[2.5rem] xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
+                      'text-3xl md:text-[2.25rem] md:leading-10 xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
                         sectionData?.sectionSettings?.largeHeading,
                     } )}
                   >
@@ -115,8 +115,8 @@ const getSection = (
 
                 {headingLevel === 2 && (
                   <h2
-                    className={cn( '!font-primary font-extra-bold', {
-                      '!text-[1.7rem] md:text-[2.25rem] md:leading-[2.5rem] xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
+                    className={cn( 'font-primary! font-extra-bold', {
+                      'text-[1.7rem]! md:text-[2.25rem] md:leading-10 xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
                         sectionData?.sectionSettings?.largeHeading,
                       'text-xl xxl:text-[1.5625rem]' :
                         !sectionData?.sectionSettings?.headingLarge,

@@ -75,7 +75,7 @@ export default async function PortofolioPage(
   const latestPortofolios = await getLatestPortofolios( params.slug, params.locale )
 
   return (
-    <main className="grow-[1] flex flex-col">
+    <main className="grow flex flex-col">
       <Detail data={data}
         latestPortofolios={latestPortofolios}
       />

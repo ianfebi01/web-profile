@@ -16,7 +16,7 @@ const Shape = ( { myposy }: { myposy: number } ) => {
         }}
       />
       <div
-        className="absolute w-0 h-0 top-[10%] left-48 border-l-[20px] border-b-[30px] border-r-[20px] border-l-transparent border-r-transparent border-b-dark-secondary"
+        className="absolute w-0 h-0 top-[10%] left-48 border-l-20 border-b-30 border-r-20 border-l-transparent border-r-transparent border-b-dark-secondary"
         style={{
           transform : `translate(0, ${translate.exponent( 1 )(
             myposy
@@ -24,7 +24,7 @@ const Shape = ( { myposy }: { myposy: number } ) => {
         }}
       />
       <div
-        className="absolute w-0 h-0 top-[25%] left-[75%] border-l-[20px] border-b-[30px] border-r-[20px] border-l-transparent border-r-transparent border-b-dark-secondary"
+        className="absolute w-0 h-0 top-[25%] left-[75%] border-l-20 border-b-30 border-r-20 border-l-transparent border-r-transparent border-b-dark-secondary"
         style={{
           transform : `translate(0, ${translate.exponent( 1 )(
             myposy
@@ -48,7 +48,7 @@ const Shape = ( { myposy }: { myposy: number } ) => {
         }}
       />
       <div
-        className="absolute w-0 h-0 inset-x-0 mx-auto top-[60%]  border-l-[20px] border-b-[30px] border-r-[20px] border-l-transparent border-r-transparent border-b-dark-secondary"
+        className="absolute w-0 h-0 inset-x-0 mx-auto top-[60%]  border-l-20 border-b-30 border-r-20 border-l-transparent border-r-transparent border-b-dark-secondary"
         style={{
           transform : `translate(140px, ${translate.exponent( 1 )(
             myposy
