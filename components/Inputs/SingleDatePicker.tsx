@@ -9,7 +9,7 @@ import {
 } from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
-import { format } from 'date-fns'
+import { format, type Locale } from 'date-fns'
 import { id, enUS } from 'date-fns/locale'
 import { Placement } from '@/types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -178,7 +178,7 @@ const SingleDatePicker = ( {
                   minDate={min}
                   maxDate={max}
                   selected={state}
-                  onChange={( e ) => {
+                  onChange={( e: Date | null ) => {
                     handleChange( e )
                   }}
                   renderDayContents={RenderDayContent}

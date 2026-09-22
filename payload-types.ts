@@ -112,6 +112,9 @@ export interface Config {
     'main-menu': MainMenuSelect<false> | MainMenuSelect<true>;
   };
   locale: 'en' | 'id';
+  widgets: {
+    collections: CollectionsWidget;
+  };
   user: User;
   jobs: {
     tasks: unknown;
@@ -387,12 +390,10 @@ export interface BodyCopyBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -446,12 +447,10 @@ export interface TextLeftImageRightBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -484,12 +483,10 @@ export interface SimpleCardsBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -523,12 +520,10 @@ export interface SmallBannerBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -553,12 +548,10 @@ export interface DividerBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -589,12 +582,10 @@ export interface AccordianBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -619,12 +610,10 @@ export interface QuoteBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -649,12 +638,10 @@ export interface FeaturedPortofoliosBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -679,12 +666,10 @@ export interface FeaturedExperiencesBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -715,12 +700,10 @@ export interface IconTextsBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -745,12 +728,10 @@ export interface ArticleSearchBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -775,12 +756,10 @@ export interface PortofolioSearchBlock {
     textDropShadow?: boolean | null;
     paddingTop?: ('pt-0' | 'pt-2' | 'pt-4' | 'pt-6' | 'pt-8' | 'pt-10' | 'pt-12' | 'pt-16' | 'pt-20' | 'pt-24') | null;
     paddingBottom?:
-      | ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24')
-      | null;
+      ('pb-0' | 'pb-2' | 'pb-4' | 'pb-6' | 'pb-8' | 'pb-10' | 'pb-12' | 'pb-16' | 'pb-20' | 'pb-24') | null;
     marginTop?: ('mt-0' | 'mt-2' | 'mt-4' | 'mt-6' | 'mt-8' | 'mt-10' | 'mt-12' | 'mt-16' | 'mt-20' | 'mt-24') | null;
     marginBottom?:
-      | ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24')
-      | null;
+      ('mb-0' | 'mb-2' | 'mb-4' | 'mb-6' | 'mb-8' | 'mb-10' | 'mb-12' | 'mb-16' | 'mb-20' | 'mb-24') | null;
     /**
      * Optional HTML ID for anchor links
      */
@@ -834,6 +813,7 @@ export interface User {
   resetPasswordExpiration?: string | null;
   salt?: string | null;
   hash?: string | null;
+  resetPasswordRequestedAt?: string | null;
   loginAttempts?: number | null;
   lockUntil?: string | null;
   sessions?:
@@ -1469,6 +1449,7 @@ export interface UsersSelect<T extends boolean = true> {
   resetPasswordExpiration?: T;
   salt?: T;
   hash?: T;
+  resetPasswordRequestedAt?: T;
   loginAttempts?: T;
   lockUntil?: T;
   sessions?:
@@ -1685,6 +1666,16 @@ export interface MainMenuSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

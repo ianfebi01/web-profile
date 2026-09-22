@@ -1,0 +1,18 @@
+packages:
+  - '.'
+
+# Native build tooling required by Next (swc), Payload (parcel/watcher),
+# esbuild and the oxc resolver used by eslint-plugin-import.
+allowBuilds:
+  '@parcel/watcher': true
+  '@swc/core': true
+  esbuild: true
+  unrs-resolver: true
+
+minimumReleaseAgeExclude:
+  - '@tanstack/query-core@5.103.2'
+  - '@tanstack/react-query@5.103.2'
+
+overrides:
+  '@payloadcms/ui': 3.90.1
+  '@payloadcms/plugin-cloud-storage': 3.90.1

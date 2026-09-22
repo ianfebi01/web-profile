@@ -58,6 +58,7 @@ const HeaderPanelDisclosure = ( { item, setIsOpen }: Props ) => {
           </dt>
           <dd>
             <Transition
+              as="div"
               show={open}
               className="overflow-clip"
               enter="transition-all duration-500 ease-in-out"
