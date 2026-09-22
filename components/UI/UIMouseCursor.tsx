@@ -361,7 +361,7 @@ export default function UIMouseCursor() {
     textContainerClass += ' text-white'
   } else if ( isOver && dataName === 'burger' ) {
     // Specifically styled to map to a burger icon overlay halo instead of totally vanishing
-    shapeClass += ' w-[64px] h-[64px] border-2 border-orange bg-transparent opacity-100'
+    shapeClass += ' w-[64px] h-[64px] border-2 border-orange bg-transparent'
   } else if ( isOver && ['button', 'input'].includes( dataName ) ) {
     shapeClass += ' w-0 h-0 transition-none'
     textContainerClass += ' text-white'
