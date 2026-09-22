@@ -12,7 +12,7 @@ const SectionProvider = ( {
 }: {
   children: React.ReactElement<MyPosYProps>[] | React.ReactElement<MyPosYProps>
 } ) => {
-  const [winHeight, setWinHeight] = useState<number>( typeof window !== 'undefined' ? window.innerHeight : 0 )
+  const [winHeight, setWinHeight] = useState<number>( 0 )
   const [myPosY, setMyPosY] = useState<number>( 0 )
 
   const sectionRef = useRef<HTMLDivElement>( null )
@@ -29,6 +29,10 @@ const SectionProvider = ( {
       setWinHeight( window.innerHeight )
     }
     
+    // Read the viewport only after mount, so the server and the first client
+    // render agree.
+    handleResize()
+
     // Initialize and track events
     window.addEventListener( 'scroll', handleScroll )
     window.addEventListener( 'resize', handleResize )
@@ -43,7 +47,10 @@ const SectionProvider = ( {
   return (
     <div ref={sectionRef}>
       {React.Children.map( children, ( child ) => {
-        if ( React.isValidElement( child ) ) {
+        // Only component children can read these props. A server component
+        // arrives here already rendered, so cloning onto its host element would
+        // emit `myposy`/`winheight` as DOM attributes and break hydration.
+        if ( React.isValidElement( child ) && typeof child.type !== 'string' ) {
           return React.cloneElement( child, {
             myposy    : myPosY,
             winheight : winHeight,
