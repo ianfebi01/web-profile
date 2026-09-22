@@ -39,6 +39,13 @@ const renderer = new Renderer()
 renderer.codespan = ( { text }: { text: string } ) => {
   return `<code class="hljs inline-code">${text}</code>`
 }
+// Wrap tables so wide ones can scroll horizontally instead of overflowing.
+renderer.table = function ( this: Renderer, token: Tokens.Table ) {
+  return `<div class="table-wrapper">${Renderer.prototype.table.call(
+    this,
+    token
+  )}</div>`
+}
 const marked = new Marked(
   markedHighlight( {
     emptyLangClass : 'hljs',

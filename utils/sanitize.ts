@@ -61,6 +61,7 @@ const sanitize = (
 
   const tableTags = ['table', 'thead', 'tbody', 'tr', 'th', 'td']
   const structuralTags = [
+    'div',
     'blockquote',
     'pre',
     'hr',
