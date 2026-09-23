@@ -11,38 +11,40 @@ interface Props {
   data: ExperienceType[]
 }
 
+// Sort by endDate in descending order, prioritizing null or missing endDate (current)
+const compareByEndDate = ( a: ExperienceType, b: ExperienceType ) => {
+  const aEndDate = a.endDate
+    ? new Date( a.endDate ).getTime()
+    : null
+  const bEndDate = b.endDate
+    ? new Date( b.endDate ).getTime()
+    : null
+
+  // Handle null or missing endDate
+  if ( aEndDate === null && bEndDate !== null ) return -1 // a comes first
+  if ( bEndDate === null && aEndDate !== null ) return 1 // b comes first
+  if ( aEndDate === null && bEndDate === null ) return 0 // equal
+
+  return bEndDate! - aEndDate!
+}
+
 const Experience: FunctionComponent<Props> = ( { data } ) => {
-  const groupedAndSorted = useMemo(
-    () =>
-      data.reduce<Record<string, ExperienceType[]>>( ( acc, item ) => {
-        // Group by companyName
-        if ( !acc[item.companyName] ) {
-          acc[item.companyName] = []
-        }
-        acc[item.companyName].push( item )
+  const groupedAndSorted = useMemo( () => {
+    // Group by companyName
+    const grouped = data.reduce<Record<string, ExperienceType[]>>( ( acc, item ) => {
+      if ( !acc[item.companyName] ) {
+        acc[item.companyName] = []
+      }
+      acc[item.companyName].push( item )
 
-        // Sort items in the group by endDate in descending order, prioritizing null or missing endDate
-        acc[item.companyName].sort( ( a, b ) => {
-          const aEndDate = a.endDate
-            ? new Date( a.endDate ).getTime()
-            : null
-          const bEndDate = b.endDate
-            ? new Date( b.endDate ).getTime()
-            : null
+      return acc
+    }, {} )
 
-          // Handle null or missing endDate
-          if ( aEndDate === null && bEndDate !== null ) return -1 // a comes first
-          if ( bEndDate === null && aEndDate !== null ) return 1 // b comes first
-          if ( aEndDate === null && bEndDate === null ) return 0 // equal
-
-          // Sort by endDate in descending order
-          return bEndDate! - aEndDate!
-        } )
-
-        return acc
-      }, {} ),
-    [data]
-  )
+    // Sort items in each group, then sort companies by their latest (index 0) experience
+    return Object.entries( grouped )
+      .map( ( [companyName, experiences] ) => [companyName, experiences.sort( compareByEndDate )] as const )
+      .sort( ( [, a], [, b] ) => compareByEndDate( a[0], b[0] ) )
+  }, [data] )
 
   // console.log( groupedAndSorted )
 
@@ -52,7 +54,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
     steps: IStep[]
   }[] = useMemo(
     () =>
-      Object.entries( groupedAndSorted ).map( ( [companyName, experiences] ) => {
+      groupedAndSorted.map( ( [companyName, experiences] ) => {
         // Calculate total working months for this company
         const totalWorkingMonths = experiences.reduce( ( total, item ) => {
           const startDate = new Date( item.startDate )
