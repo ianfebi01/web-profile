@@ -15,17 +15,6 @@ jobs:
     environment: Production
 
     steps:
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.VPS_SSH_KEY }}" > private_key.pem
-          chmod 600 private_key.pem
-
-      - name: Debug SSH Connection
-        run: ssh -vvv -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}
-
-      - name: Check if private key exists
-        run: ls -lah private_key.pem
-
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -52,9 +41,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-      - name: List contents before SCP
-        run: ls -lah
-
       - name: Upload app image & configs to VPS
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -80,14 +66,28 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 15m
           script: |
+            set -e
             echo "${{ secrets.GH_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-            cd /tmp/web-profile
             mkdir -p ~/app/web-profile
-            cp docker-compose.prod.yml ~/app/web-profile/docker-compose.prod.yml
+            cp /tmp/web-profile/docker-compose.prod.yml ~/app/web-profile/docker-compose.prod.yml
             cd ~/app/web-profile
-            docker compose -f docker-compose.prod.yml --env-file .env.production pull
-            docker compose -f docker-compose.prod.yml --env-file .env.production down
-            docker compose -f docker-compose.prod.yml --env-file .env.production up -d
+
+            pulled=false
+            for attempt in 1 2 3; do
+              if docker compose -f docker-compose.prod.yml --env-file .env.production pull; then
+                pulled=true
+                break
+              fi
+              echo "Pull failed (attempt $attempt/3), retrying in 15s..."
+              sleep 15
+            done
+            if [ "$pulled" != true ]; then
+              echo "Could not pull image from ghcr.io; leaving the running container untouched."
+              exit 1
+            fi
+
+            docker compose -f docker-compose.prod.yml --env-file .env.production up -d --remove-orphans
             docker image prune -f
             rm -rf /tmp/web-profile

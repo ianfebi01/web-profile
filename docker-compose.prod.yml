@@ -1,8 +1,8 @@
 services:
   web-profile:
     restart: always
-    build: .
     image: ghcr.io/ianfebi01/web-profile:latest
+    pull_policy: always
     container_name: web-profile
     # ports:
     #   - 3001:3000
