@@ -5,6 +5,7 @@ import { FALLBACK_SEO } from '@/utils/constants'
 import imageUrl from '@/utils/imageUrl'
 import { Metadata } from 'next'
 import { setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: Promise<{
@@ -63,6 +64,10 @@ export default async function ArticlePage(
   const params = await props.params;
   setRequestLocale( params.locale )
   const data = await getDetail( params.slug, params.locale );
+
+  if ( !data ) {
+    return notFound()
+  }
 
   return (
     <main className="grow flex flex-col">

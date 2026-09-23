@@ -9,6 +9,7 @@ import imageUrl from '@/utils/imageUrl'
 import { Metadata } from 'next'
 import { Locale } from 'next-intl'
 import { setRequestLocale } from 'next-intl/server'
+import { notFound } from 'next/navigation'
 
 type Props = {
   params: Promise<{
@@ -72,6 +73,11 @@ export default async function PortofolioPage(
   const params = await props.params;
 
   const data = await getDetail( params.slug, params.locale )
+
+  if ( !data ) {
+    return notFound()
+  }
+  
   const latestPortofolios = await getLatestPortofolios( params.slug, params.locale )
 
   return (
