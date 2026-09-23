@@ -14,6 +14,7 @@ import {
   NavCategoryType,
   SocialLinksType,
 } from '@/types/header'
+import ThemeToggle from '../ThemeToggle'
 
 interface Props {
   items: NavCategoryType[]
@@ -170,6 +171,7 @@ const Header = ( { items, socials }: Props ) => {
           </Link>
           
           <div className="flex items-center gap-6">
+            <ThemeToggle/>
             <div className={cn( "hidden sm:block transition-opacity duration-300", isOpen ? "opacity-0 pointer-events-none" : "opacity-100" )}>
               <LocaleSwitcher />
             </div>

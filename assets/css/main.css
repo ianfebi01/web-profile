@@ -11,6 +11,8 @@ layer(base);
 @import './components/searchbox.css' layer(utilities);
 @import './components/swiper.css' layer(utilities);
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @utility transition-default {
   @apply transition-all duration-500 ease-in-out;
 }
