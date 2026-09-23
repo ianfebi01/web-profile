@@ -4,7 +4,8 @@ import { withPayload } from '@payloadcms/next/withPayload'
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  reactStrictMode : false,
+  reactStrictMode   : false,
+  allowedDevOrigins : ['192.168.1.*'],
 
   output : 'standalone',
   // async rewrites() {

@@ -28,16 +28,25 @@ export default function Preloader() {
   const lenis = useLenis()
 
   useEffect( () => {
+    // Lenis is not mounted on mobile, so fall back to locking native scroll.
+    const lockScroll = () => {
+      if ( lenis ) lenis.stop()
+      else document.body.style.overflow = 'hidden'
+    }
+
+    const unlockScroll = () => {
+      if ( lenis ) lenis.start()
+      else document.body.style.overflow = ''
+    }
+
     // 1. Instantly skip for Lighthouse and bots to guarantee 100 PageSpeed
     if ( isBot ) {
-      if ( lenis ) lenis.start()
+      unlockScroll()
 
       return
     }
 
-    if ( lenis ) {
-      lenis.stop()
-    }
+    lockScroll()
 
     const counter = { value : 0 }
     let loadComplete = document.readyState === 'complete'
@@ -50,12 +59,10 @@ export default function Preloader() {
         const tl = gsap.timeline( {
           onComplete : () => {
             setIsLoading( false )
-            if ( lenis ) {
-              lenis.start()
-              import( 'gsap/ScrollTrigger' ).then( ( st ) => {
-                st.ScrollTrigger.refresh()
-              } )
-            }
+            unlockScroll()
+            import( 'gsap/ScrollTrigger' ).then( ( st ) => {
+              st.ScrollTrigger.refresh()
+            } )
           }
         } )
 
@@ -135,6 +142,7 @@ export default function Preloader() {
 
     return () => {
       window.removeEventListener( 'load', handleLoad )
+      unlockScroll()
     }
   }, [lenis, isBot] )
 

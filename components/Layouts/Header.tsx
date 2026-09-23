@@ -93,34 +93,60 @@ const Header = ( { items, socials }: Props ) => {
     }
   }, [syncMenuAnchor] )
 
-  useLenis( ( { scroll, direction } ) => {
-    // Never hide the Navbar header while the integrated mobile drawer is actively open
-    if ( isOpen ) return
+  // Lenis is not mounted on mobile, so the same handler is driven either by
+  // Lenis' scroll callback or by the native scroll event.
+  const handleScroll = useCallback(
+    ( { scroll, direction }: { scroll: number; direction: number } ) => {
+      // Never hide the Navbar header while the integrated mobile drawer is actively open
+      if ( isOpen ) return
 
-    if ( scroll < 100 || direction === -1 ) {
-      // Show navbar if it's currently hidden
-      if ( isHiddenRef.current ) {
-        isHiddenRef.current = false
-        gsap.to( navbarRef.current, {
-          y        : 0,
-          opacity  : 1,
-          duration : 0.5,
-          ease     : 'power2.out',
-        } )
+      if ( scroll < 100 || direction === -1 ) {
+        // Show navbar if it's currently hidden
+        if ( isHiddenRef.current ) {
+          isHiddenRef.current = false
+          gsap.to( navbarRef.current, {
+            y        : 0,
+            opacity  : 1,
+            duration : 0.5,
+            ease     : 'power2.out',
+          } )
+        }
+      } else if ( direction === 1 && scroll > 100 ) {
+        // Hide navbar completely up past its bounds
+        if ( !isHiddenRef.current ) {
+          isHiddenRef.current = true
+          gsap.to( navbarRef.current, {
+            y        : -100,
+            opacity  : 0,
+            duration : 0.5,
+            ease     : 'power2.inOut',
+          } )
+        }
       }
-    } else if ( direction === 1 && scroll > 100 ) {
-      // Hide navbar completely up past its bounds
-      if ( !isHiddenRef.current ) {
-        isHiddenRef.current = true
-        gsap.to( navbarRef.current, {
-          y        : -100,
-          opacity  : 0,
-          duration : 0.5,
-          ease     : 'power2.inOut',
-        } )
-      }
+    },
+    [isOpen]
+  )
+
+  const lenis = useLenis( handleScroll, [handleScroll] )
+
+  useEffect( () => {
+    // Lenis already feeds the handler when it is running.
+    if ( lenis ) return
+
+    let previousScroll = window.scrollY
+
+    const onScroll = () => {
+      const scroll = window.scrollY
+      const direction = scroll > previousScroll ? 1 : -1
+
+      previousScroll = scroll
+      handleScroll( { scroll, direction } )
     }
-  } )
+
+    window.addEventListener( 'scroll', onScroll, { passive : true } )
+
+    return () => window.removeEventListener( 'scroll', onScroll )
+  }, [lenis, handleScroll] )
 
   return (
     <>
