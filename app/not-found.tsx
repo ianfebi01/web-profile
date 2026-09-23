@@ -19,6 +19,7 @@ export default function NotFound() {
               sizes="auto"
               alt="Error image"
               className="object-contain"
+              loading='lazy'
             />
           </div>
           <article className=" max-w-xl flex flex-col items-center justify-center text-center p-4 border rounded-lg border-none relative z-20">
@@ -30,6 +31,7 @@ export default function NotFound() {
                 alt="Not found image"
                 className="object-cover"
                 priority
+                loading='eager'
               />
             </div>
 
