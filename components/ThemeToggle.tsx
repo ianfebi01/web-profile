@@ -29,7 +29,7 @@ export default function ThemeToggle() {
       checked={isDark}
       onChange={toggleDarkMode}
       aria-label="Toggle dark mode"
-      className="group relative flex h-7 w-14 cursor-pointer items-center rounded-full bg-white/10 p-1 ease-in-out focus:not-data-focus:outline-none data-checked:bg-white/10 data-focus:outline data-focus:outline-white"
+      className="group relative flex h-7 w-14 cursor-pointer items-center rounded-full bg-dark/50 p-1 ease-in-out focus:not-data-focus:outline-none data-checked:bg-white/10 data-focus:outline data-focus:outline-white"
     >
       <FontAwesomeIcon
         icon={faMoon}
