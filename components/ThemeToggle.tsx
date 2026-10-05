@@ -1,10 +1,10 @@
 "use client";
 import { useSyncExternalStore } from 'react'
-import { Switch } from '@headlessui/react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
+import { cn } from '@/lib/utils'
 
-// Watch the "dark" class on <html> so the switch stays in sync with it
+// Watch the "dark" class on <html> so the button stays in sync with it
 const subscribe = ( onChange: () => void ) => {
   const observer = new MutationObserver( onChange );
 
@@ -16,36 +16,34 @@ const subscribe = ( onChange: () => void ) => {
 const getSnapshot = () => document.documentElement.classList.contains( "dark" );
 const getServerSnapshot = () => false;
 
+const iconClass = 'absolute size-4 transition-all duration-300 ease-out'
+
 export default function ThemeToggle() {
   const isDark = useSyncExternalStore( subscribe, getSnapshot, getServerSnapshot );
 
-  const toggleDarkMode = ( checked: boolean ) => {
-    document.documentElement.classList.toggle( "dark", checked );
-    localStorage.theme = checked ? "dark" : "light";
+  const toggleDarkMode = () => {
+    document.documentElement.classList.toggle( "dark", !isDark );
+    localStorage.theme = !isDark ? "dark" : "light";
   };
 
   return (
-    <Switch
-      checked={isDark}
-      onChange={toggleDarkMode}
-      aria-label="Toggle dark mode"
-      className="group relative flex h-7 w-14 cursor-pointer items-center rounded-full bg-dark/50 p-1 ease-in-out focus:not-data-focus:outline-none data-checked:bg-white/10 data-focus:outline data-focus:outline-white"
+    <button
+      type="button"
+      onClick={toggleDarkMode}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      aria-pressed={isDark}
+      className="relative flex size-10 items-center justify-center rounded-full text-black/70 hover:text-black hover:bg-light-secondary dark:text-white/70 dark:hover:text-white dark:hover:bg-dark-secondary transition-colors duration-200 cursor-pointer"
     >
-      <FontAwesomeIcon
-        icon={faMoon}
-        aria-hidden="true"
-        className="absolute left-1.5 size-3.5 text-yellow-200 opacity-0 transition-opacity duration-200 group-data-checked:opacity-100"
-      />
       <FontAwesomeIcon
         icon={faSun}
         aria-hidden="true"
-        className="absolute right-1.5 size-3.5 text-white opacity-100 transition-opacity duration-200 group-data-checked:opacity-0"
+        className={cn( iconClass, isDark ? 'opacity-0 -rotate-90 scale-50' : 'opacity-100 rotate-0 scale-100' )}
       />
-      <span
+      <FontAwesomeIcon
+        icon={faMoon}
         aria-hidden="true"
-        className="pointer-events-none relative z-10 flex size-5 translate-x-0 items-center justify-center rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out group-data-checked:translate-x-7"
-      >
-      </span>
-    </Switch>
+        className={cn( iconClass, isDark ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 rotate-90 scale-50' )}
+      />
+    </button>
   );
 }

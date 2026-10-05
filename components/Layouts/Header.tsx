@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import Image from 'next/image'
-import { Link } from '@/i18n/navigation'
+import { Link, usePathname } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { useLenis } from 'lenis/react'
 import LocaleSwitcher from './LocaleSwitcher'
@@ -15,6 +15,7 @@ import {
   SocialLinksType,
 } from '@/types/header'
 import ThemeToggle from '../ThemeToggle'
+import constructNavUrl from '@/utils/construct-nav-url'
 
 interface Props {
   items: NavCategoryType[]
@@ -24,6 +25,8 @@ interface Props {
 const Header = ( { items, socials }: Props ) => {
   const [isOpen, setIsOpen] = useState( false )
   const [menuAnchor, setMenuAnchor] = useState<MenuAnchorType | null>( null )
+  const [isScrolled, setIsScrolled] = useState( false )
+  const pathname = usePathname()
   const navbarRef = useRef<HTMLElement>( null )
   const menuTriggerRef = useRef<HTMLDivElement>( null )
   const isHiddenRef = useRef( false )
@@ -33,13 +36,21 @@ const Header = ( { items, socials }: Props ) => {
   const syncMenuAnchor = useCallback( () => {
     if ( !menuTriggerRef.current ) return
 
-    const rect = menuTriggerRef.current.getBoundingClientRect()
+    // The trigger is a padded hover zone (p-4 -m-4); measure its content box so the
+    // panel lines up with the visible button rather than the invisible padding
+    const zone = menuTriggerRef.current
+    const rect = zone.getBoundingClientRect()
+    const style = window.getComputedStyle( zone )
+    const paddingTop = parseFloat( style.paddingTop )
+    const paddingRight = parseFloat( style.paddingRight )
+    const paddingBottom = parseFloat( style.paddingBottom )
+    const paddingLeft = parseFloat( style.paddingLeft )
 
     setMenuAnchor( {
-      top    : rect.top,
-      right  : window.innerWidth - rect.right,
-      width  : rect.width,
-      height : rect.height,
+      top    : rect.top + paddingTop,
+      right  : window.innerWidth - rect.right + paddingRight,
+      width  : rect.width - paddingLeft - paddingRight,
+      height : rect.height - paddingTop - paddingBottom,
     } )
   }, [] )
 
@@ -98,6 +109,9 @@ const Header = ( { items, socials }: Props ) => {
   // Lenis' scroll callback or by the native scroll event.
   const handleScroll = useCallback(
     ( { scroll, direction }: { scroll: number; direction: number } ) => {
+      // Solid bar once the page has scrolled away from the top
+      setIsScrolled( scroll > 16 )
+
       // Never hide the Navbar header while the integrated mobile drawer is actively open
       if ( isOpen ) return
 
@@ -149,32 +163,89 @@ const Header = ( { items, socials }: Props ) => {
     return () => window.removeEventListener( 'scroll', onScroll )
   }, [lenis, handleScroll] )
 
+  // Top-level items that link straight to a page are shown inline on wide screens
+  const inlineLinks = items
+    .filter( ( item ) => item.categoryName && !item.navItems?.length && constructNavUrl( item.navItem ) )
+    .slice( 0, 4 )
+    .map( ( item ) => ( { label : item.categoryName as string, href : constructNavUrl( item.navItem ) } ) )
+
+  const isActiveLink = ( href: string ) =>
+    href === '/' ? pathname === '/' : pathname === href || pathname.startsWith( `${href}/` )
+
   return (
     <>
       <nav
         ref={navbarRef}
         className={cn(
-          'fixed top-0 w-full h-24 z-100 transition-colors duration-500 pointer-events-none',
-          isOpen ? 'bg-transparent' : 'bg-transparent'
+          'fixed top-0 inset-x-0 z-100 border-b transition-colors duration-300',
+          isScrolled && !isOpen
+            ? 'bg-white/80 dark:bg-dark/80 backdrop-blur-md border-black/10 dark:border-white/10'
+            : 'bg-transparent border-transparent'
         )}
       >
-        <div className="flex items-center justify-between h-full px-6 md:px-12 mx-auto max-w-[1600px] pointer-events-auto pt-6">
+        {/* Empty bar space lets clicks through to the page; only the controls catch them */}
+        <div className="flex items-center justify-between gap-6 h-[72px] px-6 md:px-12 mx-auto max-w-[1600px] pointer-events-none [&>*]:pointer-events-auto">
           <Link href={'/'}
             onClick={() => setIsOpen( false )}
-            className="relative z-50"
+            className={cn(
+              'relative z-50 flex items-center gap-3 no-underline text-black dark:text-white transition-opacity duration-300',
+              isOpen && 'max-sm:opacity-0 max-sm:pointer-events-none'
+            )}
           >
             <Image src="/Logo.svg"
               alt="Logo image"
-              width={45}
-              height={45}
+              width={36}
+              height={36}
+              priority
             />
+            <span className="hidden sm:block text-base font-bold tracking-tight">Ian Febi</span>
           </Link>
-          
-          <div className="flex items-center gap-6">
-            <ThemeToggle/>
-            <div className={cn( "hidden sm:block transition-opacity duration-300", isOpen ? "opacity-0 pointer-events-none" : "opacity-100" )}>
-              <LocaleSwitcher />
+
+          {inlineLinks.length > 0 && (
+            <ul className={cn(
+              'hidden lg:flex items-center gap-1 m-0 list-none transition-opacity duration-300',
+              isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
+            )}
+            >
+              {inlineLinks.map( ( link ) => {
+                const isActive = isActiveLink( link.href )
+
+                return (
+                  <li key={link.href}
+                    className="m-0"
+                  >
+                    <Link
+                      href={link.href}
+                      aria-current={isActive ? 'page' : undefined}
+                      className={cn(
+                        'relative flex items-center h-10 px-4 rounded-full text-sm font-medium no-underline transition-colors duration-200',
+                        isActive
+                          ? 'text-black dark:text-white'
+                          : 'text-black/55 hover:text-black dark:text-white/55 dark:hover:text-white'
+                      )}
+                    >
+                      {link.label}
+                      {isActive && (
+                        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-orange" />
+                      )}
+                    </Link>
+                  </li>
+                )
+              } )}
+            </ul>
+          )}
+
+          <div className="flex items-center gap-1 sm:gap-2">
+            <div className={cn( 'flex items-center gap-1 transition-opacity duration-300', isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100' )}>
+              <ThemeToggle />
+              <div className="hidden sm:block">
+                <LocaleSwitcher />
+              </div>
             </div>
+
+            <span aria-hidden="true"
+              className="hidden sm:block w-px h-6 mx-2 bg-black/10 dark:bg-white/15"
+            />
 
             <HeaderMenuButton
               ref={menuTriggerRef}
