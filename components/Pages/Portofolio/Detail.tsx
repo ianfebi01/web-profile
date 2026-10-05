@@ -1,12 +1,15 @@
 'use client'
 import SkeletonDetail from './SkeletonDetail'
-import Chip from '@/components/Chip'
 import Markdown from '@/components/Parsers/Markdown'
 import GaleryCarousel from '@/components/Layouts/GaleryCarousel'
 import { useTranslations } from 'next-intl'
 import PortofolioCard from '@/components/Cards/PortofolioCard'
-import { Project } from '@/payload-types'
-import PageTitle from '@/components/Layouts/PageTitle'
+import { Media, Project, Skill } from '@/payload-types'
+import { Link } from '@/i18n/navigation'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft, faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons'
+import AuthorMeta from '@/components/Reading/AuthorMeta'
+import ShareActions, { actionClass } from '@/components/Reading/ShareActions'
 
 interface Props {
   data: Project | null
@@ -17,6 +20,8 @@ interface Props {
 const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
   const t = useTranslations()
 
+  const skills = ( data?.skills ?? [] ).filter( ( skill ): skill is Skill => typeof skill === 'object' )
+
   return (
     <section
       id="portofolio"
@@ -25,53 +30,108 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
       {isFetching || !data ? (
         <SkeletonDetail />
       ) : (
-        <div className="w-full h-full grow max-w-3xl px-6 lg:px-8 mt-20 sm:mt-20 mb-8 flex flex-col gap-4">
-          <PageTitle text={data?.title || ''}
-            link={'/portofolio'}
+        <article className="w-full max-w-[728px] px-6 mt-28 mb-16 text-black dark:text-white">
+          <Link
+            href="/portofolio"
+            className="inline-flex items-center gap-2 mb-6 text-sm no-underline text-black/55 hover:text-black dark:text-white/55 dark:hover:text-white transition-colors duration-200"
+          >
+            <FontAwesomeIcon icon={faArrowLeft}
+              className="size-3"
+            />
+            {t( 'portofolio.title' )}
+          </Link>
+
+          <h1 className="m-0 font-bold tracking-tight leading-[1.15] text-[32px] md:text-[42px]">
+            {data.title}
+          </h1>
+
+          <AuthorMeta content={data.description}
+            date={data.createdAt}
           />
-          <div className="flex flex-col gap-8">
-            <div className="flex flex-col gap-4 w-full mx-auto">
-              {data?.gallery?.length && (
-                <GaleryCarousel data={data.gallery.map( ( g: any ) => g.image )} />
+
+          {/* Action bar */}
+          <div className="flex items-center justify-between gap-4 mt-8 py-1 border-y border-black/10 dark:border-white/10">
+            <div className="flex flex-wrap gap-2">
+              {skills.slice( 0, 3 ).map( ( skill ) => (
+                <span
+                  key={skill.id}
+                  className="text-xs px-3 py-1 rounded-full bg-light-secondary dark:bg-dark-secondary text-black/70 dark:text-white/70"
+                >
+                  {skill.name}
+                </span>
+              ) )}
+            </div>
+            <div className="flex items-center gap-1 shrink-0">
+              {!!data.url && (
+                <a
+                  href={data.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={t( 'portofolio.visit_site' )}
+                  className={`${actionClass} no-underline`}
+                >
+                  <FontAwesomeIcon icon={faArrowUpRightFromSquare}
+                    className="size-4"
+                  />
+                </a>
               )}
-              <div className="flex flex-col gap-4">
-                <div className="flex flex-row gap-2 flex-wrap">
-                  {!!data?.createdAt && (
-                    <Chip label={new Date( data.createdAt ).toLocaleDateString()}
-                      bg="dark-secondary"
-                    />
-                  )}
-                  {!!data?.url && (
-                    <Chip
-                      label="Url: "
-                      link={data.url || undefined}
-                      bg="dark-secondary"
-                    />
-                  )}
-                </div>
-                {!!data?.description && (
-                  <div className="bg-light-secondary dark:bg-dark-secondary p-4 border border-none rounded-lg flex flex-col gap-4 text-black/90 dark:text-white/90">
-                    <Markdown content={data.description} />
-                  </div>
-                )}
+              <ShareActions title={data.title} />
+            </div>
+          </div>
+
+          {!!data.gallery?.length && (
+            <div className="mt-10">
+              <GaleryCarousel data={data.gallery.map( ( g ) => g.image ).filter( ( image ): image is string | Media => !!image )} />
+            </div>
+          )}
+
+          {!!data.description && (
+            <div className="article-body mt-6">
+              <Markdown content={data.description} />
+            </div>
+          )}
+
+          {!!data.url && (
+            <a
+              href={data.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 mt-10 px-5 py-2.5 rounded-full text-sm font-medium no-underline bg-black text-white hover:bg-black/80 dark:bg-white dark:text-dark dark:hover:bg-white/80 transition-colors duration-200"
+            >
+              {t( 'portofolio.visit_site' )}
+              <FontAwesomeIcon icon={faArrowUpRightFromSquare}
+                className="size-3"
+              />
+            </a>
+          )}
+
+          {skills.length > 0 && (
+            <div className="flex flex-wrap gap-2 mt-12">
+              {skills.map( ( skill ) => (
+                <span
+                  key={skill.id}
+                  className="text-sm px-4 py-2 rounded-full bg-light-secondary dark:bg-dark-secondary"
+                >
+                  {skill.name}
+                </span>
+              ) )}
+            </div>
+          )}
+
+          {latestPortofolios && latestPortofolios.length > 0 && (
+            <div className="mt-16 pt-12 border-t border-black/10 dark:border-white/10">
+              <h2 className="mt-0 mb-8 text-xl font-bold">{t( 'see_latest_portfolios' )}</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {latestPortofolios.map( ( portofolio ) => (
+                  <PortofolioCard
+                    key={portofolio.slug}
+                    portofolio={portofolio as any}
+                  />
+                ) )}
               </div>
             </div>
-            <hr className="border-black/15 dark:border-white-overlay-2" />
-            {latestPortofolios && latestPortofolios.length > 0 && (
-              <>
-                <h2 className="h1 mt-0">{t( 'see_latest_portfolios' )}:</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {latestPortofolios.map( ( portofolio ) => (
-                    <PortofolioCard
-                      key={portofolio.slug}
-                      portofolio={portofolio as any}
-                    />
-                  ) )}
-                </div>
-              </>
-            )}
-          </div>
-        </div>
+          )}
+        </article>
       )}
     </section>
   )

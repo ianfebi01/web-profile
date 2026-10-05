@@ -17,7 +17,8 @@
     },
     "portofolio": {
         "title": "Portofolio",
-        "desc": "Daftar portofolio oleh Ian Febi Sastrataruna"
+        "desc": "Daftar portofolio oleh Ian Febi Sastrataruna",
+        "visit_site": "Kunjungi situs"
     },
     "locale-switcher": {
         "title": "Ubah Bahasa"

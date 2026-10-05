@@ -17,7 +17,8 @@
     },
     "portofolio": {
         "title": "Portofolio",
-        "desc": "Portofolio of Ian Febi Sastrataruna"
+        "desc": "Portofolio of Ian Febi Sastrataruna",
+        "visit_site": "Visit site"
     },
     "locale-switcher": {
         "title": "Change Language"

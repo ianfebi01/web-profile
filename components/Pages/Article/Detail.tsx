@@ -4,11 +4,8 @@ import imageUrl from '@/utils/imageUrl'
 import Markdown from '@/components/Parsers/Markdown'
 import imageLoader from '@/lib/constans/image-loader'
 import SkeletonDetail from '../Portofolio/SkeletonDetail'
-import { useLocale, useTranslations } from 'next-intl'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faLink, faShareFromSquare } from '@fortawesome/free-solid-svg-icons'
-import toast from 'react-hot-toast'
-import { useState } from 'react'
+import AuthorMeta from '@/components/Reading/AuthorMeta'
+import ShareActions from '@/components/Reading/ShareActions'
 import { Article, Tag } from '@/payload-types'
 
 interface Props {
@@ -16,41 +13,8 @@ interface Props {
   isFetching?: boolean
 }
 
-const AUTHOR_NAME = 'Ian Febi Sastrataruna'
-const WORDS_PER_MINUTE = 200
-
-const getReadingTime = ( content?: string | null ) => {
-  const words = content?.trim().split( /\s+/ ).length ?? 0
-
-  return Math.max( 1, Math.round( words / WORDS_PER_MINUTE ) )
-}
-
 const Detail = ( { data, isFetching }: Props ) => {
-  const t = useTranslations()
-  const locale = useLocale()
-  const [copied, setCopied] = useState( false )
-
   const tags = ( data?.tags ?? [] ).filter( ( tag ): tag is Tag => typeof tag === 'object' )
-
-  const copyLink = async () => {
-    await navigator.clipboard.writeText( window.location.href )
-    setCopied( true )
-    toast.success( t( 'article.link_copied' ) )
-    setTimeout( () => setCopied( false ), 2000 )
-  }
-
-  const share = async () => {
-    if ( !navigator.share ) return copyLink()
-
-    try {
-      await navigator.share( { title : data?.title, text : data?.introText ?? undefined, url : window.location.href } )
-    } catch {
-      // The user dismissed the share sheet
-    }
-  }
-
-  const actionClass =
-    'p-2 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors duration-200 cursor-pointer'
 
   return (
     <section
@@ -65,30 +29,9 @@ const Detail = ( { data, isFetching }: Props ) => {
             {data.title}
           </h1>
 
-          {/* Author */}
-          <div className="flex items-center gap-3 mt-8">
-            <div className="relative size-11 shrink-0 overflow-hidden rounded-full bg-light-secondary dark:bg-dark-secondary">
-              <Image
-                src="/me.png"
-                alt={AUTHOR_NAME}
-                fill
-                sizes="44px"
-                className="object-cover object-top"
-              />
-            </div>
-            <div className="flex flex-col gap-0.5">
-              <span className="text-sm md:text-base font-medium">{AUTHOR_NAME}</span>
-              <span className="text-sm text-black/55 dark:text-white/55">
-                {t( 'article.min_read', { count : getReadingTime( data.content ) } )}
-                <span className="mx-2">·</span>
-                {new Date( data.createdAt ).toLocaleDateString( locale, {
-                  month : 'short',
-                  day   : 'numeric',
-                  year  : 'numeric',
-                } )}
-              </span>
-            </div>
-          </div>
+          <AuthorMeta content={data.content}
+            date={data.createdAt}
+          />
 
           {/* Action bar */}
           <div className="flex items-center justify-between gap-4 mt-8 py-1 border-y border-black/10 dark:border-white/10">
@@ -103,26 +46,7 @@ const Detail = ( { data, isFetching }: Props ) => {
               ) )}
             </div>
             <div className="flex items-center gap-1 shrink-0">
-              <button
-                type="button"
-                onClick={copyLink}
-                aria-label={t( 'article.copy_link' )}
-                className={actionClass}
-              >
-                <FontAwesomeIcon icon={copied ? faCheck : faLink}
-                  className="size-4"
-                />
-              </button>
-              <button
-                type="button"
-                onClick={share}
-                aria-label={t( 'article.share' )}
-                className={actionClass}
-              >
-                <FontAwesomeIcon icon={faShareFromSquare}
-                  className="size-4"
-                />
-              </button>
+              <ShareActions title={data.title} />
             </div>
           </div>
 
