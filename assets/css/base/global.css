@@ -111,7 +111,7 @@
     h3,
     h4,
     h5 {
-      @apply font-primary mt-11;
+      @apply font-sans mt-11;
     }
 
     h1,
@@ -170,7 +170,7 @@
 
     /* Inline code styling */
     code.inline-code {
-      @apply bg-(--hljs-bg) text-(--hljs-mono-1) text-[0.875em] px-1.5 py-0.5 rounded-sm font-mono break-all;
+      @apply bg-(--hljs-bg) text-(--hljs-mono-1) text-[0.875em] px-1.5 py-0.5 rounded-sm font-code break-all;
     }
 
     .table-wrapper {

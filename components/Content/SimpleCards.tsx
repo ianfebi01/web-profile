@@ -32,7 +32,7 @@ const SimpleCards: React.FC<Props> = ( { sectionData } ) => {
               <header>
                 <h2
                   className={cn(
-                    'font-extra-bold',
+                    'font-extrabold',
                     item.bigTitleSize ? 'h2' : 'h3'
                   )}
                 >

@@ -57,7 +57,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
         <span className="mb-2 text-xs lg:text-sm line-clamp-1 text-greydark">
           {formatDate( data.date || data.createdAt )}
         </span>
-        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extra-bold lg:mb-6">
+        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extrabold lg:mb-6">
           {data.title}
         </h3>
         <div className="mb-4 lg:mb-8 xxl:text-xl">

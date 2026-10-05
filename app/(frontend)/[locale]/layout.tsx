@@ -1,7 +1,7 @@
 import '@/assets/css/main.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import type { Metadata } from 'next'
-import { Source_Code_Pro, Source_Serif_4 } from 'next/font/google'
+import { Inter, Source_Code_Pro, Source_Serif_4 } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import ReactQueryProvider from '@/components/Context/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
@@ -22,6 +22,11 @@ import { routing } from '@/i18n/routing'
 import Header from '@/components/Layouts/Header'
 
 config.autoAddCss = false
+
+const inter = Inter( {
+  subsets  : ['latin'],
+  variable : '--font-sans-family',
+} )
 
 const sourceCodePro = Source_Code_Pro( {
   subsets  : ['latin'],
@@ -66,7 +71,7 @@ export default async function LocaleLayout( {
 
   return (
     <html lang={locale}
-      className={`${sourceCodePro.variable} ${sourceSerif.variable} scrollbar-gutter-stable`}
+      className={`${inter.variable} ${sourceCodePro.variable} ${sourceSerif.variable} scrollbar-gutter-stable`}
       suppressHydrationWarning
     >
       <head>

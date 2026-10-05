@@ -37,7 +37,7 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
 
       <div className="relative flex flex-col h-full px-4 py-6">
 
-        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extra-bold lg:mb-6 lg:mt-2">
+        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extrabold lg:mb-6 lg:mt-2">
           {portofolio.title}
         </h3>
 
