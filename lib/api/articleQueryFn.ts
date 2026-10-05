@@ -40,3 +40,43 @@ export const getAllArticleSlugs = unstable_cache(
   ['all-article-slugs'],
   { tags : ['articles'] }
 )
+
+export const getRecommendedArticles = unstable_cache(
+  async ( currentSlug: string, tagIds: string[] = [], locale: string = 'en', limit: number = 4 ): Promise<Article[]> => {
+    const payload = await getPayload( { config : configPromise } )
+
+    // Articles that share a tag with the current one come first
+    const related = tagIds.length > 0
+      ? ( await payload.find( {
+        collection : 'articles',
+        where      : { and : [{ slug : { not_equals : currentSlug } }, { tags : { in : tagIds } }] },
+        locale     : locale as 'en' | 'id',
+        depth      : 2,
+        limit,
+        sort       : '-createdAt',
+      } ) ).docs
+      : []
+
+    if ( related.length >= limit ) return related
+
+    // Top up with the latest articles
+    const excludedIds = related.map( ( article ) => article.id )
+    const latest = await payload.find( {
+      collection : 'articles',
+      where      : {
+        and : [
+          { slug : { not_equals : currentSlug } },
+          ...( excludedIds.length > 0 ? [{ id : { not_in : excludedIds } }] : [] ),
+        ],
+      },
+      locale : locale as 'en' | 'id',
+      depth  : 2,
+      limit  : limit - related.length,
+      sort   : '-createdAt',
+    } )
+
+    return [...related, ...latest.docs]
+  },
+  ['recommended-articles'],
+  { tags : ['articles'] }
+)

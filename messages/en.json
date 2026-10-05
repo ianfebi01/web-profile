@@ -9,11 +9,18 @@
     "no-data-found": "Data not found",
     "article": {
         "title": "Article",
-        "desc": "Article of Ian Febi Sastrataruna"
+        "desc": "Article of Ian Febi Sastrataruna",
+        "min_read": "{count} min read",
+        "copy_link": "Copy link",
+        "link_copied": "Link copied",
+        "share": "Share",
+        "recommended": "Recommended articles",
+        "see_all": "See all articles"
     },
     "portofolio": {
         "title": "Portofolio",
-        "desc": "Portofolio of Ian Febi Sastrataruna"
+        "desc": "Portofolio of Ian Febi Sastrataruna",
+        "visit_site": "Visit site"
     },
     "locale-switcher": {
         "title": "Change Language"
@@ -66,5 +73,12 @@
     "edit": "Edit",
     "cancel": "Cancel",
     "summary": "Transaction Summary",
-    "see_latest_portfolios": "See my latest portfolios"
+    "see_latest_portfolios": "See my latest portfolios",
+    "experience": {
+        "present": "Present",
+        "current": "Current",
+        "years": "{count, plural, one {# yr} other {# yrs}}",
+        "months": "{count, plural, one {# mo} other {# mos}}",
+        "less_than_month": "< 1 mo"
+    }
 }

@@ -21,12 +21,12 @@ const getSection = (
     <div
       key={index}
       className={cn( {
-        'bg-dark'                                     : bgColour === 'dark',
-        'bg-dark-secondary'                           : bgColour === 'dark-secondary',
-        'bg-orange'                                   : bgColour === 'orange',
-        'bg-green'                                    : bgColour === 'green',
-        'bg-white'                                    : bgColour === 'white',
-        'last:border-b-[0.5px] last:border-[#707070]' : bgColour === 'blue-dark',
+        // 'bg-white dark:bg-dark'                       : bgColour === 'dark',
+        // 'bg-light-secondary dark:bg-dark-secondary'   : bgColour === 'dark-secondary',
+        // 'bg-orange'                                   : bgColour === 'orange',
+        // 'bg-green'                                    : bgColour === 'green',
+        // 'bg-white'                                    : bgColour === 'white',
+        // 'last:border-b-[0.5px] last:border-[#707070]' : bgColour === 'blue-dark',
 
         'last:pb-8 last:lg:pb-16' : !sectionData.sectionSettings?.paddingBottom,
 
@@ -102,7 +102,7 @@ const getSection = (
               <div className="pt-16">
                 {headingLevel === 1 && (
                   <h1
-                    className={cn( 'font-extra-bold normal-case', {
+                    className={cn( 'font-extrabold normal-case', {
                       'drop-shadow-md' :
                         sectionData?.sectionSettings?.textDropShadow,
                       'text-3xl md:text-[2.25rem] md:leading-10 xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
@@ -115,7 +115,7 @@ const getSection = (
 
                 {headingLevel === 2 && (
                   <h2
-                    className={cn( 'font-primary! font-extra-bold', {
+                    className={cn( 'font-extrabold', {
                       'text-[1.7rem]! md:text-[2.25rem] md:leading-10 xxl:text-[2.5rem] xxl:leading-[2.75rem]' :
                         sectionData?.sectionSettings?.largeHeading,
                       'text-xl xxl:text-[1.5625rem]' :

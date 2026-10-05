@@ -12,8 +12,8 @@ const Chip = ( { label, bg = 'dark', className, link }: Props ) => {
     <div
       className={cn( [
         'py-1 px-2 border border-none rounded-md w-fit',
-        [bg === 'dark' && 'bg-dark'],
-        [bg === 'dark-secondary' && 'bg-dark-secondary'],
+        [bg === 'dark' && 'bg-white dark:bg-dark'],
+        [bg === 'dark-secondary' && 'bg-light-secondary dark:bg-dark-secondary'],
         className,
       ] )}
     >

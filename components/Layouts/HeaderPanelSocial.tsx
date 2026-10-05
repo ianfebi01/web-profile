@@ -83,7 +83,7 @@ const HeaderPanelSocial = ( {
       onClick={() => openNewTab( item.url )}
       className={cn(
         transitionEnabled && 'opacity-0 translate-y-[50px] will-change-transform',
-        'flex size-12 items-center justify-center text-white hover:text-orange transition-all duration-300 focus:outline-none focus-visible:ring-0 focus:border-none outline-none focus:outline-0'
+        'flex size-12 items-center justify-center text-black dark:text-white hover:text-orange transition-all duration-300 focus:outline-none focus-visible:ring-0 focus:border-none outline-none focus:outline-0'
       )}
       data-name="button"
       aria-label={item.platform}

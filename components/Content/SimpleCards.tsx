@@ -25,14 +25,14 @@ const SimpleCards: React.FC<Props> = ( { sectionData } ) => {
             <AnimationProvider
               once
               className={cn(
-                'bg-dark-secondary drop-shadow-20 px-6 py-8 rounded-lg h-full'
+                'bg-light-secondary dark:bg-dark-secondary drop-shadow-20 px-6 py-8 rounded-lg h-full'
               )}
               delay={0.2 + ( index * 0.1 )}
             >
               <header>
                 <h2
                   className={cn(
-                    'font-extra-bold',
+                    'font-extrabold',
                     item.bigTitleSize ? 'h2' : 'h3'
                   )}
                 >

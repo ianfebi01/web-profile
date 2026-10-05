@@ -9,11 +9,18 @@
     "no-data-found": "Data tidak ditemukan",
     "article": {
         "title": "Artikel",
-        "desc": "Daftar artikel oleh Ian Febi Sastrataruna"
+        "desc": "Daftar artikel oleh Ian Febi Sastrataruna",
+        "min_read": "{count} menit baca",
+        "copy_link": "Salin tautan",
+        "link_copied": "Tautan disalin",
+        "share": "Bagikan",
+        "recommended": "Artikel rekomendasi",
+        "see_all": "Lihat semua artikel"
     },
     "portofolio": {
         "title": "Portofolio",
-        "desc": "Daftar portofolio oleh Ian Febi Sastrataruna"
+        "desc": "Daftar portofolio oleh Ian Febi Sastrataruna",
+        "visit_site": "Kunjungi situs"
     },
     "locale-switcher": {
         "title": "Ubah Bahasa"
@@ -66,5 +73,12 @@
     "edit": "Ubah",
     "cancel": "Batal",
     "summary": "Rangkuman Transaksi",
-    "see_latest_portfolios": "Lihat portofolio terbaru saya"
+    "see_latest_portfolios": "Lihat portofolio terbaru saya",
+    "experience": {
+        "present": "Sekarang",
+        "current": "Saat ini",
+        "years": "{count} thn",
+        "months": "{count} bln",
+        "less_than_month": "< 1 bln"
+    }
 }

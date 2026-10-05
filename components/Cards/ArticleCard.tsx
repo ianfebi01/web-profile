@@ -30,7 +30,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
   return (
     <article
       className={cn(
-        'bg-dark-secondary text-white flex flex-col gap-4 w-[calc(100%-0.5rem)] relative rounded-lg overflow-hidden',
+        'bg-light-secondary dark:bg-dark-secondary text-black dark:text-white flex flex-col gap-4 w-[calc(100%-0.5rem)] relative rounded-lg overflow-hidden',
         'h-full sm:basis-[calc(50%-1.5rem)] lg:basis-[calc(33.3%-1.5rem)]',
       )}
     >
@@ -57,7 +57,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
         <span className="mb-2 text-xs lg:text-sm line-clamp-1 text-greydark">
           {formatDate( data.date || data.createdAt )}
         </span>
-        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extra-bold lg:mb-6">
+        <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extrabold lg:mb-6">
           {data.title}
         </h3>
         <div className="mb-4 lg:mb-8 xxl:text-xl">

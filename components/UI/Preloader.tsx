@@ -193,7 +193,7 @@ export default function Preloader() {
             } )}
           </h1>
 
-          <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex items-center justify-center gap-2 font-mono text-xl md:text-3xl font-medium">
+          <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 flex items-center justify-center gap-2 font-code text-xl md:text-3xl font-medium">
             <span>{String( progress ).padStart( 3, '0' )}</span>
             <svg 
               viewBox="0 0 24 24" 

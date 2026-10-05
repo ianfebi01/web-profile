@@ -1,8 +1,9 @@
 'use client'
 import { FunctionComponent, useEffect, useMemo, useRef } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import { Experience as ExperienceType } from '@/payload-types'
+import { cn } from '@/lib/utils'
 import Markdown from './Parsers/Markdown'
-import ProgressVertical, { IStep } from './ProgressVertical'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 gsap.registerPlugin( ScrollTrigger )
@@ -11,104 +12,89 @@ interface Props {
   data: ExperienceType[]
 }
 
+// Sort by endDate in descending order, prioritizing null or missing endDate (current)
+const compareByEndDate = ( a: ExperienceType, b: ExperienceType ) => {
+  const aEndDate = a.endDate
+    ? new Date( a.endDate ).getTime()
+    : null
+  const bEndDate = b.endDate
+    ? new Date( b.endDate ).getTime()
+    : null
+
+  // Handle null or missing endDate
+  if ( aEndDate === null && bEndDate !== null ) return -1 // a comes first
+  if ( bEndDate === null && aEndDate !== null ) return 1 // b comes first
+  if ( aEndDate === null && bEndDate === null ) return 0 // equal
+
+  return bEndDate! - aEndDate!
+}
+
+const isCurrent = ( item: ExperienceType ) => !item.endDate || new Date( item.endDate ) >= new Date()
+
+const getMonths = ( item: ExperienceType ) => {
+  const startDate = new Date( item.startDate )
+  const endDate = item.endDate ? new Date( item.endDate ) : new Date() // Use current date if endDate is null
+
+  return ( endDate.getFullYear() - startDate.getFullYear() ) * 12 + ( endDate.getMonth() - startDate.getMonth() )
+}
+
 const Experience: FunctionComponent<Props> = ( { data } ) => {
-  const groupedAndSorted = useMemo(
-    () =>
-      data.reduce<Record<string, ExperienceType[]>>( ( acc, item ) => {
-        // Group by companyName
-        if ( !acc[item.companyName] ) {
-          acc[item.companyName] = []
-        }
-        acc[item.companyName].push( item )
+  const t = useTranslations( 'experience' )
+  const locale = useLocale()
 
-        // Sort items in the group by endDate in descending order, prioritizing null or missing endDate
-        acc[item.companyName].sort( ( a, b ) => {
-          const aEndDate = a.endDate
-            ? new Date( a.endDate ).getTime()
-            : null
-          const bEndDate = b.endDate
-            ? new Date( b.endDate ).getTime()
-            : null
+  const companies = useMemo( () => {
+    // Group by companyName
+    const grouped = data.reduce<Record<string, ExperienceType[]>>( ( acc, item ) => {
+      if ( !acc[item.companyName] ) {
+        acc[item.companyName] = []
+      }
+      acc[item.companyName].push( item )
 
-          // Handle null or missing endDate
-          if ( aEndDate === null && bEndDate !== null ) return -1 // a comes first
-          if ( bEndDate === null && aEndDate !== null ) return 1 // b comes first
-          if ( aEndDate === null && bEndDate === null ) return 0 // equal
+      return acc
+    }, {} )
 
-          // Sort by endDate in descending order
-          return bEndDate! - aEndDate!
-        } )
-
-        return acc
-      }, {} ),
-    [data]
-  )
-
-  // console.log( groupedAndSorted )
-
-  const transformedData: {
-    companyName: string
-    totalWorkingMonths: number
-    steps: IStep[]
-  }[] = useMemo(
-    () =>
-      Object.entries( groupedAndSorted ).map( ( [companyName, experiences] ) => {
-        // Calculate total working months for this company
-        const totalWorkingMonths = experiences.reduce( ( total, item ) => {
-          const startDate = new Date( item.startDate )
-          const endDate = item.endDate
-            ? new Date( item.endDate )
-            : new Date() // Use current date if endDate is null
-          const months =
-            ( endDate.getFullYear() - startDate.getFullYear() ) * 12 +
-            ( endDate.getMonth() - startDate.getMonth() )
-
-          return total + months
-        }, 0 )
+    // Sort roles in each company, then sort companies by their latest role
+    return Object.entries( grouped )
+      .map( ( [companyName, roles] ) => {
+        const sortedRoles = [...roles].sort( compareByEndDate )
+        const earliestStart = sortedRoles.reduce(
+          ( earliest, role ) => ( role.startDate < earliest ? role.startDate : earliest ),
+          sortedRoles[0].startDate
+        )
 
         return {
-          companyName        : companyName,
-          totalWorkingMonths : totalWorkingMonths,
-          steps              : experiences.map( ( item ) => {
-            const startDate = new Date( item.startDate )
-            const endDate = item.endDate
-              ? new Date( item.endDate )
-              : new Date() // Use current date if endDate is null
-            const months =
-              ( endDate.getFullYear() - startDate.getFullYear() ) * 12 +
-              ( endDate.getMonth() - startDate.getMonth() )
-
-            return {
-              description : String( item.description || '' ),
-              name        : String( item.companyName ),
-              role        : String( item.role ),
-              status :
-                item.endDate &&
-                new Date( item.endDate ) < new Date()
-                  ? 'complete'
-                  : 'current',
-              totalWorkingMonths : months,
-            }
-          } ),
+          companyName,
+          roles       : sortedRoles,
+          startDate   : earliestStart,
+          endDate     : sortedRoles[0].endDate,
+          isCurrent   : sortedRoles.some( isCurrent ),
+          totalMonths : sortedRoles.reduce( ( total, role ) => total + getMonths( role ), 0 ),
         }
-      } ),
-    [groupedAndSorted]
-  )
+      } )
+      .sort( ( a, b ) => compareByEndDate( a.roles[0], b.roles[0] ) )
+  }, [data] )
 
-  function convertMonthsToYearsAndMonths( totalMonths: number ): string {
-    const years = Math.floor( totalMonths / 12 ) // Calculate the number of years
-    const months = totalMonths % 12 // Calculate the remaining months
+  const formatDuration = ( totalMonths: number ) => {
+    const years = Math.floor( totalMonths / 12 )
+    const months = totalMonths % 12
 
-    const yearText = years > 0 ? `${years} yr${years > 1 ? 's' : ''}` : ''
-    const monthText =
-      months > 0 ? `${months} month${months > 1 ? 's' : ''}` : ''
+    if ( years === 0 && months === 0 ) return t( 'less_than_month' )
 
-    // Combine year and month text with appropriate spacing
-    return [yearText, monthText].filter( Boolean ).join( ' ' )
+    return [
+      years > 0 && t( 'years', { count : years } ),
+      months > 0 && t( 'months', { count : months } ),
+    ].filter( Boolean ).join( ' ' )
+  }
+
+  const formatPeriod = ( startDate: string, endDate?: string | null ) => {
+    const format = ( date: string ) =>
+      new Date( date ).toLocaleDateString( locale, { month : 'short', year : 'numeric' } )
+
+    return `${format( startDate )} — ${endDate && new Date( endDate ) < new Date() ? format( endDate ) : t( 'present' )}`
   }
 
   // Transition
-  const itemsRef = useRef<HTMLDivElement[] | null[]>( [] )
+  const itemsRef = useRef<HTMLLIElement[] | null[]>( [] )
   useEffect( () => {
     itemsRef.current.forEach( ( item ) => {
       gsap.to( item, {
@@ -126,57 +112,89 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
   }, [] )
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="bg-dark px-4 py-6 rounded-lg divide-y divide-white-overlay-2">
-        {transformedData.map( ( item, index ) => (
-          <div
-            key={item.companyName}
-            className="pt-4 first:pt-0 translate-y-[50px] opacity-0"
-            ref={el => {
-              ( itemsRef.current[index] = el );
+    <ol className="m-0 list-none max-w-5xl mx-auto border-t border-black/10 dark:border-white/10 text-black dark:text-white">
+      {companies.map( ( company, index ) => {
+        const hasMultipleRoles = company.roles.length > 1
+
+        return (
+          <li
+            key={company.companyName}
+            ref={( el ) => {
+              itemsRef.current[index] = el
             }}
+            className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-12 py-10 md:py-12 border-b border-black/10 dark:border-white/10 translate-y-[50px] opacity-0"
           >
-            {item.steps.length > 1 && (
-              <>
-                <h3>{item.companyName}</h3>
-                <p className="mt-0 mb-2 text-sm">
-                  {convertMonthsToYearsAndMonths( item.totalWorkingMonths )}
-                </p>
-              </>
-            )}
-            <div>
-              {item.steps.length > 1 ? (
-                <ProgressVertical
-                  steps={item.steps}
-                  convertMonthsToYearsAndMonths={convertMonthsToYearsAndMonths}
-                />
-              ) : (
-                item.steps.map( ( step, i ) => (
-                  <div key={i}
-                    className="relative flex items-start group"
-                  >
-                    <span className="flex flex-col min-w-0 ml-4">
-                      <h4 className="h3">{step.role}</h4>
-                      <p className="mt-0 mb-2 text-sm">
-                        {convertMonthsToYearsAndMonths( item.totalWorkingMonths )}
-                      </p>
-                      <p className="mt-0 mb-2 text-sm text-white-overlay">
-                        {step.name}
-                      </p>
-                      <div className="text-white/80">
-                        <Markdown content={step.description} />
-                      </div>
-                    </span>
-                  </div>
-                ) )
+            {/* Period */}
+            <div className="flex flex-col gap-1 text-sm text-black/55 dark:text-white/55">
+              <span className="font-medium text-black/80 dark:text-white/80">
+                {formatPeriod( company.startDate, company.endDate )}
+              </span>
+              <span>{formatDuration( company.totalMonths )}</span>
+              {company.isCurrent && (
+                <span className="inline-flex items-center gap-2 mt-2 text-orange font-medium">
+                  <span className="relative flex size-2">
+                    <span className="absolute inline-flex size-full rounded-full bg-orange opacity-60 animate-ping" />
+                    <span className="relative inline-flex size-2 rounded-full bg-orange" />
+                  </span>
+                  {t( 'current' )}
+                </span>
               )}
             </div>
-          </div>
-        ) )}
-        {/* <ProgressVertical steps={steps} /> */}
-      </div>
-    </div>
-  );
+
+            {/* Company and roles */}
+            <div className="flex flex-col min-w-0">
+              <h3 className="m-0 text-2xl md:text-[28px] font-bold tracking-tight leading-tight">
+                {company.companyName}
+              </h3>
+
+              <ol className={cn( 'm-0 list-none flex flex-col', hasMultipleRoles ? 'mt-6 gap-8' : 'mt-1' )}>
+                {company.roles.map( ( role ) => (
+                  <li
+                    key={role.id}
+                    className={cn( 'relative', hasMultipleRoles && 'pl-7' )}
+                  >
+                    {hasMultipleRoles && (
+                      <>
+                        <span
+                          aria-hidden="true"
+                          className="absolute left-[5px] top-4 -bottom-8 w-px bg-black/15 dark:bg-white/15 [li:last-child>&]:hidden"
+                        />
+                        <span
+                          aria-hidden="true"
+                          className={cn(
+                            'absolute left-0 top-1.5 size-[11px] rounded-full border-2',
+                            isCurrent( role )
+                              ? 'bg-orange border-orange'
+                              : 'bg-white dark:bg-dark border-black/30 dark:border-white/30'
+                          )}
+                        />
+                      </>
+                    )}
+
+                    <h4 className={cn( 'm-0 font-semibold leading-snug', hasMultipleRoles ? 'text-lg' : 'text-lg md:text-xl text-black/70 dark:text-white/70' )}>
+                      {role.role}
+                    </h4>
+                    {hasMultipleRoles && (
+                      <p className="m-0 mt-1 text-sm text-black/55 dark:text-white/55">
+                        {formatPeriod( role.startDate, role.endDate )}
+                        <span className="mx-2">·</span>
+                        {formatDuration( getMonths( role ) )}
+                      </p>
+                    )}
+                    {!!role.description && (
+                      <div className="mt-3 text-black/75 dark:text-white/75 [&_.body-copy_p]:mt-3 [&_.body-copy_li]:mt-1.5">
+                        <Markdown content={role.description} />
+                      </div>
+                    )}
+                  </li>
+                ) )}
+              </ol>
+            </div>
+          </li>
+        )
+      } )}
+    </ol>
+  )
 }
 
 export default Experience

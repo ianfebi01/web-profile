@@ -374,7 +374,7 @@ export default function UIMouseCursor() {
     <div
       ref={cursorRef}
       style={{ zIndex : 9999999 }} // Injected CSS directly assures the browser composite strictly enforces absolute top priority!
-      className="fixed top-0 left-0 pointer-events-none font-mono text-[13px] font-normal"
+      className="fixed top-0 left-0 pointer-events-none font-code text-[13px] font-normal"
     >
       <div ref={shapeRef}
         className={shapeClass}

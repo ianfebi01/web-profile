@@ -1,98 +1,102 @@
 'use client'
 
 import { Disclosure, Transition } from '@headlessui/react'
-import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Page } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
 import { cn } from '@/lib/utils'
 import { NavCategoryType, NavItemType } from '@/types/header'
 import constructNavUrl from '@/utils/construct-nav-url'
+import { PanelIndex, panelLabelClass, panelRowClass } from './HeaderPanelRow'
 
 interface Props {
   item: NavCategoryType
+  index: number
   setIsOpen: ( value: boolean ) => void
 }
 
-const HeaderPanelDisclosure = ( { item, setIsOpen }: Props ) => {
+const ToggleIcon = ( { open }: { open: boolean } ) => (
+  <span className="flex items-center justify-center size-8 rounded-full ring-1 ring-black/10 dark:ring-white/15">
+    <FontAwesomeIcon
+      className={cn( 'size-3 transition-transform duration-300 ease-out', open && 'rotate-45' )}
+      aria-hidden="true"
+      icon={faPlus}
+    />
+  </span>
+)
+
+const HeaderPanelDisclosure = ( { item, index, setIsOpen }: Props ) => {
+  const href = constructNavUrl( item.navItem )
+  const hasDirectLink = Boolean( item.navItem?.url || item.navItem?.page ) && !!href
+
   return (
     <Disclosure as="div">
       {( { open } ) => (
-        <dl
-          className={`py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out ${
-            open ? 'bg-dark-secondary' : ''
-          }`}
-        >
-          <dt>
-            <Disclosure.Button className="flex items-start justify-between w-full text-left text-white">
-              {( !item.navItem?.url && !item.navItem?.page ) ? (
-                <div className={cn( 'h3 pl-4 no-underline cursor-default' )}>
-                  {item.categoryName}
-                </div>
-              ) : (
-                <Link
-                  href={constructNavUrl( item.navItem ) || ''}
-                  className={cn(
-                    'h3 pl-4 underline-offset-4',
-                    !constructNavUrl( item.navItem )
-                      ? 'no-underline pointer-events-none'
-                      : 'no-underline hover:underline pointer-events-auto'
-                  )}
-                  aria-disabled={!constructNavUrl( item.navItem )}
-                  tabIndex={!constructNavUrl( item.navItem ) ? -1 : undefined}
-                  onClick={() => setIsOpen( false )}
-                >
-                  {item.categoryName}
-                </Link>
-              )}
-              <span className="flex items-center pr-4 ml-6 h-7 text-soft-grey hover:text-blue-dark">
-                <FontAwesomeIcon
-                  className={`size-4 transition-all ease-in-out ${
-                    open ? '-rotate-45' : ''
-                  }`}
-                  aria-hidden="true"
-                  icon={faPlusCircle}
-                />
+        <div className={cn( 'rounded-2xl transition-colors duration-200', open && 'bg-light-secondary dark:bg-dark-secondary' )}>
+          {hasDirectLink ? (
+            // Label navigates; only the + button toggles the sub-links
+            <div className={cn( panelRowClass, open && 'hover:bg-transparent dark:hover:bg-transparent' )}>
+              <PanelIndex index={index} />
+              <Link
+                href={href}
+                className={cn( panelLabelClass, 'no-underline hover:underline underline-offset-4 decoration-2 text-black dark:text-white' )}
+                onClick={() => setIsOpen( false )}
+              >
+                {item.categoryName}
+              </Link>
+              <Disclosure.Button
+                aria-label={`Toggle ${item.categoryName}`}
+                className="ml-auto self-center cursor-pointer"
+              >
+                <ToggleIcon open={open} />
+              </Disclosure.Button>
+            </div>
+          ) : (
+            <Disclosure.Button
+              className={cn( panelRowClass, 'text-left text-black dark:text-white cursor-pointer', open && 'hover:bg-transparent dark:hover:bg-transparent' )}
+            >
+              <PanelIndex index={index} />
+              <span className={panelLabelClass}>{item.categoryName}</span>
+              <span className="ml-auto self-center">
+                <ToggleIcon open={open} />
               </span>
             </Disclosure.Button>
-          </dt>
-          <dd>
-            <Transition
-              as="div"
-              show={open}
-              className="overflow-clip"
-              enter="transition-all duration-500 ease-in-out"
-              enterFrom="max-h-0"
-              enterTo="max-h-[500px]"
-              leave="transition-all duration-500 ease-in-out"
-              leaveFrom="max-h-[500px]"
-              leaveTo="max-h-0 "
+          )}
+
+          <Transition
+            as="div"
+            show={open}
+            className="overflow-clip"
+            enter="transition-all duration-500 ease-in-out"
+            enterFrom="max-h-0"
+            enterTo="max-h-[500px]"
+            leave="transition-all duration-500 ease-in-out"
+            leaveFrom="max-h-[500px]"
+            leaveTo="max-h-0"
+          >
+            <Disclosure.Panel
+              as="ul"
+              className="m-0 list-none flex flex-col gap-1 pl-[52px] pr-3 pb-4"
             >
-              <Disclosure.Panel as="div"
-                className="flex overflow-y-hidden"
-              >
-                <div className="px-4 my-4 text-xs lg:text-[1.1rem] ml-4">
-                  <div className="flex flex-col gap-4">
-                    {item.navItems?.map(
-                      ( subItem: NavItemType, indexSubitem: number ) => (
-                        <Link
-                          key={indexSubitem}
-                          href={constructNavUrl( subItem )}
-                          className="block m-0 no-underline p underline-offset-4 decoration-2 hover:underline"
-                          target={subItem?.newTab ? '_blank' : undefined}
-                          rel={subItem?.newTab ? 'noopener noreferrer' : undefined}
-                          onClick={() => setIsOpen( false )}
-                        >
-                          {subItem?.name || ( subItem.page as Page )?.title}
-                        </Link>
-                      )
-                    )}
-                  </div>
-                </div>
-              </Disclosure.Panel>
-            </Transition>
-          </dd>
-        </dl>
+              {item.navItems?.map( ( subItem: NavItemType, indexSubitem: number ) => (
+                <li key={indexSubitem}
+                  className="m-0"
+                >
+                  <Link
+                    href={constructNavUrl( subItem )}
+                    className="block py-1.5 text-base font-medium no-underline text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition-colors duration-200"
+                    target={subItem?.newTab ? '_blank' : undefined}
+                    rel={subItem?.newTab ? 'noopener noreferrer' : undefined}
+                    onClick={() => setIsOpen( false )}
+                  >
+                    {subItem?.name || ( subItem.page as Page )?.title}
+                  </Link>
+                </li>
+              ) )}
+            </Disclosure.Panel>
+          </Transition>
+        </div>
       )}
     </Disclosure>
   )

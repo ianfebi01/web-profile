@@ -3,7 +3,6 @@ import parseMd from '@/utils/parseMd'
 import sanitize from '@/utils/sanitize'
 import truncate from '@/utils/truncate'
 import { useRef } from 'react';
-import 'highlight.js/styles/atom-one-dark.css'
 
 interface Props {
   content: string

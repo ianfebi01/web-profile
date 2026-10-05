@@ -23,7 +23,7 @@ const PaginationControls = ( {
 
   return (
     <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center sm:justify-between">
-      <p className="m-0 text-sm text-white/70 sm:text-base">
+      <p className="m-0 text-sm text-black/70 dark:text-white/70 sm:text-base">
         {pageLabel} {currentPage} / {totalPages}
       </p>
       <div className="flex gap-3">

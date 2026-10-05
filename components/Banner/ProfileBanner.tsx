@@ -75,7 +75,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
     <section
       ref={sectionRef}
       id="home"
-      className={cn( "main__section px-0! sm:px-0 md:px-0 bg-dark relative overflow-clip" )}
+      className={cn( "main__section px-0! sm:px-0 md:px-0 bg-white dark:bg-dark relative overflow-clip" )}
     >
       <Shape myposy={0} />
 
@@ -140,7 +140,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
       >
         <h1 className="text-center m-0">{sectionData.name}</h1>
         <div
-          className="text-center text-white/75 body-copy"
+          className="text-center text-black/75 dark:text-white/75 body-copy"
           dangerouslySetInnerHTML={{
             __html : sanitize( parseMd( sectionData.bio || "" ), "richtext" ),
           }}
@@ -202,7 +202,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
       </div>
 
       {/* Shadow inset bottom */}
-      <div className="absolute w-full bottom-0 bg-linear-to-t from-dark to-transparent h-1/3 z-0 pointer-events-none">
+      <div className="absolute w-full bottom-0 bg-linear-to-t from-white dark:from-dark to-transparent h-1/3 z-0 pointer-events-none">
       </div>
     </section>
   );

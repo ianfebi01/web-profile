@@ -5,13 +5,17 @@ import { cn } from '@/lib/utils'
 import { NavCategoryType } from '@/types/header'
 import constructNavUrl from '@/utils/construct-nav-url'
 import HeaderPanelDisclosure from './HeaderPanelDisclosure'
+import { PanelIndex, panelLabelClass, panelRowClass } from './HeaderPanelRow'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
   item: NavCategoryType
+  index: number
   setIsOpen: ( value: boolean ) => void
 }
 
-const HeaderPanelItem = ( { item, setIsOpen }: Props ) => {
+const HeaderPanelItem = ( { item, index, setIsOpen }: Props ) => {
   const hasCategoryName = Boolean( item.categoryName )
   const hasChildren = Boolean( item.navItems?.length )
   const hasDirectLink = Boolean( item.navItem?.url || item.navItem?.page )
@@ -21,6 +25,7 @@ const HeaderPanelItem = ( { item, setIsOpen }: Props ) => {
     return (
       <HeaderPanelDisclosure
         item={item}
+        index={index}
         setIsOpen={setIsOpen}
       />
     )
@@ -30,30 +35,26 @@ const HeaderPanelItem = ( { item, setIsOpen }: Props ) => {
     return (
       <Link
         href={href || ''}
-        className={cn(
-          'h3 px-4 underline-offset-4 w-full block',
-          'py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out',
-          !href
-            ? 'no-underline pointer-events-none'
-            : 'no-underline hover:underline pointer-events-auto'
-        )}
+        className={cn( panelRowClass, !href && 'pointer-events-none' )}
         aria-disabled={!href}
         tabIndex={!href ? -1 : undefined}
         onClick={() => setIsOpen( false )}
       >
-        {item.categoryName}
+        <PanelIndex index={index} />
+        <span className={panelLabelClass}>{item.categoryName}</span>
+        <FontAwesomeIcon
+          icon={faArrowRight}
+          aria-hidden="true"
+          className="ml-auto self-center size-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+        />
       </Link>
     )
   }
 
   return (
-    <div
-      className={cn(
-        'h3 px-4 underline-offset-4 w-full block',
-        'py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out cursor-default'
-      )}
-    >
-      {item.categoryName}
+    <div className={cn( panelRowClass, 'cursor-default' )}>
+      <PanelIndex index={index} />
+      <span className={panelLabelClass}>{item.categoryName}</span>
     </div>
   )
 }

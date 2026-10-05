@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <section
       id="footer"
-      className="main__section h-fit bg-dark overflow-hidden"
+      className="main__section h-fit bg-white dark:bg-dark overflow-hidden"
     >
       <div className="main__container my-8 md:my-16 h-full">
         <div className="w-fit mx-auto mb-4">
@@ -20,10 +20,6 @@ const Footer = () => {
               height={40}
             />
             <h2 className="text-lg">Ian Febi Sastrataruna</h2>
-            <p className="text-white/75">
-              RT 02, RW 15, Semuluhkidul, Ngeposari, Semanu, Gunungkidul,
-              Yogyakarta, Indonesia.
-            </p>
           </div>
         </div>
 
