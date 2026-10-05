@@ -6,7 +6,8 @@ import imageLoader from '@/lib/constans/image-loader'
 import { getPlainText } from '@/utils/parseMd'
 import { useLocale, useTranslations } from 'next-intl'
 import { Article, Tag } from '@/payload-types'
-import { AUTHOR_AVATAR, AUTHOR_NAME, getReadingTime } from '@/components/Reading/reading'
+import { AUTHOR_NAME, getReadingTime } from '@/components/Reading/reading'
+import AuthorAvatar from '@/components/Reading/AuthorAvatar'
 
 interface Props {
   data: Article
@@ -30,15 +31,7 @@ const ArticleListItem = ( { data }: Props ) => {
         className="group flex flex-col gap-3 no-underline text-black dark:text-white"
       >
         <div className="flex items-center gap-2">
-          <div className="relative size-5 shrink-0 overflow-hidden rounded-full bg-light-secondary dark:bg-dark-secondary">
-            <Image
-              src={AUTHOR_AVATAR}
-              alt=""
-              fill
-              sizes="20px"
-              className="object-cover object-top"
-            />
-          </div>
+          <AuthorAvatar size="sm" />
           <span className="text-[13px] font-medium">{AUTHOR_NAME}</span>
         </div>
 

@@ -1,5 +1,5 @@
 export const AUTHOR_NAME = 'Ian Febi Sastrataruna'
-export const AUTHOR_AVATAR = '/me.png'
+export const AUTHOR_INITIALS = AUTHOR_NAME.split( ' ' ).map( ( word ) => word[0] ).join( '' ).toUpperCase()
 
 const WORDS_PER_MINUTE = 200
 

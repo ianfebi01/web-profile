@@ -1,7 +1,7 @@
 'use client'
-import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
-import { AUTHOR_AVATAR, AUTHOR_NAME, getReadingTime } from './reading'
+import { AUTHOR_NAME, getReadingTime } from './reading'
+import AuthorAvatar from './AuthorAvatar'
 
 interface Props {
   content?: string | null
@@ -15,15 +15,7 @@ const AuthorMeta = ( { content, date }: Props ) => {
 
   return (
     <div className="flex items-center gap-3 mt-8">
-      <div className="relative size-11 shrink-0 overflow-hidden rounded-full bg-light-secondary dark:bg-dark-secondary">
-        <Image
-          src={AUTHOR_AVATAR}
-          alt={AUTHOR_NAME}
-          fill
-          sizes="44px"
-          className="object-cover object-top"
-        />
-      </div>
+      <AuthorAvatar />
       <div className="flex flex-col gap-0.5">
         <span className="text-sm md:text-base font-medium">{AUTHOR_NAME}</span>
         <span className="text-sm text-black/55 dark:text-white/55">
