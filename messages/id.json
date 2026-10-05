@@ -13,7 +13,9 @@
         "min_read": "{count} menit baca",
         "copy_link": "Salin tautan",
         "link_copied": "Tautan disalin",
-        "share": "Bagikan"
+        "share": "Bagikan",
+        "recommended": "Artikel rekomendasi",
+        "see_all": "Lihat semua artikel"
     },
     "portofolio": {
         "title": "Portofolio",

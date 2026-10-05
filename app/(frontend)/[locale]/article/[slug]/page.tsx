@@ -1,5 +1,5 @@
 import Detail from '@/components/Pages/Article/Detail'
-import { getAllArticleSlugs, getDetail } from '@/lib/api/articleQueryFn'
+import { getAllArticleSlugs, getDetail, getRecommendedArticles } from '@/lib/api/articleQueryFn'
 import { Article } from '@/payload-types'
 import { FALLBACK_SEO } from '@/utils/constants'
 import imageUrl from '@/utils/imageUrl'
@@ -69,9 +69,14 @@ export default async function ArticlePage(
     return notFound()
   }
 
+  const tagIds = ( data.tags ?? [] ).map( ( tag ) => ( typeof tag === 'object' ? tag.id : tag ) )
+  const recommendedArticles = await getRecommendedArticles( params.slug, tagIds, params.locale )
+
   return (
     <main className="grow flex flex-col">
-      <Detail data={data} />
+      <Detail data={data}
+        recommendedArticles={recommendedArticles}
+      />
     </main>
   )
 }

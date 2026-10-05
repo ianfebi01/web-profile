@@ -6,14 +6,19 @@ import imageLoader from '@/lib/constans/image-loader'
 import SkeletonDetail from '../Portofolio/SkeletonDetail'
 import AuthorMeta from '@/components/Reading/AuthorMeta'
 import ShareActions from '@/components/Reading/ShareActions'
+import ArticleRecommendCard from '@/components/Cards/ArticleRecommendCard'
+import { Link } from '@/i18n/navigation'
+import { useTranslations } from 'next-intl'
 import { Article, Tag } from '@/payload-types'
 
 interface Props {
   data: Article | null
+  recommendedArticles?: Article[]
   isFetching?: boolean
 }
 
-const Detail = ( { data, isFetching }: Props ) => {
+const Detail = ( { data, recommendedArticles = [], isFetching }: Props ) => {
+  const t = useTranslations()
   const tags = ( data?.tags ?? [] ).filter( ( tag ): tag is Tag => typeof tag === 'object' )
 
   return (
@@ -83,6 +88,29 @@ const Detail = ( { data, isFetching }: Props ) => {
             </div>
           )}
         </article>
+      )}
+
+      {!isFetching && recommendedArticles.length > 0 && (
+        <aside className="w-full border-t border-black/10 dark:border-white/10">
+          <div className="max-w-[728px] mx-auto px-6 py-16 text-black dark:text-white">
+            <h2 className="mt-0 mb-10 text-xl md:text-2xl font-bold tracking-tight">
+              {t( 'article.recommended' )}
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
+              {recommendedArticles.map( ( article ) => (
+                <ArticleRecommendCard key={article.id}
+                  data={article}
+                />
+              ) )}
+            </div>
+            <Link
+              href="/article"
+              className="inline-flex mt-12 px-5 py-2.5 rounded-full text-sm font-medium no-underline border border-black/25 hover:border-black dark:border-white/25 dark:hover:border-white transition-colors duration-200"
+            >
+              {t( 'article.see_all' )}
+            </Link>
+          </div>
+        </aside>
       )}
     </section>
   )

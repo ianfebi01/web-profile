@@ -1,19 +1,11 @@
 'use client'
 import Image from 'next/image'
 import { useLocale, useTranslations } from 'next-intl'
+import { AUTHOR_AVATAR, AUTHOR_NAME, getReadingTime } from './reading'
 
 interface Props {
   content?: string | null
   date: string
-}
-
-const AUTHOR_NAME = 'Ian Febi Sastrataruna'
-const WORDS_PER_MINUTE = 200
-
-const getReadingTime = ( content?: string | null ) => {
-  const words = content?.trim().split( /\s+/ ).length ?? 0
-
-  return Math.max( 1, Math.round( words / WORDS_PER_MINUTE ) )
 }
 
 // Medium-style byline: avatar, author, reading time and date
@@ -25,7 +17,7 @@ const AuthorMeta = ( { content, date }: Props ) => {
     <div className="flex items-center gap-3 mt-8">
       <div className="relative size-11 shrink-0 overflow-hidden rounded-full bg-light-secondary dark:bg-dark-secondary">
         <Image
-          src="/me.png"
+          src={AUTHOR_AVATAR}
           alt={AUTHOR_NAME}
           fill
           sizes="44px"
