@@ -1,7 +1,7 @@
 'use client'
 
 import { Project } from '@/payload-types'
-import PortofolioCard from './Cards/PortofolioCard'
+import ProjectCard from './Cards/ProjectCard'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -38,7 +38,7 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
   return (
     <div
       ref={containerRef}
-      className="mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 list-none"
+      className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3"
     >
       {portofolios?.map( ( item, i ) => (
         <div ref={el => {
@@ -47,7 +47,7 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
         key={item.slug}
         className='translate-y-[75px] opacity-0'
         >
-          <PortofolioCard portofolio={item} />
+          <ProjectCard data={item} />
         </div>
       ) )}
     </div>
