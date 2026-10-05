@@ -33,6 +33,7 @@ layer(base);
 
   --color-dark: #222222;
   --color-dark-secondary: #393939;
+  --color-light-secondary: #e4e4e4;
   --color-orange: #f26b50;
   --color-green: #4faa84;
   --color-white: #f1f1f1;
@@ -77,6 +78,6 @@ layer(base);
 
 @layer base {
   body {
-    @apply bg-white dark:bg-dark text-white text-xs;
+    @apply bg-white dark:bg-dark text-black dark:text-white text-xs transition-colors duration-500;
   }
 }

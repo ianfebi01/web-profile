@@ -19,12 +19,12 @@ const HeaderPanelDisclosure = ( { item, setIsOpen }: Props ) => {
     <Disclosure as="div">
       {( { open } ) => (
         <dl
-          className={`py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out ${
-            open ? 'bg-dark-secondary' : ''
+          className={`py-2 hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out ${
+            open ? 'bg-light-secondary dark:bg-dark-secondary' : ''
           }`}
         >
           <dt>
-            <Disclosure.Button className="flex items-start justify-between w-full text-left text-white">
+            <Disclosure.Button className="flex items-start justify-between w-full text-left text-black dark:text-white">
               {( !item.navItem?.url && !item.navItem?.page ) ? (
                 <div className={cn( 'h3 pl-4 no-underline cursor-default' )}>
                   {item.categoryName}

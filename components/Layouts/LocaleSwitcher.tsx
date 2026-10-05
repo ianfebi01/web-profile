@@ -41,9 +41,9 @@ export default function LocaleSwitcher() {
             <Popover.Button
               className={cn(
                 'py-2 px-4 text-sm flex items-center gap-2 transition-default w-fit rounded-lg border border-transparent',
-                ' hover:border-white/25',
+                ' hover:border-black/25 dark:hover:border-white/25',
                 'ring-0 focus:ring-0 outline-none',
-                show ? 'text-white border-white/25' : 'text-white/50'
+                show ? 'text-black dark:text-white border-black/25 dark:border-white/25' : 'text-black/50 dark:text-white/50'
               )}
             >
               <FontAwesomeIcon icon={faGlobe}
@@ -52,7 +52,7 @@ export default function LocaleSwitcher() {
               <div
                 className={cn(
                   'transition-default group-hover:text-orange-300/80',
-                  show ? 'text-white transform -rotate-180' : 'text-white/50'
+                  show ? 'text-black dark:text-white transform -rotate-180' : 'text-black/50 dark:text-white/50'
                 )}
               >
                 <FontAwesomeIcon icon={faChevronDown}
@@ -74,7 +74,7 @@ export default function LocaleSwitcher() {
                 className="absolute right-0 z-10 w-full pt-3 sm:px-0"
               >
                 <div className="overflow-hidden rounded-lg shadow-lg ring-1 ring-black/5">
-                  <div className="relative grid p-4 bg-dark-secondary">
+                  <div className="relative grid p-4 bg-light-secondary dark:bg-dark-secondary">
                     {routing.locales?.map( ( item, i ) => {
                       return (
                         <div
@@ -91,8 +91,8 @@ export default function LocaleSwitcher() {
                               ' text-sm text-left uppercase',
                               'transition duration-150 ease-in-out',
                               'focus:outline-none focus-visible:ring focus-visible:ring-orange-500/50',
-                              'text-white/50 hover:text-white',
-                              item === locale && 'text-white'
+                              'text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white',
+                              item === locale && 'text-black dark:text-white'
                             )}
                           >
                             {item}

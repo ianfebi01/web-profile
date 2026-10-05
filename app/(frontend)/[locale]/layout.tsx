@@ -34,6 +34,8 @@ export const metadata: Metadata = {
     'Front End Web Developer with 1+ year of experience. Expert on React js and Vue js',
 }
 
+const themeInitScript = `try{var t=localStorage.theme;document.documentElement.classList.toggle('dark',t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}`
+
 export function generateStaticParams() {
   return routing.locales.map( ( locale ) => ( { locale } ) );
 }
@@ -62,6 +64,10 @@ export default async function LocaleLayout( {
       className={`${sourceCodePro.variable} scrollbar-gutter-stable`}
       suppressHydrationWarning
     >
+      <head>
+        {/* Apply the saved theme (or the OS preference) before paint to avoid a flash */}
+        <script dangerouslySetInnerHTML={{ __html : themeInitScript }} />
+      </head>
       <body suppressHydrationWarning={true}
         id="myportal"
       >

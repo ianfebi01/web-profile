@@ -106,9 +106,9 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
         <div className="flex-1 w-full flex items-center md:justify-center">
           <div
             ref={squareRef}
-            className="bg-linear-to-r from-orange via-orange/80 to-orange/20 aspect-square h-80 relative p-1 translate-y-6 opacity-0 scale-90 origin-bottom-right"
+            className="bg-linear-to-r from-black via-black/80 to-black/20 dark:from-orange dark:via-orange/80 dark:to-orange/20 aspect-square h-80 relative p-1 translate-y-6 opacity-0 scale-90 origin-bottom-right"
           >
-            <div className="w-full h-full bg-dark"></div>
+            <div className="w-full h-full bg-white dark:bg-dark"></div>
             <span
               ref={codeTextRef}
               className="font-code font-bold text-3xl lg:text-5xl text-orange p-2 tracking-tighter bg-dark absolute right-0 bottom-0 translate-y-1/2 translate-x-1/2"
@@ -121,12 +121,12 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
             ref={( el ) => {
               textsRef.current[0] = el
             }}
-            className="text-5xl lg:text-7xl font-bold m-0 opacity-0 translate-y-6"
+            className="text-5xl lg:text-7xl font-bold m-0 opacity-0 translate-y-6 text-black dark:text-white"
           >
             {sectionData.heading1 || 'Heading 1'}
             {' '}
             {sectionData.heading2 && (
-              <span className="font-code font-thin tracking-tighter text-orange">
+              <span className="font-code font-thin tracking-tighter text-black dark:text-orange">
                 {sectionData.heading2}
               </span>
             )}
@@ -137,12 +137,12 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
             }}
             className="text-5xl lg:text-7xl font-bold m-0 opacity-0 translate-y-6"
           >
-            <span className='font-code font-thin tracking-tighter text-orange'>
+            <span className='font-code font-thin tracking-tighter text-black dark:text-orange'>
               {sectionData.heading3 || ''}
             </span>
             {' '}
             {sectionData.heading4 && (
-              <span className="text-white">{sectionData.heading4}</span>
+              <span className="text-black dark:text-white">{sectionData.heading4}</span>
             )}
           </h2>
           <p
@@ -167,7 +167,7 @@ const MainBanner: FunctionComponent<MainBannerProps> = ( { sectionData } ) => {
                       <Image
                         src={imageUrl( skill?.image ) as string}
                         alt={skill?.name}
-                        className="w-full h-full object-contain"
+                        className="w-full h-full object-contain drop-shadow-2xl"
                         loading="lazy"
                         fill
                       />

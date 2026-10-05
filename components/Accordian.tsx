@@ -26,7 +26,7 @@ export default function Accordion( { items = [] }: Props ) {
                 key={idx}
               >
                 {( { open } ) => (
-                  <dl className={cn( 'pt-6 p-4 rounded-xl bg-dark shadow-2xl' )}>
+                  <dl className={cn( 'pt-6 p-4 rounded-xl bg-white dark:bg-dark shadow-2xl' )}>
                     <dt>
                       <Disclosure.Button className="flex w-full items-start justify-between text-left">
                         <span
@@ -62,7 +62,7 @@ export default function Accordion( { items = [] }: Props ) {
                           className="flex overflow-y-hidden transition-all duration-500 ease-in-out"
                         >
                           <div
-                            className={cn( 'body-copy pl-4 text-white-overlay' )}
+                            className={cn( 'body-copy pl-4 text-black/50 dark:text-white-overlay' )}
                           >
                             <Markdown content={item.content}></Markdown>
                           </div>

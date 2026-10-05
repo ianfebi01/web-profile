@@ -129,7 +129,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="bg-dark px-4 py-6 rounded-lg divide-y divide-white-overlay-2">
+      <div className="bg-white dark:bg-dark px-4 py-6 rounded-lg divide-y divide-black/10 dark:divide-white-overlay-2">
         {transformedData.map( ( item, index ) => (
           <div
             key={item.companyName}
@@ -162,10 +162,10 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
                       <p className="mt-0 mb-2 text-sm">
                         {convertMonthsToYearsAndMonths( item.totalWorkingMonths )}
                       </p>
-                      <p className="mt-0 mb-2 text-sm text-white-overlay">
+                      <p className="mt-0 mb-2 text-sm text-black/50 dark:text-white-overlay">
                         {step.name}
                       </p>
-                      <div className="text-white/80">
+                      <div className="text-black/80 dark:text-white/80">
                         <Markdown content={step.description} />
                       </div>
                     </span>

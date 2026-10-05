@@ -44,7 +44,7 @@ const ProgressVertical: React.FC<Props> = ( {
                     <p className="mt-0 mb-2 text-sm">
                       {convertMonthsToYearsAndMonths( step.totalWorkingMonths )}
                     </p>
-                    <div className="text-white/80">
+                    <div className="text-black/80 dark:text-white/80">
                       <Markdown content={step.description} />
                     </div>
                   </span>
@@ -68,7 +68,7 @@ const ProgressVertical: React.FC<Props> = ( {
                     <p className="mt-0 mb-2 text-sm">
                       {convertMonthsToYearsAndMonths( step.totalWorkingMonths )}
                     </p>
-                    <div className="text-white/80">
+                    <div className="text-black/80 dark:text-white/80">
                       <Markdown content={step.description} />
                     </div>
                   </span>
@@ -100,7 +100,7 @@ const ProgressVertical: React.FC<Props> = ( {
                       <p className="mt-0 mb-2 text-sm">
                         {convertMonthsToYearsAndMonths( step.totalWorkingMonths )}
                       </p>
-                      <div className="text-white/80">
+                      <div className="text-black/80 dark:text-white/80">
                         <Markdown content={step.description} />
                       </div>
                     </span>

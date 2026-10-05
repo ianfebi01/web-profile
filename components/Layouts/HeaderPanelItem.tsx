@@ -32,7 +32,7 @@ const HeaderPanelItem = ( { item, setIsOpen }: Props ) => {
         href={href || ''}
         className={cn(
           'h3 px-4 underline-offset-4 w-full block',
-          'py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out',
+          'py-2 hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out',
           !href
             ? 'no-underline pointer-events-none'
             : 'no-underline hover:underline pointer-events-auto'
@@ -50,7 +50,7 @@ const HeaderPanelItem = ( { item, setIsOpen }: Props ) => {
     <div
       className={cn(
         'h3 px-4 underline-offset-4 w-full block',
-        'py-2 hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out cursor-default'
+        'py-2 hover:bg-light-secondary dark:hover:bg-dark-secondary rounded-lg overflow-x-clip transition-all duration-300 ease-in-out cursor-default'
       )}
     >
       {item.categoryName}

@@ -53,7 +53,7 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
         {data.map( ( item, index: number ) => (
           <SwiperSlide key={index}>
             <div className="h-full flex flex-col">
-              <div className="relative aspect-video overflow-hidden mb-8 bg-dark-secondary rounded-lg">
+              <div className="relative aspect-video overflow-hidden mb-8 bg-light-secondary dark:bg-dark-secondary rounded-lg">
                 <Image
                   alt={`Image ${index}`}
                   src={imageUrl( item ) || ''}
@@ -77,12 +77,12 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
         ) )}
       </Swiper>
       <div className="aspect-video absolute w-full top-0 hidden min-[1156px]:block">
-        <button className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
+        <button className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
           <FontAwesomeIcon icon={faCircleChevronLeft}
             size="2xl"
           />
         </button>
-        <button className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-white/75 hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
+        <button className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
           <FontAwesomeIcon icon={faCircleChevronRight}
             size="2xl"
           />
@@ -90,11 +90,11 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
       </div>
       <div className="aspect-video absolute w-full top-0">
         <div className="flex flex-row gap-2 items-center justify-center h-[44px] mx-auto inset-x-0 z-30 absolute top-full">
-          <button className="btn-prev size-6 text-white/90 min-[1156px]:hidden">
+          <button className="btn-prev size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden">
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
           <div className="paginationEL leading-none translate-x-0!"></div>
-          <button className="btn-next size-6 text-white/90 min-[1156px]:hidden">
+          <button className="btn-next size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden">
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>

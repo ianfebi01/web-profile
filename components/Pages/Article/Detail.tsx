@@ -20,7 +20,7 @@ const Detail = ( { data, isFetching }: Props ) => {
   return (
     <section
       id="portofolio"
-      className="w-full flex flex-col items-center bg-dark grow"
+      className="w-full flex flex-col items-center bg-white dark:bg-dark grow"
     >
       {isFetching || !data ? (
         <SkeletonDetail />
@@ -64,7 +64,7 @@ const Detail = ( { data, isFetching }: Props ) => {
                 />
               )}
               {!!data?.content && (
-                <div className="flex flex-col text-white">
+                <div className="flex flex-col text-black dark:text-white">
                   <Markdown content={data.content} />
                 </div>
               )}

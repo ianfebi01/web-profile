@@ -54,7 +54,7 @@ const HeaderPanel = ( {
 
       <div
         className={cn(
-          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-dark pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-4xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
+          'absolute w-[calc(100vw-2rem)] sm:w-full sm:max-w-md bg-blue-dark bg-white dark:bg-dark shadow-2xl pt-10 px-6 lg:px-8 overflow-y-auto flex flex-col h-fit rounded-4xl transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]',
           isOpen
             ? 'scale-100'
             : 'scale-[0]'
@@ -67,11 +67,11 @@ const HeaderPanel = ( {
         }}
       >
         <div className={cn( "flex mt-6 grow transition-opacity duration-300", isOpen ? "opacity-100" : "opacity-0" )}>
-          <div className="flex flex-col items-center justify-center mb-6 overflow-hidden text-xl font-bold text-white grow">
+          <div className="flex flex-col items-center justify-center mb-6 overflow-hidden text-xl font-bold text-black dark:text-white grow">
             <div className="flex w-full mt-6 grow">
               <div className="flex flex-col w-full gap-4 py-6">
                 <div className={cn(
-                  "flex flex-col w-full h-full gap-4 text-white",
+                  "flex flex-col w-full h-full gap-4 text-black dark:text-white",
                 )}
                 >
                   {items?.map( ( item, key ) => (

@@ -20,7 +20,7 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
   return (
     <section
       id="portofolio"
-      className="w-full flex flex-col items-center bg-dark grow"
+      className="w-full flex flex-col items-center bg-white dark:bg-dark grow"
     >
       {isFetching || !data ? (
         <SkeletonDetail />
@@ -50,13 +50,13 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
                   )}
                 </div>
                 {!!data?.description && (
-                  <div className="bg-dark-secondary p-4 border border-none rounded-lg flex flex-col gap-4 text-white/90">
+                  <div className="bg-light-secondary dark:bg-dark-secondary p-4 border border-none rounded-lg flex flex-col gap-4 text-black/90 dark:text-white/90">
                     <Markdown content={data.description} />
                   </div>
                 )}
               </div>
             </div>
-            <hr className="border-white-overlay-2" />
+            <hr className="border-black/15 dark:border-white-overlay-2" />
             {latestPortofolios && latestPortofolios.length > 0 && (
               <>
                 <h2 className="h1 mt-0">{t( 'see_latest_portfolios' )}:</h2>

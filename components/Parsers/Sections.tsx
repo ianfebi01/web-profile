@@ -21,8 +21,8 @@ const getSection = (
     <div
       key={index}
       className={cn( {
-        'bg-dark'                                     : bgColour === 'dark',
-        'bg-dark-secondary'                           : bgColour === 'dark-secondary',
+        'bg-white dark:bg-dark'                       : bgColour === 'dark',
+        'bg-light-secondary dark:bg-dark-secondary'   : bgColour === 'dark-secondary',
         'bg-orange'                                   : bgColour === 'orange',
         'bg-green'                                    : bgColour === 'green',
         'bg-white'                                    : bgColour === 'white',

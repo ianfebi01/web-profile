@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <section
       id="footer"
-      className="main__section h-fit bg-dark overflow-hidden"
+      className="main__section h-fit bg-white dark:bg-dark overflow-hidden"
     >
       <div className="main__container my-8 md:my-16 h-full">
         <div className="w-fit mx-auto mb-4">

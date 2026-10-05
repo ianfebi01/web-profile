@@ -17,18 +17,18 @@ const HeaderMenuButton = forwardRef<HTMLDivElement, Props>(
         data-name="burger"
         onClick={onClick}
       >
-        <span className="text-[15px] font-bold text-white group-hover:text-orange transition-colors hidden sm:block pointer-events-none mt-1">
+        <span className="text-[15px] font-bold text-black dark:text-white group-hover:text-orange transition-colors hidden sm:block pointer-events-none mt-1">
           Menu
         </span>
 
         <button
-          className="magnet-target group/target flex items-center justify-center w-12 h-12 rounded-full bg-transparent text-white"
+          className="magnet-target group/target flex items-center justify-center w-12 h-12 rounded-full bg-transparent text-black dark:text-white"
           aria-label="Toggle Menu"
           type="button"
         >
           <div className="relative flex items-center justify-center w-[26px] h-[26px] pointer-events-none">
             <span className={cn(
-              'absolute transition-all duration-300 ease-out bg-white',
+              'absolute transition-all duration-300 ease-out bg-black dark:bg-white',
               isOpen
                 ? 'left-0 w-[26px] h-[2px] rotate-45 rounded-sm'
                 : 'left-0 w-1.5 h-1.5 rounded-full group-hover/target:translate-x-[10px]'
@@ -36,13 +36,13 @@ const HeaderMenuButton = forwardRef<HTMLDivElement, Props>(
             ></span>
 
             <span className={cn(
-              'absolute transition-all duration-300 ease-out bg-white z-10',
+              'absolute transition-all duration-300 ease-out bg-black dark:bg-white z-10',
               isOpen ? 'w-0 h-0 opacity-0' : 'w-1.5 h-1.5 rounded-full'
             )}
             ></span>
 
             <span className={cn(
-              'absolute transition-all duration-300 ease-out bg-white',
+              'absolute transition-all duration-300 ease-out bg-black dark:bg-white',
               isOpen
                 ? 'right-0 w-[26px] h-[2px] -rotate-45 rounded-sm'
                 : 'right-0 w-1.5 h-1.5 rounded-full group-hover/target:translate-x-[-10px]'

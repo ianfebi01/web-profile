@@ -55,7 +55,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             {sectionData.heading && (
               <h1
                 className={cn(
-                  'font-extra-bold mt-0 w-fit text-white relative z-1',
+                  'font-extra-bold mt-0 w-fit text-black dark:text-white relative z-1',
                   'text-3xl lg:text-5xl xxl:text-[4.35rem] xxl:leading-[4.5rem]',
                   'drop-shadow-20-0_5'
                 )}
@@ -115,7 +115,7 @@ const BannerStandard: React.FC<BannerProps> = ( { sectionData } ) => {
             {sectionData.heading && (
               <h1
                 className={cn(
-                  'font-extra-bold mt-0 w-fit text-white relative z-1',
+                  'font-extra-bold mt-0 w-fit text-black dark:text-white relative z-1',
                   'text-3xl lg:text-5xl xxl:text-[4.35rem] xxl:leading-[4.5rem]',
                   'drop-shadow-20-0_5'
                 )}

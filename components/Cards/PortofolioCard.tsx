@@ -17,9 +17,9 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
       href={`/portofolio/${portofolio.slug}`}
       data-name="proj"
       data-text="View"
-      className="bg-dark-secondary rounded-lg w-full overflow-hidden flex flex-col no-underline! group h-full"
+      className="bg-light-secondary dark:bg-dark-secondary rounded-lg w-full overflow-hidden flex flex-col no-underline! group h-full"
     >
-      <div className="relative w-full overflow-hidden aspect-video shrink-0 bg bg-dark/50">
+      <div className="relative w-full overflow-hidden aspect-video shrink-0 bg bg-white/50 dark:bg-dark/50">
         <Image
           alt={`Image ${portofolio?.title}`}
           src={
@@ -43,7 +43,7 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
 
         {!!getPlainText( portofolio.description || '' ) && (
           <div className="xxl:text-xl">
-            <p className="m-0 line-clamp-3 text-white/80">
+            <p className="m-0 line-clamp-3 text-black/80 dark:text-white/80">
               {getPlainText( portofolio.description || '' )}
             </p>
           </div>

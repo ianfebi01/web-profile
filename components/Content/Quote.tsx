@@ -19,7 +19,7 @@ const Quote: FunctionComponent<Props> = ( props ) => {
   return (
     <div
       className={cn(
-        'bg-dark h-full border border-none rounded-3xl flex justify-center items-center p-4 md:p-10 relative overflow-hidden'
+        'bg-dark text-white h-full border border-none rounded-3xl flex justify-center items-center p-4 md:p-10 relative overflow-hidden'
       )}
     >
       <div

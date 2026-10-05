@@ -35,7 +35,7 @@ const ArticleListing = () => {
   return (
     <main>
       <section id="article"
-        className="h-fit bg-dark"
+        className="h-fit bg-white dark:bg-dark"
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-8 mt-20 sm:mt-20 flex flex-col gap-4">
           <PageTitle text={tArticle( 'title' )}
@@ -55,18 +55,18 @@ const ArticleListing = () => {
               {Array.from( { length : 6 } ).map( ( _, index ) => (
                 <div
                   key={index}
-                  className="aspect-4/5 rounded-lg bg-dark-secondary animate-pulse"
+                  className="aspect-4/5 rounded-lg bg-light-secondary dark:bg-dark-secondary animate-pulse"
                 />
               ) )}
             </div>
           ) : isError ? (
-            <p className="text-sm text-white/70 sm:text-base">{t( 'something_went_wrong_title' )}</p>
+            <p className="text-sm text-black/70 dark:text-white/70 sm:text-base">{t( 'something_went_wrong_title' )}</p>
           ) : articles.length === 0 ? (
             <NoDataFound />
           ) : (
             <>
               {isFetching ? (
-                <p className="m-0 text-sm text-white/50">Loading...</p>
+                <p className="m-0 text-sm text-black/50 dark:text-white/50">Loading...</p>
               ) : null}
               <div className="mx-auto grid grid-cols-1 gap-8 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 list-none">
                 {articles.map( ( article ) => (

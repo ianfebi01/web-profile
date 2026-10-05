@@ -178,11 +178,11 @@
     }
 
     table {
-      @apply border-collapse border border-white-overlay-2;
+      @apply border-collapse border border-black/15 dark:border-white-overlay-2;
 
       td,
       th {
-        @apply px-4 py-2 align-text-top border border-white-overlay-2;
+        @apply px-4 py-2 align-text-top border border-black/15 dark:border-white-overlay-2;
       }
 
       th {

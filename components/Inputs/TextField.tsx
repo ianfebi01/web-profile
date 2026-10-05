@@ -58,8 +58,8 @@ const TextField = ( {
   }, [] )
 
   return loading ? (
-    <div className="h-8 p-2 w-full border border-white/25 rounded-lg">
-      <div className="h-full max-w-sm bg-dark-secondary animate-pulse" />
+    <div className="h-8 p-2 w-full border border-black/25 dark:border-white/25 rounded-lg">
+      <div className="h-full max-w-sm bg-light-secondary dark:bg-dark-secondary animate-pulse" />
     </div>
   ) : (
     <div className="relative">
@@ -81,10 +81,10 @@ const TextField = ( {
             className={cn(
               'w-full',
               'py-2 px-8',
-              'text-white border rounded-lg bg-transparent ring-0 focus:ring-0 shadow-none focus:outline-none transition-colors duration-500 ease-in-out placeholder:text-white-overlay',
+              'text-black dark:text-white border rounded-lg bg-transparent ring-0 focus:ring-0 shadow-none focus:outline-none transition-colors duration-500 ease-in-out placeholder:text-black/50 dark:placeholder:text-white-overlay',
               'text-sm lg:text-base',
               [
-                'focus:border-white/50 border-white/25',
+                'focus:border-black/50 dark:focus:border-white/50 border-black/25 dark:border-white/25',
                 touched && error && 'focus:border-red-500 border-red-500',
               ],
               props.className
@@ -107,10 +107,10 @@ const TextField = ( {
           {...props}
           className={cn(
             'w-full',
-            'text-white p-2 border rounded-lg bg-transparent ring-0 focus:ring-0 shadow-none focus:outline-none transition-colors duration-500 ease-in-out placeholder:text-white-overlay',
+            'text-black dark:text-white p-2 border rounded-lg bg-transparent ring-0 focus:ring-0 shadow-none focus:outline-none transition-colors duration-500 ease-in-out placeholder:text-black/50 dark:placeholder:text-white-overlay',
             'text-sm lg:text-base',
             [
-              'focus:border-white/50 border-white/25',
+              'focus:border-black/50 dark:focus:border-white/50 border-black/25 dark:border-white/25',
               touched && error && 'focus:border-red-500 border-red-500',
             ],
             [type === 'password' && 'pr-4'],
