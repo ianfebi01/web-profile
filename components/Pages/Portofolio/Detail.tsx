@@ -3,7 +3,7 @@ import SkeletonDetail from './SkeletonDetail'
 import Markdown from '@/components/Parsers/Markdown'
 import GaleryCarousel from '@/components/Layouts/GaleryCarousel'
 import { useTranslations } from 'next-intl'
-import PortofolioCard from '@/components/Cards/PortofolioCard'
+import ProjectCard from '@/components/Cards/ProjectCard'
 import { Media, Project, Skill } from '@/payload-types'
 import { Link } from '@/i18n/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -121,11 +121,11 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
           {latestPortofolios && latestPortofolios.length > 0 && (
             <div className="mt-16 pt-12 border-t border-black/10 dark:border-white/10">
               <h2 className="mt-0 mb-8 text-xl font-bold">{t( 'see_latest_portfolios' )}</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-12">
                 {latestPortofolios.map( ( portofolio ) => (
-                  <PortofolioCard
+                  <ProjectCard
                     key={portofolio.slug}
-                    portofolio={portofolio as any}
+                    data={portofolio}
                   />
                 ) )}
               </div>
