@@ -1,7 +1,7 @@
 import '@/assets/css/main.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import type { Metadata } from 'next'
-import { Source_Code_Pro } from 'next/font/google'
+import { Source_Code_Pro, Source_Serif_4 } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import ReactQueryProvider from '@/components/Context/ReactQueryProvider'
 import { Toaster } from 'react-hot-toast'
@@ -26,6 +26,11 @@ config.autoAddCss = false
 const sourceCodePro = Source_Code_Pro( {
   subsets  : ['latin'],
   variable : '--font-code-family',
+} )
+
+const sourceSerif = Source_Serif_4( {
+  subsets  : ['latin'],
+  variable : '--font-serif-family',
 } )
 
 export const metadata: Metadata = {
@@ -61,7 +66,7 @@ export default async function LocaleLayout( {
 
   return (
     <html lang={locale}
-      className={`${sourceCodePro.variable} scrollbar-gutter-stable`}
+      className={`${sourceCodePro.variable} ${sourceSerif.variable} scrollbar-gutter-stable`}
       suppressHydrationWarning
     >
       <head>

@@ -9,7 +9,11 @@
     "no-data-found": "Data tidak ditemukan",
     "article": {
         "title": "Artikel",
-        "desc": "Daftar artikel oleh Ian Febi Sastrataruna"
+        "desc": "Daftar artikel oleh Ian Febi Sastrataruna",
+        "min_read": "{count} menit baca",
+        "copy_link": "Salin tautan",
+        "link_copied": "Tautan disalin",
+        "share": "Bagikan"
     },
     "portofolio": {
         "title": "Portofolio",

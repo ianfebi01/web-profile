@@ -9,7 +9,11 @@
     "no-data-found": "Data not found",
     "article": {
         "title": "Article",
-        "desc": "Article of Ian Febi Sastrataruna"
+        "desc": "Article of Ian Febi Sastrataruna",
+        "min_read": "{count} min read",
+        "copy_link": "Copy link",
+        "link_copied": "Link copied",
+        "share": "Share"
     },
     "portofolio": {
         "title": "Portofolio",
