@@ -21,12 +21,12 @@ const getSection = (
     <div
       key={index}
       className={cn( {
-        'bg-white dark:bg-dark'                       : bgColour === 'dark',
-        'bg-light-secondary dark:bg-dark-secondary'   : bgColour === 'dark-secondary',
-        'bg-orange'                                   : bgColour === 'orange',
-        'bg-green'                                    : bgColour === 'green',
-        'bg-white'                                    : bgColour === 'white',
-        'last:border-b-[0.5px] last:border-[#707070]' : bgColour === 'blue-dark',
+        // 'bg-white dark:bg-dark'                       : bgColour === 'dark',
+        // 'bg-light-secondary dark:bg-dark-secondary'   : bgColour === 'dark-secondary',
+        // 'bg-orange'                                   : bgColour === 'orange',
+        // 'bg-green'                                    : bgColour === 'green',
+        // 'bg-white'                                    : bgColour === 'white',
+        // 'last:border-b-[0.5px] last:border-[#707070]' : bgColour === 'blue-dark',
 
         'last:pb-8 last:lg:pb-16' : !sectionData.sectionSettings?.paddingBottom,
 

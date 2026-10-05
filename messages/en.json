@@ -73,5 +73,12 @@
     "edit": "Edit",
     "cancel": "Cancel",
     "summary": "Transaction Summary",
-    "see_latest_portfolios": "See my latest portfolios"
+    "see_latest_portfolios": "See my latest portfolios",
+    "experience": {
+        "present": "Present",
+        "current": "Current",
+        "years": "{count, plural, one {# yr} other {# yrs}}",
+        "months": "{count, plural, one {# mo} other {# mos}}",
+        "less_than_month": "< 1 mo"
+    }
 }

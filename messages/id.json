@@ -73,5 +73,12 @@
     "edit": "Ubah",
     "cancel": "Batal",
     "summary": "Rangkuman Transaksi",
-    "see_latest_portfolios": "Lihat portofolio terbaru saya"
+    "see_latest_portfolios": "Lihat portofolio terbaru saya",
+    "experience": {
+        "present": "Sekarang",
+        "current": "Saat ini",
+        "years": "{count} thn",
+        "months": "{count} bln",
+        "less_than_month": "< 1 bln"
+    }
 }
