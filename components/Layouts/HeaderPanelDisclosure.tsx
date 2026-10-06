@@ -17,7 +17,9 @@ interface Props {
 }
 
 const ToggleIcon = ( { open }: { open: boolean } ) => (
-  <span className="flex items-center justify-center size-8 rounded-full ring-1 ring-black/10 dark:ring-white/15">
+  <span aria-hidden="true"
+    className="flex items-center justify-center size-8 rounded-full ring-1 ring-black/10 dark:ring-white/15"
+  >
     <FontAwesomeIcon
       className={cn( 'size-3 transition-transform duration-300 ease-out', open && 'rotate-45' )}
       aria-hidden="true"
@@ -85,7 +87,7 @@ const HeaderPanelDisclosure = ( { item, index, setIsOpen }: Props ) => {
                 >
                   <Link
                     href={constructNavUrl( subItem )}
-                    className="block py-1.5 text-base font-medium no-underline text-black/60 hover:text-black dark:text-white/60 dark:hover:text-white transition-colors duration-200"
+                    className="block py-1.5 text-base font-medium no-underline text-black/65 hover:text-black dark:text-white/60 dark:hover:text-white transition-colors duration-200"
                     target={subItem?.newTab ? '_blank' : undefined}
                     rel={subItem?.newTab ? 'noopener noreferrer' : undefined}
                     onClick={() => setIsOpen( false )}

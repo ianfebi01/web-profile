@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const actionClass =
-  'p-2 text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors duration-200 cursor-pointer'
+  'p-2 text-black/65 hover:text-black dark:text-white/50 dark:hover:text-white transition-colors duration-200 cursor-pointer'
 
 const ShareActions = ( { title }: Props ) => {
   const t = useTranslations()

@@ -47,7 +47,9 @@ const PortofoliosWrapper = ( { portofolios }: Props ) => {
         key={item.slug}
         className='translate-y-[75px] opacity-0'
         >
-          <ProjectCard data={item} />
+          <ProjectCard data={item}
+            headingLevel="h3"
+          />
         </div>
       ) )}
     </div>

@@ -17,14 +17,17 @@ const HeaderMenuButton = forwardRef<HTMLDivElement, Props>(
         data-name="burger"
         onClick={onClick}
       >
-        <span className="text-sm font-medium text-black/70 dark:text-white/70 group-hover:text-black dark:group-hover:text-white transition-colors hidden sm:block pointer-events-none">
+        <span aria-hidden="true"
+          className="text-sm font-medium text-black/70 dark:text-white/70 group-hover:text-black dark:group-hover:text-white transition-colors hidden sm:block pointer-events-none"
+        >
           {isOpen ? 'Close' : 'Menu'}
         </span>
 
         <button
           className="magnet-target group/target flex items-center justify-center w-12 h-12 rounded-full bg-transparent text-black dark:text-white ring-0 ring-black/10 dark:ring-white/15 group-hover:ring-black/25 dark:group-hover:ring-white/30 transition-shadow duration-300"
-          aria-label="Toggle Menu"
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
           aria-expanded={isOpen}
+          aria-controls="site-menu"
           type="button"
         >
           <div className="relative flex items-center justify-center w-[22px] h-[22px] pointer-events-none">

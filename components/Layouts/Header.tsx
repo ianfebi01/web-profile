@@ -105,6 +105,19 @@ const Header = ( { items, socials }: Props ) => {
     }
   }, [syncMenuAnchor] )
 
+  // Close the menu with Escape
+  useEffect( () => {
+    if ( !isOpen ) return
+
+    const onKeyDown = ( e: KeyboardEvent ) => {
+      if ( e.key === 'Escape' ) setIsOpen( false )
+    }
+
+    window.addEventListener( 'keydown', onKeyDown )
+
+    return () => window.removeEventListener( 'keydown', onKeyDown )
+  }, [isOpen] )
+
   // Lenis is not mounted on mobile, so the same handler is driven either by
   // Lenis' scroll callback or by the native scroll event.
   const handleScroll = useCallback(
@@ -174,7 +187,7 @@ const Header = ( { items, socials }: Props ) => {
 
   return (
     <>
-      <nav
+      <header
         ref={navbarRef}
         className={cn(
           'fixed top-0 inset-x-0 z-100 border-b transition-colors duration-300',
@@ -186,6 +199,7 @@ const Header = ( { items, socials }: Props ) => {
         {/* Empty bar space lets clicks through to the page; only the controls catch them */}
         <div className="flex items-center justify-between gap-6 h-[72px] px-6 md:px-12 mx-auto max-w-[1600px] pointer-events-none [&>*]:pointer-events-auto">
           <Link href={'/'}
+            aria-label="Ian Febi Sastrataruna – Home"
             onClick={() => setIsOpen( false )}
             className={cn(
               'relative z-50 flex items-center gap-3 no-underline text-black dark:text-white transition-opacity duration-300',
@@ -193,7 +207,7 @@ const Header = ( { items, socials }: Props ) => {
             )}
           >
             <Image src="/Logo.svg"
-              alt="Logo image"
+              alt=""
               width={36}
               height={36}
               priority
@@ -202,37 +216,43 @@ const Header = ( { items, socials }: Props ) => {
           </Link>
 
           {inlineLinks.length > 0 && (
-            <ul className={cn(
-              'hidden lg:flex items-center gap-1 m-0 list-none transition-opacity duration-300',
-              isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
-            )}
+            <nav aria-label="Primary"
+              className="hidden lg:block"
             >
-              {inlineLinks.map( ( link ) => {
-                const isActive = isActiveLink( link.href )
+              <ul className={cn(
+                'flex items-center gap-1 m-0 list-none transition-opacity duration-300',
+                isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100'
+              )}
+              >
+                {inlineLinks.map( ( link ) => {
+                  const isActive = isActiveLink( link.href )
 
-                return (
-                  <li key={link.href}
-                    className="m-0"
-                  >
-                    <Link
-                      href={link.href}
-                      aria-current={isActive ? 'page' : undefined}
-                      className={cn(
-                        'relative flex items-center h-10 px-4 rounded-full text-sm font-medium no-underline transition-colors duration-200',
-                        isActive
-                          ? 'text-black dark:text-white'
-                          : 'text-black/55 hover:text-black dark:text-white/55 dark:hover:text-white'
-                      )}
+                  return (
+                    <li key={link.href}
+                      className="m-0"
                     >
-                      {link.label}
-                      {isActive && (
-                        <span className="absolute bottom-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-orange" />
-                      )}
-                    </Link>
-                  </li>
-                )
-              } )}
-            </ul>
+                      <Link
+                        href={link.href}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={cn(
+                          'relative flex items-center h-10 px-4 rounded-full text-sm font-medium no-underline transition-colors duration-200',
+                          isActive
+                            ? 'text-black dark:text-white'
+                            : 'text-black/65 hover:text-black dark:text-white/55 dark:hover:text-white'
+                        )}
+                      >
+                        {link.label}
+                        {isActive && (
+                          <span aria-hidden="true"
+                            className="absolute bottom-1 left-1/2 -translate-x-1/2 size-1 rounded-full bg-orange"
+                          />
+                        )}
+                      </Link>
+                    </li>
+                  )
+                } )}
+              </ul>
+            </nav>
           )}
 
           <div className="flex items-center gap-1 sm:gap-2">
@@ -254,7 +274,7 @@ const Header = ( { items, socials }: Props ) => {
             />
           </div>
         </div>
-      </nav>
+      </header>
 
       <HeaderPanel
         isOpen={isOpen}

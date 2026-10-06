@@ -33,9 +33,10 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
         <article className="w-full max-w-[728px] px-6 mt-28 mb-16 text-black dark:text-white">
           <Link
             href="/portofolio"
-            className="inline-flex items-center gap-2 mb-6 text-sm no-underline text-black/55 hover:text-black dark:text-white/55 dark:hover:text-white transition-colors duration-200"
+            className="inline-flex items-center gap-2 mb-6 text-sm no-underline text-black/65 hover:text-black dark:text-white/55 dark:hover:text-white transition-colors duration-200"
           >
             <FontAwesomeIcon icon={faArrowLeft}
+              aria-hidden="true"
               className="size-3"
             />
             {t( 'portofolio.title' )}
@@ -81,7 +82,9 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
 
           {!!data.gallery?.length && (
             <div className="mt-10">
-              <GaleryCarousel data={data.gallery.map( ( g ) => g.image ).filter( ( image ): image is string | Media => !!image )} />
+              <GaleryCarousel title={data.title}
+                data={data.gallery.map( ( g ) => g.image ).filter( ( image ): image is string | Media => !!image )}
+              />
             </div>
           )}
 
@@ -126,6 +129,7 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
                   <ProjectCard
                     key={portofolio.slug}
                     data={portofolio}
+                    headingLevel="h3"
                   />
                 ) )}
               </div>

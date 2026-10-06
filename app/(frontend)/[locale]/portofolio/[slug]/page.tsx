@@ -4,11 +4,16 @@ import {
   getDetail,
   getLatestPortofolios,
 } from '@/lib/api/portofolioQueryFn'
-import { Project } from '@/payload-types'
+import { Project, Skill } from '@/payload-types'
+import { buildMetadata, clampDescription } from '@/lib/seo/metadata'
+import { getLocalizedSlugs, slugsToPaths } from '@/lib/seo/localized-slugs'
+import { getPlainText } from '@/utils/parseMd'
+import JsonLd from '@/components/Seo/JsonLd'
+import { breadcrumbSchema, graph, projectSchema } from '@/lib/seo/structured-data'
 import imageUrl from '@/utils/imageUrl'
 import { Metadata } from 'next'
 import { Locale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 
 type Props = {
@@ -18,41 +23,35 @@ type Props = {
   }>
 }
 
+const skillNames = ( data: Project ) =>
+  ( data.skills ?? [] ).filter( ( skill ): skill is Skill => typeof skill === 'object' ).map( ( skill ) => skill.name )
+
+const projectDescription = ( data: Project ) =>
+  clampDescription( getPlainText( data.description || '' ) ) || `Portfolio project: ${data.title}`
+
 export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
-  const { locale } = await params
-  setRequestLocale( locale )
+  setRequestLocale( params.locale )
 
   const data = await getDetail( params.slug, params.locale )
 
-  const title = data?.title
-  const desc = `Portfolio for project called ${data?.title}`
-  const canonicalURL = `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}/portofolio/${params.slug}`
+  if ( !data ) return { robots : { index : false } }
 
-  return {
-    title,
-    description : desc,
-    openGraph   : {
-      title,
-      description : desc,
-      url         : canonicalURL,
-      siteName    : title,
-      images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail ) || '' }]
-        : [],
-      type    : 'article',
-      authors : ['Ian Febi Sastrataruna'],
-    },
-    twitter : {
-      card        : 'summary',
-      site        : '@ianfebi01',
-      title,
-      description : desc,
-      images      : data?.thumbnail
-        ? [{ url : imageUrl( data.thumbnail ) || '' }]
-        : [],
-    },
-  }
+  const slugs = await getLocalizedSlugs( 'projects', data.id )
+
+  return buildMetadata( {
+    locale        : params.locale,
+    paths         : slugsToPaths( slugs, '/portofolio' ),
+    title         : data.title,
+    description   : projectDescription( data ),
+    image         : imageUrl( data.thumbnail ),
+    imageAlt      : data.title,
+    type          : 'article',
+    publishedTime : data.createdAt,
+    modifiedTime  : data.updatedAt,
+    tags          : skillNames( data ),
+    keywords      : skillNames( data ),
+  } )
 }
 
 export async function generateStaticParams() {
@@ -71,6 +70,7 @@ export default async function PortofolioPage(
   }
 ) {
   const params = await props.params;
+  setRequestLocale( params.locale )
 
   const data = await getDetail( params.slug, params.locale )
 
@@ -80,11 +80,34 @@ export default async function PortofolioPage(
   
   const latestPortofolios = await getLatestPortofolios( params.slug, params.locale )
 
+  const t = await getTranslations( { locale : params.locale, namespace : 'portofolio' } )
+  const path = `/portofolio/${params.slug}`
+  const jsonLd = graph(
+    projectSchema( {
+      locale       : params.locale,
+      path,
+      name         : data.title,
+      description  : projectDescription( data ),
+      image        : imageUrl( data.thumbnail ),
+      images       : ( data.gallery ?? [] ).map( ( item ) => imageUrl( item.image ) ),
+      dateCreated  : data.createdAt,
+      dateModified : data.updatedAt,
+      keywords     : skillNames( data ),
+      sameAs       : data.url,
+    } ),
+    breadcrumbSchema( params.locale, [
+      { name : 'Home', path : '' },
+      { name : t( 'title' ), path : '/portofolio' },
+      { name : data.title, path },
+    ] ),
+  )
+
   return (
-    <main className="grow flex flex-col">
+    <div className="grow flex flex-col">
+      <JsonLd data={jsonLd} />
       <Detail data={data}
         latestPortofolios={latestPortofolios}
       />
-    </main>
+    </div>
   )
 }

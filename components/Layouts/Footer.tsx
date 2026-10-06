@@ -7,7 +7,7 @@ import Image from 'next/image'
 
 const Footer = () => {
   return (
-    <section
+    <footer
       id="footer"
       className="main__section h-fit bg-white dark:bg-dark overflow-hidden"
     >
@@ -15,11 +15,11 @@ const Footer = () => {
         <div className="w-fit mx-auto mb-4">
           <div className="flex flex-col gap-2 max-w-2xl items-center text-center">
             <Image src="/Logo.svg"
-              alt="Logo image"
+              alt=""
               width={40}
               height={40}
             />
-            <h2 className="text-lg">Ian Febi Sastrataruna</h2>
+            <p className="text-lg font-bold">Ian Febi Sastrataruna</p>
           </div>
         </div>
 
@@ -30,14 +30,14 @@ const Footer = () => {
             className="text-md"
             icon={<InstagramIcon size={20} />}
           />
-          •
+          <span aria-hidden="true">•</span>
           <LinkOpenNewTab
             url={'https://www.linkedin.com/in/ian-febi-sastrataruna-895598149/'}
             label={'LinkedIn'}
             className="text-md"
             icon={<LinkedinIcon size={20} />}
           />
-          •
+          <span aria-hidden="true">•</span>
           <div className=" flex flex-row items-center gap-2">
             <CopyToClipboard
               copyText="ianfebi01@gmail.com"
@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   )
 }
 

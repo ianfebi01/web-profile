@@ -13,7 +13,8 @@
     "lint": "eslint .",
     "payload": "cross-env PAYLOAD_CONFIG_PATH=app/payload.config.ts payload",
     "db:backup": "bash scripts/db/backup.sh",
-    "db:restore": "bash scripts/db/restore.sh"
+    "db:restore": "bash scripts/db/restore.sh",
+    "test:a11y": "playwright test"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -77,6 +78,8 @@
     "yup": "^1.7.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/qs": "^6.15.1",
     "@typescript-eslint/eslint-plugin": "^8.70.0",

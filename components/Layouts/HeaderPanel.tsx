@@ -47,7 +47,9 @@ const HeaderPanel = ( {
         'fixed inset-0 z-80 transition-all duration-500',
         isOpen ? 'pointer-events-auto' : 'pointer-events-none'
       )}
-      aria-hidden={!isOpen}
+      id="site-menu"
+      // Keep the closed panel out of the tab order and the accessibility tree
+      inert={!isOpen}
     >
       <div
         className={cn(
@@ -55,6 +57,7 @@ const HeaderPanel = ( {
           isOpen ? 'opacity-100' : 'opacity-0'
         )}
         onClick={() => setIsOpen( false )}
+        aria-hidden="true"
       />
 
       <div
@@ -72,11 +75,15 @@ const HeaderPanel = ( {
         }}
       >
         <div className={cn( 'flex flex-col transition-opacity duration-300 text-black dark:text-white', isOpen ? 'opacity-100' : 'opacity-0' )}>
-          <span className="px-3 mb-2 font-code text-[11px] uppercase tracking-[0.2em] text-black/40 dark:text-white/40">
+          <span aria-hidden="true"
+            className="px-3 mb-2 font-code text-[11px] uppercase tracking-[0.2em] text-black/65 dark:text-white/60"
+          >
             Navigation
           </span>
 
-          <nav className="flex flex-col">
+          <nav aria-label="Menu"
+            className="flex flex-col"
+          >
             {items?.map( ( item, key ) => (
               <div
                 key={key}

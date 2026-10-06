@@ -62,7 +62,7 @@ export default function Accordion( { items = [] }: Props ) {
                           className="flex overflow-y-hidden transition-all duration-500 ease-in-out"
                         >
                           <div
-                            className={cn( 'body-copy pl-4 text-black/50 dark:text-white-overlay' )}
+                            className={cn( 'body-copy pl-4 text-black/65 dark:text-white-overlay' )}
                           >
                             <Markdown content={item.content}></Markdown>
                           </div>
