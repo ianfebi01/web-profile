@@ -1,5 +1,9 @@
 import { Metadata } from "next";
 import { FALLBACK_SEO } from "@/utils/constants";
+import { buildMetadata } from "@/lib/seo/metadata";
+import JsonLd from "@/components/Seo/JsonLd";
+import { graph, personSchema, webPageSchema, PERSON_ID } from "@/lib/seo/structured-data";
+import { SITE_NAME } from "@/lib/seo/config";
 import imageUrl from "@/utils/imageUrl";
 import HeroesAndSections from "@/components/Parsers/HeroesAndSections";
 import { Locale } from "next-intl";
@@ -17,12 +21,20 @@ import { getPayload } from "payload";
 import configPromise from "@payload-config";
 
 export async function generateMetadata( props: Props ): Promise<Metadata> {
-  if ( !isPayloadReady() ) return FALLBACK_SEO;
-
   const params = await props.params;
+  const fallback = buildMetadata( {
+    locale      : params.locale,
+    paths       : '',
+    title       : FALLBACK_SEO.title,
+    description : FALLBACK_SEO.description,
+    type        : 'profile',
+  } )
+
+  if ( !isPayloadReady() ) return fallback;
+
   const homeGlobal = await getHomePage( params.locale );
 
-  if ( !homeGlobal || !homeGlobal.page ) return FALLBACK_SEO;
+  if ( !homeGlobal || !homeGlobal.page ) return fallback;
 
   const payload = await getPayload( { config : configPromise } );
   const pageDoc =
@@ -37,44 +49,18 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
       } );
 
   const metadata = ( pageDoc as any )?.meta;
-  if ( !metadata ) return FALLBACK_SEO;
+  if ( !metadata ) return fallback;
 
-  const canonicalURL =
-    metadata?.canonicalURL ||
-    `${process.env.NEXT_PUBLIC_BASE_URL}/${params.locale}`;
-
-  return {
+  return buildMetadata( {
+    locale      : params.locale,
+    paths       : '',
     title       : metadata?.title || FALLBACK_SEO.title,
     description : metadata?.description || FALLBACK_SEO.description,
     keywords    : metadata?.keywords,
-    openGraph   : {
-      url         : canonicalURL,
-      title       : metadata?.title || FALLBACK_SEO.title,
-      description : metadata?.description || FALLBACK_SEO.description,
-      siteName    : "Ian Febi Sastrataruna",
-      type        : "website",
-      images      : [
-        {
-          url : metadata?.image?.url
-            ? imageUrl( metadata?.image?.url as any ) || ""
-            : "",
-        },
-      ],
-    },
-    twitter : {
-      card        : "summary",
-      site        : "@ianfebi01",
-      title       : metadata?.title || FALLBACK_SEO.title,
-      description : metadata?.description || FALLBACK_SEO.description,
-      images      : [
-        {
-          url : metadata?.image?.url
-            ? imageUrl( metadata?.image?.url as any ) || ""
-            : "",
-        },
-      ],
-    },
-  };
+    image       : imageUrl( metadata?.image ),
+    canonical   : metadata?.canonicalURL,
+    type        : 'profile',
+  } );
 }
 
 export function generateStaticParams() {
@@ -129,5 +115,26 @@ export default async function PageHome( props: Props ) {
     blocks : ( pageDoc as any ).blocks || [],
   };
 
-  return <HeroesAndSections page={pageData as any} />;
+  const jsonLd = graph(
+    webPageSchema( {
+      locale      : params.locale,
+      path        : '',
+      name        : ( pageDoc as any )?.meta?.title || SITE_NAME,
+      description : ( pageDoc as any )?.meta?.description || profile?.bio || FALLBACK_SEO.description,
+      type        : 'ProfilePage',
+      extra       : { mainEntity : { '@id' : PERSON_ID } },
+    } ),
+    personSchema( {
+      description : profile?.bio,
+      image       : imageUrl( profile?.avatar as any ),
+      sameAs      : ( profile?.socialPlatformLinks ?? [] ).map( ( link ) => link.url ).filter( ( url ) => /^https?:/.test( url ) ),
+    } ),
+  );
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <HeroesAndSections page={pageData as any} />
+    </>
+  );
 }

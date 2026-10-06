@@ -9,10 +9,11 @@ import { Project, Skill } from '@/payload-types'
 
 interface Props {
   data: Project
+  headingLevel?: 'h2' | 'h3'
 }
 
 // Medium-style project card: thumbnail, title, excerpt, then date and skills
-const ProjectCard = ( { data }: Props ) => {
+const ProjectCard = ( { data, headingLevel: Heading = 'h2' }: Props ) => {
   const locale = useLocale()
 
   const thumbnail = imageUrl( data.thumbnail )
@@ -32,7 +33,7 @@ const ProjectCard = ( { data }: Props ) => {
           {!!thumbnail && (
             <Image
               src={thumbnail}
-              alt={`${data.title} Picture`}
+              alt=""
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
               className="object-contain object-center group-hover:scale-105 transition-default"
@@ -42,16 +43,16 @@ const ProjectCard = ( { data }: Props ) => {
           )}
         </div>
 
-        <h3 className="m-0 mt-2 font-bold tracking-tight leading-snug text-xl line-clamp-2 group-hover:underline underline-offset-4 decoration-1">
+        <Heading className="m-0 mt-2 font-bold tracking-tight leading-snug text-xl line-clamp-2 group-hover:underline underline-offset-4 decoration-1">
           {data.title}
-        </h3>
+        </Heading>
         {!!excerpt && (
-          <p className="m-0 font-serif text-sm sm:text-base leading-normal line-clamp-2 text-black/55 dark:text-white/60">
+          <p className="m-0 font-serif text-sm sm:text-base leading-normal line-clamp-2 text-black/65 dark:text-white/60">
             {excerpt}
           </p>
         )}
 
-        <div className="flex flex-wrap items-center gap-2 mt-auto pt-2 text-[13px] text-black/55 dark:text-white/55">
+        <div className="flex flex-wrap items-center gap-2 mt-auto pt-2 text-[13px] text-black/65 dark:text-white/55">
           <span>
             {new Date( data.createdAt ).toLocaleDateString( locale, {
               month : 'short',

@@ -1,6 +1,6 @@
 import '@/assets/css/main.css'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, Source_Code_Pro, Source_Serif_4 } from 'next/font/google'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import ReactQueryProvider from '@/components/Context/ReactQueryProvider'
@@ -16,10 +16,14 @@ import { Site } from '@/payload-types'
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary'
 import Error from '@/app/error'
 import { hasLocale, NextIntlClientProvider } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
 import Header from '@/components/Layouts/Header'
+import JsonLd from '@/components/Seo/JsonLd'
+import { FALLBACK_SEO } from '@/utils/constants'
+import { AUTHOR_NAME, SITE_NAME, SITE_URL, TWITTER_HANDLE } from '@/lib/seo/config'
+import { graph, personSchema, websiteSchema } from '@/lib/seo/structured-data'
 
 config.autoAddCss = false
 
@@ -39,9 +43,43 @@ const sourceSerif = Source_Serif_4( {
 } )
 
 export const metadata: Metadata = {
-  title : 'Ian Febi S',
-  description :
-    'Front End Web Developer with 1+ year of experience. Expert on React js and Vue js',
+  metadataBase : new URL( SITE_URL ),
+  title        : {
+    default  : FALLBACK_SEO.title,
+    template : `%s | ${SITE_NAME}`,
+  },
+  description     : FALLBACK_SEO.description,
+  applicationName : SITE_NAME,
+  authors         : [{ name : AUTHOR_NAME, url : SITE_URL }],
+  creator         : AUTHOR_NAME,
+  publisher       : AUTHOR_NAME,
+  formatDetection : { telephone : false, email : false, address : false },
+  robots          : {
+    index     : true,
+    follow    : true,
+    googleBot : {
+      index               : true,
+      follow              : true,
+      'max-image-preview' : 'large',
+      'max-snippet'       : -1,
+      'max-video-preview' : -1,
+    },
+  },
+  twitter : {
+    card    : 'summary_large_image',
+    site    : TWITTER_HANDLE,
+    creator : TWITTER_HANDLE,
+  },
+}
+
+export const viewport: Viewport = {
+  width        : 'device-width',
+  initialScale : 1,
+  themeColor   : [
+    { media : '(prefers-color-scheme: light)', color : '#ffffff' },
+    { media : '(prefers-color-scheme: dark)', color : '#222222' },
+  ],
+  colorScheme : 'light dark',
 }
 
 const themeInitScript = `try{var t=localStorage.theme;document.documentElement.classList.toggle('dark',t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}`
@@ -64,10 +102,15 @@ export default async function LocaleLayout( {
   }
 
   setRequestLocale( locale )
-  
+  const t = await getTranslations( { locale } )
+
   const siteData = ( await getSiteData( locale ) ) as { data: Site & { mainNavMenu?: any, footerNavMenu?: any } }
   const navItems = siteData?.data?.mainNavMenu ?? []
   const socialLinks = siteData?.data?.socialPlatformLinks ?? []
+  const siteJsonLd = graph(
+    personSchema( { sameAs : socialLinks.map( ( link ) => link.url ).filter( ( url ) => /^https?:/.test( url ) ) } ),
+    websiteSchema( siteData?.data?.description || FALLBACK_SEO.description ),
+  )
 
   return (
     <html lang={locale}
@@ -77,10 +120,16 @@ export default async function LocaleLayout( {
       <head>
         {/* Apply the saved theme (or the OS preference) before paint to avoid a flash */}
         <script dangerouslySetInnerHTML={{ __html : themeInitScript }} />
+        <JsonLd data={siteJsonLd} />
       </head>
       <body suppressHydrationWarning={true}
         id="myportal"
       >
+        <a href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-full focus:bg-orange focus:text-white focus:no-underline"
+        >
+          {t( 'skip_to_content' )}
+        </a>
         <GoogleAnalytics />
         <ErrorBoundary errorComponent={Error}>
           <SmoothScrollProvider>
@@ -120,8 +169,13 @@ export default async function LocaleLayout( {
                     socials={socialLinks}
                   />
 
-                  {children}
-          
+                  <main id="main-content"
+                    tabIndex={-1}
+                    className="grow flex flex-col outline-none"
+                  >
+                    {children}
+                  </main>
+
                   <SectionProvider>
                     <Footer />
                   </SectionProvider>

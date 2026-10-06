@@ -75,7 +75,7 @@ export default function LocaleSwitcher() {
                         'text-sm font-medium uppercase transition-colors duration-150 cursor-pointer',
                         'focus:outline-none focus-visible:ring focus-visible:ring-orange/50',
                         'hover:bg-light-secondary dark:hover:bg-dark-secondary',
-                        item === locale ? 'text-black dark:text-white' : 'text-black/50 dark:text-white/50'
+                        item === locale ? 'text-black dark:text-white' : 'text-black/65 dark:text-white/50'
                       )}
                     >
                       {item}
@@ -119,7 +119,7 @@ export function LocaleSegmented( { className }: { className?: string } ) {
             'h-8 px-3 rounded-full text-xs font-medium uppercase transition-colors duration-200 cursor-pointer',
             item === locale
               ? 'bg-white text-black dark:bg-dark dark:text-white shadow-sm'
-              : 'text-black/50 hover:text-black dark:text-white/50 dark:hover:text-white'
+              : 'text-black/65 hover:text-black dark:text-white/50 dark:hover:text-white'
           )}
         >
           {item}

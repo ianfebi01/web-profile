@@ -1,6 +1,9 @@
 import ArticleListing from '@/components/Pages/Article/Listing'
 import { Props } from '@/types'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { buildMetadata } from '@/lib/seo/metadata'
+import JsonLd from '@/components/Seo/JsonLd'
+import { breadcrumbSchema, graph, webPageSchema } from '@/lib/seo/structured-data'
 
 export const dynamic = 'force-dynamic'
 
@@ -11,27 +14,13 @@ export async function generateMetadata( props: Omit<Props, 'children'> ) {
 
   const t = await getTranslations( { locale, namespace : 'article' } )
 
-  const title = `${t( 'title' )} | Ian Febi Sastrataruna`
-  const desc = t( 'desc' )
-
-  return {
-    title       : title,
-    description : desc,
+  return buildMetadata( {
+    locale,
+    paths       : '/article',
+    title       : t( 'title' ),
+    description : t( 'desc' ),
     keywords    : 'article',
-
-    openGraph : {
-      title       : title,
-      description : desc,
-      siteName    : 'Ian Febi Sastrataruna',
-      type        : 'website',
-    },
-    twitter : {
-      card        : 'summary',
-      site        : '@ianfebi01',
-      title       : title,
-      description : desc || '',
-    },
-  }
+  } )
 }
 
 export default async function ArticlePage( props: Omit<Props, 'children'> ) {
@@ -39,5 +28,25 @@ export default async function ArticlePage( props: Omit<Props, 'children'> ) {
 
   setRequestLocale( locale )
 
-  return <ArticleListing />
+  const t = await getTranslations( { locale, namespace : 'article' } )
+  const jsonLd = graph(
+    webPageSchema( {
+      locale,
+      path        : '/article',
+      name        : t( 'title' ),
+      description : t( 'desc' ),
+      type        : 'CollectionPage',
+    } ),
+    breadcrumbSchema( locale, [
+      { name : 'Home', path : '' },
+      { name : t( 'title' ), path : '/article' },
+    ] ),
+  )
+
+  return (
+    <>
+      <JsonLd data={jsonLd} />
+      <ArticleListing />
+    </>
+  )
 }

@@ -18,7 +18,7 @@ const AuthorMeta = ( { content, date }: Props ) => {
       <AuthorAvatar />
       <div className="flex flex-col gap-0.5">
         <span className="text-sm md:text-base font-medium">{AUTHOR_NAME}</span>
-        <span className="text-sm text-black/55 dark:text-white/55">
+        <span className="text-sm text-black/65 dark:text-white/55">
           {t( 'article.min_read', { count : getReadingTime( content ) } )}
           <span className="mx-2">·</span>
           {new Date( date ).toLocaleDateString( locale, {

@@ -51,11 +51,11 @@ const ArticleRecommendCard = ( { data }: Props ) => {
         <h3 className="m-0 font-bold tracking-tight leading-snug text-xl line-clamp-2 group-hover:underline underline-offset-4 decoration-1">
           {data.title}
         </h3>
-        <p className="m-0 font-serif text-sm sm:text-base leading-normal line-clamp-2 text-black/55 dark:text-white/60">
+        <p className="m-0 font-serif text-sm sm:text-base leading-normal line-clamp-2 text-black/65 dark:text-white/60">
           {getPlainText( data.introText || data.content || '' )}
         </p>
 
-        <div className="flex items-center gap-2 mt-auto pt-2 text-[13px] text-black/55 dark:text-white/55">
+        <div className="flex items-center gap-2 mt-auto pt-2 text-[13px] text-black/65 dark:text-white/55">
           <span>
             {new Date( data.createdAt ).toLocaleDateString( locale, {
               month : 'short',

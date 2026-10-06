@@ -32,7 +32,7 @@ const PortofolioListing = () => {
   const totalPages = data?.totalPages ?? 0
 
   return (
-    <main>
+    <>
       <section id="portofolio"
         className="h-fit bg-white dark:bg-dark"
       >
@@ -69,7 +69,7 @@ const PortofolioListing = () => {
           ) : (
             <>
               {isFetching ? (
-                <p className="m-0 text-sm text-black/50 dark:text-white/50">Loading...</p>
+                <p className="m-0 text-sm text-black/65 dark:text-white/50">Loading...</p>
               ) : null}
               <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3 border-t border-black/10 dark:border-white/10 pt-10">
                 {portofolios.map( ( portofolio ) => (
@@ -90,7 +90,7 @@ const PortofolioListing = () => {
           )}
         </div>
       </section>
-    </main>
+    </>
   )
 }
 

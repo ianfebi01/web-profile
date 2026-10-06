@@ -1,29 +1,31 @@
 /*
   highlight.js theme that follows the site theme:
   Atom One Light by default, Atom One Dark under `.dark`.
+  Token colours are darkened/lightened from the originals to meet WCAG AA
+  (4.5:1) against their background.
 */
 :root {
   --hljs-bg: #fafafa;
   --hljs-mono-1: #383a42;
-  --hljs-mono-3: #a0a1a7;
-  --hljs-hue-1: #0184bb;
-  --hljs-hue-2: #4078f2;
+  --hljs-mono-3: #696c77;
+  --hljs-hue-1: #0172a3;
+  --hljs-hue-2: #2f5fd0;
   --hljs-hue-3: #a626a4;
-  --hljs-hue-4: #50a14f;
-  --hljs-hue-5: #e45649;
+  --hljs-hue-4: #3b7d3a;
+  --hljs-hue-5: #c0392b;
   --hljs-hue-6: #986801;
-  --hljs-hue-6-2: #c18401;
+  --hljs-hue-6-2: #8a5d00;
 }
 
 .dark {
   --hljs-bg: #282c34;
   --hljs-mono-1: #abb2bf;
-  --hljs-mono-3: #5c6370;
+  --hljs-mono-3: #929aa6;
   --hljs-hue-1: #56b6c2;
   --hljs-hue-2: #61aeee;
   --hljs-hue-3: #c678dd;
   --hljs-hue-4: #98c379;
-  --hljs-hue-5: #e06c75;
+  --hljs-hue-5: #ef7b84;
   --hljs-hue-6: #d19a66;
   --hljs-hue-6-2: #e6c07b;
 }

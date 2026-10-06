@@ -125,7 +125,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
             className="grid grid-cols-1 md:grid-cols-[220px_1fr] gap-3 md:gap-12 py-10 md:py-12 border-b border-black/10 dark:border-white/10 translate-y-[50px] opacity-0"
           >
             {/* Period */}
-            <div className="flex flex-col gap-1 text-sm text-black/55 dark:text-white/55">
+            <div className="flex flex-col gap-1 text-sm text-black/65 dark:text-white/55">
               <span className="font-medium text-black/80 dark:text-white/80">
                 {formatPeriod( company.startDate, company.endDate )}
               </span>
@@ -175,7 +175,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
                       {role.role}
                     </h4>
                     {hasMultipleRoles && (
-                      <p className="m-0 mt-1 text-sm text-black/55 dark:text-white/55">
+                      <p className="m-0 mt-1 text-sm text-black/65 dark:text-white/55">
                         {formatPeriod( role.startDate, role.endDate )}
                         <span className="mx-2">·</span>
                         {formatDuration( getMonths( role ) )}

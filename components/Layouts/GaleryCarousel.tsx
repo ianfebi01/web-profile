@@ -22,11 +22,17 @@ import { Media } from '@/payload-types'
 
 interface Props {
   data: ( string | Media )[]
+  title?: string
 }
 
-const GaleryCarousel: React.FC<Props> = ( { data } ) => {
+const GaleryCarousel: React.FC<Props> = ( { data, title = 'Gallery' } ) => {
   return (
-    <ul className="w-full m-0! relative">
+    <div
+      className="w-full m-0! relative"
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={title}
+    >
       <Swiper
         navigation={{
           prevEl : `.btn-prev`,
@@ -55,7 +61,7 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
             <div className="h-full flex flex-col">
               <div className="relative aspect-video overflow-hidden mb-8 bg-light-secondary dark:bg-dark-secondary rounded-lg">
                 <Image
-                  alt={`Image ${index}`}
+                  alt={`${title} – ${index + 1} / ${data.length}`}
                   src={imageUrl( item ) || ''}
                   fill
                   style={{
@@ -77,29 +83,43 @@ const GaleryCarousel: React.FC<Props> = ( { data } ) => {
         ) )}
       </Swiper>
       <div className="aspect-video absolute w-full top-0 hidden min-[1156px]:block">
-        <button className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
+        <button type="button"
+          aria-label="Previous slide"
+          className="btn-prev absolute left-2 lg:left-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5"
+        >
           <FontAwesomeIcon icon={faCircleChevronLeft}
+            aria-hidden="true"
             size="2xl"
           />
         </button>
-        <button className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5">
+        <button type="button"
+          aria-label="Next slide"
+          className="btn-next absolute right-2 lg:right-4 inset-y-0 my-auto z-30 text-black/75 dark:text-white/75 hover:text-black/90 dark:hover:text-white/90 transition-default disabled:opacity-0 h-fit drop-shadow-20-0_5"
+        >
           <FontAwesomeIcon icon={faCircleChevronRight}
+            aria-hidden="true"
             size="2xl"
           />
         </button>
       </div>
       <div className="aspect-video absolute w-full top-0">
         <div className="flex flex-row gap-2 items-center justify-center h-[44px] mx-auto inset-x-0 z-30 absolute top-full">
-          <button className="btn-prev size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden">
+          <button type="button"
+            aria-label="Previous slide"
+            className="btn-prev size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden"
+          >
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
           <div className="paginationEL leading-none translate-x-0!"></div>
-          <button className="btn-next size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden">
+          <button type="button"
+            aria-label="Next slide"
+            className="btn-next size-6 text-black/90 dark:text-white/90 min-[1156px]:hidden"
+          >
             <FontAwesomeIcon icon={faChevronRight} />
           </button>
         </div>
       </div>
-    </ul>
+    </div>
   )
 }
 

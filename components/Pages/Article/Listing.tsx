@@ -32,7 +32,7 @@ const ArticleListing = () => {
   const totalPages = data?.totalPages ?? 0
 
   return (
-    <main>
+    <>
       <section id="article"
         className="h-fit bg-white dark:bg-dark"
       >
@@ -72,7 +72,7 @@ const ArticleListing = () => {
           ) : (
             <>
               {isFetching ? (
-                <p className="m-0 text-sm text-black/50 dark:text-white/50">Loading...</p>
+                <p className="m-0 text-sm text-black/65 dark:text-white/50">Loading...</p>
               ) : null}
               <div className="flex flex-col divide-y divide-black/10 dark:divide-white/10">
                 {articles.map( ( article ) => (
@@ -93,7 +93,7 @@ const ArticleListing = () => {
           )}
         </div>
       </section>
-    </main>
+    </>
   )
 }
 
