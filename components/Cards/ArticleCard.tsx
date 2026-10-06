@@ -8,6 +8,7 @@ import { Article } from '@/payload-types'
 import imageLoader from '@/lib/constans/image-loader'
 import { getPlainText } from '@/utils/parseMd'
 import { useLocale, useTranslations } from 'next-intl'
+import formatDateTz from '@/utils/format-date'
 
 interface Props {
   data: Article | any
@@ -17,14 +18,14 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
   const t = useTranslations()
   const locale = useLocale()
 
-  const formatDate = ( dateString: string ) => {
+  const formatArticleDate = ( dateString: string ) => {
     const options: Intl.DateTimeFormatOptions = {
       year  : 'numeric',
       month : 'long',
       day   : 'numeric',
     }
 
-    return new Date( dateString ).toLocaleDateString( locale, options )
+    return formatDateTz( dateString, locale, options )
   }
 
   return (
@@ -55,7 +56,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
 
       <div className="relative flex flex-col h-full px-4 pb-6">
         <span className="mb-2 text-xs lg:text-sm line-clamp-1 text-greydark">
-          {formatDate( data.date || data.createdAt )}
+          {formatArticleDate( data.date || data.createdAt )}
         </span>
         <h3 className="pt-0 text-xl xxl:text-3xl xxl:leading-[2rem] font-extrabold lg:mb-6">
           {data.title}

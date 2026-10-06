@@ -6,6 +6,7 @@ import imageLoader from '@/lib/constans/image-loader'
 import { getPlainText } from '@/utils/parseMd'
 import { useLocale } from 'next-intl'
 import { Project, Skill } from '@/payload-types'
+import formatDate from '@/utils/format-date'
 
 interface Props {
   data: Project
@@ -54,7 +55,7 @@ const ProjectCard = ( { data, headingLevel: Heading = 'h2' }: Props ) => {
 
         <div className="flex flex-wrap items-center gap-2 mt-auto pt-2 text-[13px] text-black/65 dark:text-white/55">
           <span>
-            {new Date( data.createdAt ).toLocaleDateString( locale, {
+            {formatDate( data.createdAt, locale, {
               month : 'short',
               year  : 'numeric',
             } )}
