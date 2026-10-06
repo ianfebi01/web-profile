@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils'
 import Markdown from './Parsers/Markdown'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import formatDate, { getYearMonth } from '@/utils/format-date'
 gsap.registerPlugin( ScrollTrigger )
 
 interface Props {
@@ -32,10 +33,10 @@ const compareByEndDate = ( a: ExperienceType, b: ExperienceType ) => {
 const isCurrent = ( item: ExperienceType ) => !item.endDate || new Date( item.endDate ) >= new Date()
 
 const getMonths = ( item: ExperienceType ) => {
-  const startDate = new Date( item.startDate )
-  const endDate = item.endDate ? new Date( item.endDate ) : new Date() // Use current date if endDate is null
+  const start = getYearMonth( item.startDate )
+  const end = getYearMonth( item.endDate || Date.now() ) // Use current date if endDate is null
 
-  return ( endDate.getFullYear() - startDate.getFullYear() ) * 12 + ( endDate.getMonth() - startDate.getMonth() )
+  return ( end.year - start.year ) * 12 + ( end.month - start.month )
 }
 
 const Experience: FunctionComponent<Props> = ( { data } ) => {
@@ -88,7 +89,7 @@ const Experience: FunctionComponent<Props> = ( { data } ) => {
 
   const formatPeriod = ( startDate: string, endDate?: string | null ) => {
     const format = ( date: string ) =>
-      new Date( date ).toLocaleDateString( locale, { month : 'short', year : 'numeric' } )
+      formatDate( date, locale, { month : 'short', year : 'numeric' } )
 
     return `${format( startDate )} — ${endDate && new Date( endDate ) < new Date() ? format( endDate ) : t( 'present' )}`
   }

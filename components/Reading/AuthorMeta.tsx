@@ -2,6 +2,7 @@
 import { useLocale, useTranslations } from 'next-intl'
 import { AUTHOR_NAME, getReadingTime } from './reading'
 import AuthorAvatar from './AuthorAvatar'
+import formatDate from '@/utils/format-date'
 
 interface Props {
   content?: string | null
@@ -21,7 +22,7 @@ const AuthorMeta = ( { content, date }: Props ) => {
         <span className="text-sm text-black/65 dark:text-white/55">
           {t( 'article.min_read', { count : getReadingTime( content ) } )}
           <span className="mx-2">·</span>
-          {new Date( date ).toLocaleDateString( locale, {
+          {formatDate( date, locale, {
             month : 'short',
             day   : 'numeric',
             year  : 'numeric',

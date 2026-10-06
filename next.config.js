@@ -7,7 +7,9 @@ const nextConfig = {
   reactStrictMode   : false,
   allowedDevOrigins : ['192.168.1.*'],
 
-  output : 'standalone',
+  output                      : 'standalone',
+  // Ship browser source maps so Lighthouse / DevTools can map production errors to source
+  productionBrowserSourceMaps : true,
   // async rewrites() {
   //   return [
   //     {
@@ -16,7 +18,7 @@ const nextConfig = {
   //     },
   //   ]
   // },
-  images : {
+  images                      : {
     remotePatterns : [
       {
         protocol : 'https',

@@ -8,6 +8,7 @@ import { useLocale, useTranslations } from 'next-intl'
 import { Article } from '@/payload-types'
 import { AUTHOR_NAME, getReadingTime } from '@/components/Reading/reading'
 import AuthorAvatar from '@/components/Reading/AuthorAvatar'
+import formatDate from '@/utils/format-date'
 
 interface Props {
   data: Article
@@ -57,7 +58,7 @@ const ArticleRecommendCard = ( { data }: Props ) => {
 
         <div className="flex items-center gap-2 mt-auto pt-2 text-[13px] text-black/65 dark:text-white/55">
           <span>
-            {new Date( data.createdAt ).toLocaleDateString( locale, {
+            {formatDate( data.createdAt, locale, {
               month : 'short',
               day   : 'numeric',
               year  : 'numeric',
