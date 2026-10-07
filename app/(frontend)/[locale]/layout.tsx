@@ -19,6 +19,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl'
 import { getTranslations, setRequestLocale } from 'next-intl/server'
 import { notFound } from 'next/navigation'
 import { routing } from '@/i18n/routing'
+import { isPayloadReady } from '@/lib/is-payload-ready'
 import Header from '@/components/Layouts/Header'
 import JsonLd from '@/components/Seo/JsonLd'
 import { FALLBACK_SEO } from '@/utils/constants'
@@ -85,6 +86,9 @@ export const viewport: Viewport = {
 const themeInitScript = `try{var t=localStorage.theme;document.documentElement.classList.toggle('dark',t?t==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches)}catch(e){}`
 
 export function generateStaticParams() {
+  // See app/(frontend)/[locale]/page.tsx: don't prerender without a database
+  if ( !isPayloadReady() ) return [];
+
   return routing.locales.map( ( locale ) => ( { locale } ) );
 }
 

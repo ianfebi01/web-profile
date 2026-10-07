@@ -64,6 +64,11 @@ export async function generateMetadata( props: Props ): Promise<Metadata> {
 }
 
 export function generateStaticParams() {
+  // Without a database (e.g. the Docker build) the page would be prerendered empty and
+  // that blank HTML served as the stale ISR copy on the first visit after a deploy.
+  // Returning [] defers rendering to the first request instead.
+  if ( !isPayloadReady() ) return [];
+
   return (
     locales?.map( ( locale ) => ( {
       locale : locale,
