@@ -251,7 +251,26 @@ export interface Project {
   title: string;
   slug: string;
   description?: string | null;
-  content?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Paste markdown and save to replace the content above. This field is cleared after saving.
+   */
+  markdownImport?: string | null;
+  contentMarkdown?: string | null;
   thumbnail?: (string | null) | Media;
   gallery?:
     | {
@@ -973,6 +992,8 @@ export interface ProjectsSelect<T extends boolean = true> {
   slug?: T;
   description?: T;
   content?: T;
+  markdownImport?: T;
+  contentMarkdown?: T;
   thumbnail?: T;
   gallery?:
     | T

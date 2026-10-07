@@ -94,6 +94,14 @@ const Detail = ( { data, latestPortofolios, isFetching }: Props ) => {
             </div>
           )}
 
+          {!!data.contentMarkdown && (
+            <div className="article-body mt-6">
+              <Markdown content={data.contentMarkdown}
+                headingLevel={1}
+              />
+            </div>
+          )}
+
           {!!data.url && (
             <a
               href={data.url}
