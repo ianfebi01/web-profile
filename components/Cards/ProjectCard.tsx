@@ -19,7 +19,7 @@ const ProjectCard = ( { data, headingLevel: Heading = 'h2' }: Props ) => {
 
   const thumbnail = imageUrl( data.thumbnail )
   const skills = ( data.skills ?? [] ).filter( ( skill ): skill is Skill => typeof skill === 'object' )
-  const excerpt = getPlainText( data.description || '' )
+  const excerpt = getPlainText( data.description || data.contentMarkdown || '' )
 
   return (
     <article className="h-full">

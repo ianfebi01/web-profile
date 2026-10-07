@@ -41,10 +41,10 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
           {portofolio.title}
         </h3>
 
-        {!!getPlainText( portofolio.description || '' ) && (
+        {!!getPlainText( portofolio.description || portofolio.contentMarkdown || '' ) && (
           <div className="xxl:text-xl">
             <p className="m-0 line-clamp-3 text-black/80 dark:text-white/80">
-              {getPlainText( portofolio.description || '' )}
+              {getPlainText( portofolio.description || portofolio.contentMarkdown || '' )}
             </p>
           </div>
         )}

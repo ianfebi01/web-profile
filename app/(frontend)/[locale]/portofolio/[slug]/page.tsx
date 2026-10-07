@@ -27,7 +27,7 @@ const skillNames = ( data: Project ) =>
   ( data.skills ?? [] ).filter( ( skill ): skill is Skill => typeof skill === 'object' ).map( ( skill ) => skill.name )
 
 const projectDescription = ( data: Project ) =>
-  clampDescription( getPlainText( data.description || '' ) ) || `Portfolio project: ${data.title}`
+  clampDescription( getPlainText( data.description || data.contentMarkdown || '' ) ) || `Portfolio project: ${data.title}`
 
 export async function generateMetadata( props: Props ): Promise<Metadata> {
   const params = await props.params;
