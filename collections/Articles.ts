@@ -7,6 +7,11 @@ export const Articles: CollectionConfig = {
   admin : {
     useAsTitle : 'title',
   },
+  auth : {
+    useAPIKey : {
+      reveal : true, 
+    },
+  },
   access : {
     read : () => true,
   },
