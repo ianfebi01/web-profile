@@ -15,8 +15,12 @@ import { Projects } from '../collections/Projects';
 import { Articles } from '../collections/Articles';
 import { Pages } from '../collections/Pages';
 import { Experiences } from '../collections/Experiences';
+import { Users } from '../collections/Users';
 
 export default buildConfig( {
+  admin : {
+    user : Users.slug,
+  },
   // If you'd like to use Rich Text, pass your editor here
   editor       : lexicalEditor(),
   localization : {
@@ -26,7 +30,7 @@ export default buildConfig( {
   },
 
   // Define and configure your collections in this array
-  collections : [Media, Tags, Skills, Projects, Articles, Pages, Experiences],
+  collections : [Users, Media, Tags, Skills, Projects, Articles, Pages, Experiences],
   globals     : [Site, Profile, HomePage, MainMenu],
 
   // Your Payload secret - should be a complex and secure string, unguessable

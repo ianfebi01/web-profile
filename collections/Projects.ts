@@ -58,11 +58,6 @@ export const Projects: CollectionConfig = {
   admin : {
     useAsTitle : 'title',
   },
-  auth : {
-    useAPIKey : {
-      reveal : true, 
-    },
-  },
   access : {
     read : () => true,
   },
