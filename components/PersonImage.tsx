@@ -50,7 +50,7 @@ const PersonImage: FunctionComponent<Props> = ( { image } ) => {
           fill
           priority
           className='relative'
-          sizes='auto'
+          sizes='261px'
         />
       </motion.div>
     </div>

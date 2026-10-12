@@ -19,7 +19,7 @@ const ErrorLoadingData = ( { size = 'lg' }: Props ) => {
         <Image
           src="/error.svg"
           fill
-          sizes="auto"
+          sizes="240px"
           alt="Not found image"
           className="object-cover"
           priority

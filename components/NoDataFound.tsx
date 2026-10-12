@@ -23,7 +23,7 @@ const NoDataFound = ( { size = 'lg' }: Props ) => {
         <Image
           src="/not-found.svg"
           fill
-          sizes="auto"
+          sizes="240px"
           alt="Not found image"
           className="object-cover"
           priority

@@ -11,7 +11,7 @@ export default function Error( { reset }: { error?: unknown; reset?: () => void 
         <Image
           src="/shape.svg"
           fill
-          sizes="auto"
+          sizes="100vw"
           alt="Error image"
           className="object-contain"
           loading='lazy'
@@ -22,7 +22,7 @@ export default function Error( { reset }: { error?: unknown; reset?: () => void 
           <Image
             src="/error.svg"
             fill
-            sizes="auto"
+            sizes="240px"
             alt="Error image"
             className="object-cover"
             priority

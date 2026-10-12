@@ -166,10 +166,11 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                     src={
                       imageUrl( item.image ) || ''
                     }
+                    fill
                     style={{
                       objectFit : 'contain',
                     }}
-                    sizes="auto"
+                    sizes="16px"
                     alt="Icon"
                   />
                 </div>
@@ -184,7 +185,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                   alt={data.title}
                   fill
                   priority
-                  sizes="auto"
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   style={{
                     objectFit : 'contain',
                   }}
@@ -234,7 +235,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                     style={{
                       objectFit : 'contain',
                     }}
-                    sizes="auto"
+                    sizes="16px"
                     alt="Icon"
                   />
                 </div>
@@ -249,7 +250,7 @@ const CardPortofolio: FunctionComponent<Props> = ( props ) => {
                   alt={data.title}
                   fill
                   priority
-                  sizes="auto"
+                  sizes="(max-width: 768px) 50vw, 33vw"
                   style={{
                     objectFit : 'contain',
                   }}

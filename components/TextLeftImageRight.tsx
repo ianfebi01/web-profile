@@ -144,7 +144,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                     'aspect-auto h-full w-full md:hidden' : true,
                   } )}
                   fill
-                  sizes="auto"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <Image
                   loading="lazy"
@@ -159,7 +159,7 @@ const TextLeftImageRight: React.FC<Props> = ( {
                     'aspect-auto h-full w-ful hidden md:block' : true,
                   } )}
                   fill
-                  sizes="auto"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
             </div>

@@ -28,7 +28,7 @@ const PortofolioCard = ( { portofolio }: PortofolioCardProps ) => {
             ) || ""
           }
           fill
-          sizes="auto"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           className="object-contain object-center group-hover:scale-110 transition-default"
           loading="lazy"
           placeholder={imageLoader}

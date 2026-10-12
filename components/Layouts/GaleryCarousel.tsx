@@ -68,7 +68,7 @@ const GaleryCarousel: React.FC<Props> = ( { data, title = 'Gallery' } ) => {
                     objectFit : 'contain',
                   }}
                   loading={index === 0 ? 'eager' : 'lazy'}
-                  sizes="auto"
+                  sizes="(max-width: 1280px) 100vw, 1280px"
                   placeholder={imageLoader}
                   className="drop-shadow-2xl"
                 />

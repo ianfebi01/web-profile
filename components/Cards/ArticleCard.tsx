@@ -48,7 +48,7 @@ const ArticleCard: React.FC<Props> = ( { data } ) => {
             className="object-cover object-top w-full h-full"
             loading="lazy"
             fill
-            sizes="auto"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             placeholder={imageLoader}
           />
         </div>

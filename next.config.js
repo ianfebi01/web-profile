@@ -19,6 +19,9 @@ const nextConfig = {
   //   ]
   // },
   images                      : {
+    // Cloudinary resizes images on its CDN; keeps the sharp optimizer off the VPS
+    loader         : 'custom',
+    loaderFile     : './lib/cloudinary-loader.ts',
     remotePatterns : [
       {
         protocol : 'https',

@@ -59,7 +59,7 @@ const ImageField = ( { name, placeholder, loading, disabled }: ImageFieldProps )
             src={field.value as string}
             alt="Preview image"
             fill
-            sizes="auto"
+            sizes="(max-width: 640px) 100vw, 400px"
             style={{ objectFit : 'contain' }}
             className="z-0"
           />

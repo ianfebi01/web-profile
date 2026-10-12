@@ -98,7 +98,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
               alt="Profile image"
               fill
               priority
-              sizes="auto"
+              sizes="192px"
               className="object-cover"
               placeholder={imageLoader}
             />
@@ -125,7 +125,7 @@ const ProfileBanner: FunctionComponent<Props> = ( { sectionData } ) => {
               alt="Profile image"
               fill
               priority
-              sizes="auto"
+              sizes="192px"
               className="object-cover"
               placeholder={imageLoader}
             />

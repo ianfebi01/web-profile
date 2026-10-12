@@ -16,7 +16,7 @@ export default function NotFound() {
             <Image
               src="/shape.svg"
               fill
-              sizes="auto"
+              sizes="100vw"
               alt="Error image"
               className="object-contain"
               loading='lazy'
@@ -27,7 +27,7 @@ export default function NotFound() {
               <Image
                 src="/404.svg"
                 fill
-                sizes="auto"
+                sizes="240px"
                 alt="Not found image"
                 className="object-cover"
                 priority
