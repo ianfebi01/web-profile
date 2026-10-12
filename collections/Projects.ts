@@ -16,7 +16,8 @@ type LexicalNode = {
 // output real `![alt](url)` images instead.
 const populateUploadNodes = async <T extends { root: unknown }>( data: T, req: PayloadRequest ): Promise<T> => {
   const uploads: LexicalNode[] = []
-  const walk = ( node: LexicalNode ) => {
+  const walk = ( node?: LexicalNode ) => {
+    if ( !node ) return
     if ( node.type === 'upload' && node.relationTo && ( typeof node.value === 'string' || typeof node.value === 'number' ) ) {
       uploads.push( node )
     }
@@ -157,7 +158,8 @@ export const Projects: CollectionConfig = {
         afterRead : [async ( { siblingData, req } ) => {
           const data = siblingData?.content
 
-          if ( !data || typeof data !== 'object' ) return ''
+          // With `locale: 'all'` this is a `{ [locale]: editorState }` map, not an editor state
+          if ( !data || typeof data !== 'object' || !( 'root' in data ) ) return ''
 
           return convertLexicalToMarkdown( {
             // Clone so populating uploads doesn't change the `content` returned to the client
