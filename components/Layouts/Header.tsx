@@ -14,6 +14,8 @@ import {
   NavCategoryType,
   SocialLinksType,
 } from '@/types/header'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGithub } from '@fortawesome/free-brands-svg-icons'
 import ThemeToggle from '../ThemeToggle'
 import constructNavUrl from '@/utils/construct-nav-url'
 
@@ -257,6 +259,19 @@ const Header = ( { items, socials }: Props ) => {
 
           <div className="flex items-center gap-1 sm:gap-2">
             <div className={cn( 'flex items-center gap-1 transition-opacity duration-300', isOpen ? 'opacity-0 pointer-events-none' : 'opacity-100' )}>
+              <a
+                href="https://github.com/ianfebi01"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="GitHub"
+                title="GitHub"
+                className="flex size-10 items-center justify-center rounded-full text-black/70 hover:text-black hover:bg-light-secondary dark:text-white/70 dark:hover:text-white dark:hover:bg-dark-secondary transition-colors duration-200"
+              >
+                <FontAwesomeIcon icon={faGithub}
+                  aria-hidden="true"
+                  className="size-4"
+                />
+              </a>
               <ThemeToggle />
               <div className="hidden sm:block">
                 <LocaleSwitcher />

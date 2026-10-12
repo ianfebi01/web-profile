@@ -36,6 +36,11 @@ const HeaderPanel = ( {
   const panelRight = menuAnchor ? Math.max( menuAnchor.right - PANEL_INSET, 4 ) : 16
   const panelMaxHeight = `calc(100dvh - ${panelTop}px - 16px)`
 
+  // Always offer GitHub, unless the CMS already lists it
+  const socialLinks: SocialLinksType = socials.some( ( item ) => item.platform?.toLowerCase() === 'github' )
+    ? socials
+    : [...socials, { platform : 'github', url : 'https://github.com/ianfebi01' }]
+
   // Grow the panel out of the button's centre
   const transformOrigin = menuAnchor
     ? `calc(100% - ${menuAnchor.right - panelRight + menuAnchor.width / 2}px) ${menuAnchor.top - panelTop + menuAnchor.height / 2}px`
@@ -103,7 +108,7 @@ const HeaderPanel = ( {
 
           <div className="flex items-center justify-between gap-4 mt-8 pt-5 px-1 border-t border-black/10 dark:border-white/10">
             <div className="flex items-center -ml-2">
-              {socials.map( ( item, index ) => (
+              {socialLinks.map( ( item, index ) => (
                 <HeaderPanelSocial
                   key={index}
                   item={item}

@@ -1,5 +1,6 @@
 'use client'
 import LinkOpenNewTab from '@/components/Buttons/LinkOpenNewTab'
+import GithubIcon from '@/components/Icons/GithubIcon'
 import InstagramIcon from '@/components/Icons/InstagramIcon'
 import LinkedinIcon from '@/components/Icons/LinkedinIcon'
 import CopyToClipboard from '@/components/Inputs/CopyToClipboard'
@@ -36,6 +37,13 @@ const Footer = () => {
             label={'LinkedIn'}
             className="text-md"
             icon={<LinkedinIcon size={20} />}
+          />
+          <span aria-hidden="true">•</span>
+          <LinkOpenNewTab
+            url={'https://github.com/ianfebi01'}
+            label={'GitHub'}
+            className="text-md"
+            icon={<GithubIcon size={18} />}
           />
           <span aria-hidden="true">•</span>
           <div className=" flex flex-row items-center gap-2">
