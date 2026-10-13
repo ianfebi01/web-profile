@@ -325,6 +325,7 @@ export interface Article {
   content?: string | null;
   heroImage?: (string | null) | Media;
   tags?: (string | Tag)[] | null;
+  aiGenerated?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -1048,6 +1049,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   content?: T;
   heroImage?: T;
   tags?: T;
+  aiGenerated?: T;
   updatedAt?: T;
   createdAt?: T;
 }

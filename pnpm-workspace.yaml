@@ -4,9 +4,11 @@ packages:
 # Native build tooling required by Next (swc), Payload (parcel/watcher),
 # esbuild and the oxc resolver used by eslint-plugin-import.
 allowBuilds:
+  '@google/genai': false
   '@parcel/watcher': true
   '@swc/core': true
   esbuild: true
+  protobufjs: false
   unrs-resolver: true
 
 minimumReleaseAgeExclude:

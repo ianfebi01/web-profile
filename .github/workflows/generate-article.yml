@@ -1,0 +1,36 @@
+name: Generate Daily Article
+
+on:
+  schedule:
+    # 01:00 UTC = 08:00 WIB
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Generate even if an AI article was already created in the last 20h'
+        type: boolean
+        default: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    environment: Production
+    timeout-minutes: 10
+
+    steps:
+      - name: Generate article with Gemini
+        env:
+          BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
+          PAYLOAD_API_KEY: ${{ secrets.PAYLOAD_API_KEY }}
+          FORCE: ${{ inputs.force || false }}
+        run: |
+          set -euo pipefail
+          status=$(curl -sS -o response.json -w '%{http_code}' \
+            --max-time 300 --retry 2 --retry-delay 30 \
+            -X POST "${BASE_URL%/}/api/articles/generate?force=${FORCE}" \
+            -H "Authorization: users API-Key ${PAYLOAD_API_KEY}")
+          cat response.json; echo
+          if [ "$status" -ge 400 ]; then
+            echo "::error::Article generation failed with HTTP $status"
+            exit 1
+          fi

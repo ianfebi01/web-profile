@@ -80,6 +80,11 @@ CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
 CLOUDINARY_FOLDER=web-profile-payload
 
+# AI articles (daily via .github/workflows/generate-article.yml)
+GEMINI_API_KEY=your-gemini-api-key
+GEMINI_MODEL=gemini-3.8-flash        # optional
+ARTICLE_TOPICS="Next.js, React, TypeScript, web performance"  # optional topic hint
+
 # App
 BASE_URL=http://localhost:3000
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
