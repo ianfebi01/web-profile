@@ -1,6 +1,7 @@
+import { after } from 'next/server'
 import type { CollectionConfig } from 'payload'
 
-import { generateArticle } from '../lib/ai/generateArticle'
+import { getGenerationState, startGeneration } from '../lib/ai/generateArticle'
 import { readLocalizedSlug, resolveLocales, revalidateContent } from '../lib/revalidate'
 
 export const Articles: CollectionConfig = {
@@ -15,6 +16,7 @@ export const Articles: CollectionConfig = {
     {
       // Called daily by .github/workflows/generate-article.yml
       // Auth: `Authorization: users API-Key <key>`; add `?force=true` to bypass the once-a-day guard.
+      // Responds 202 right away and generates in the background; poll GET /generate/status.
       path    : '/generate',
       method  : 'post',
       handler : async ( req ) => {
@@ -22,15 +24,22 @@ export const Articles: CollectionConfig = {
           return Response.json( { error : 'Unauthorized' }, { status : 401 } )
         }
 
-        try {
-          const result = await generateArticle( req.payload, { force : req.searchParams.get( 'force' ) === 'true' } )
+        const { state, run } = startGeneration( req.payload, { force : req.searchParams.get( 'force' ) === 'true' } )
+        // after() keeps the request context, so the revalidation hooks still work
+        if ( run ) after( run )
 
-          return Response.json( result, { status : result.status === 'created' ? 201 : 200 } )
-        } catch ( error ) {
-          req.payload.logger.error( { err : error, msg : 'AI article generation failed' } )
-
-          return Response.json( { error : error instanceof Error ? error.message : 'Generation failed' }, { status : 500 } )
+        return Response.json( state, { status : 202 } )
+      },
+    },
+    {
+      path    : '/generate/status',
+      method  : 'get',
+      handler : async ( req ) => {
+        if ( !req.user ) {
+          return Response.json( { error : 'Unauthorized' }, { status : 401 } )
         }
+
+        return Response.json( getGenerationState() ?? { running : false } )
       },
     },
   ],

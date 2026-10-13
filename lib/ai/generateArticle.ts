@@ -109,28 +109,56 @@ Requirements:
 - Choose 1 to 3 tag slugs from this list only (return an empty array if none fit):
 ${tags.length ? tags.map( ( t ) => `  - ${t.slug} (${t.title})` ).join( '\n' ) : '  (no tags available)'}`
 
-// Single long-lived server: a module-level flag stops a retried request (e.g. after a
-// proxy timeout) from starting a second generation while the first is still running.
-let inProgress = false
+export type GenerationState = {
+  runId: string
+  running: boolean
+  startedAt: string
+  finishedAt?: string
+  result?: GenerateArticleResult
+  error?: string
+}
+
+// Generation outlasts the proxy timeout (Cloudflare: 100s), so the endpoint starts it in the
+// background and the workflow polls this state. Module-level state is fine on our single
+// long-lived server, and also stops a second run from starting while one is in progress.
+let state: GenerationState | null = null
+
+export const getGenerationState = () => state
+
+/** Returns the new run's state, or the current one if a generation is already running. */
+export const startGeneration = (
+  payload: Payload,
+  options: { force?: boolean } = {},
+): { state: GenerationState; started: boolean; run?: () => Promise<void> } => {
+  if ( state?.running ) return { state, started : false }
+
+  const current: GenerationState = {
+    runId     : crypto.randomUUID(),
+    running   : true,
+    startedAt : new Date().toISOString(),
+  }
+  state = current
+
+  const run = async () => {
+    try {
+      current.result = await generateArticle( payload, options )
+    } catch ( error ) {
+      current.error = error instanceof Error ? error.message : 'Generation failed'
+      payload.logger.error( { err : error, msg : 'AI article generation failed' } )
+    } finally {
+      current.running = false
+      current.finishedAt = new Date().toISOString()
+    }
+  }
+
+  return { state : current, started : true, run }
+}
 
 export const generateArticle = async (
   payload: Payload,
-  options: { force?: boolean } = {},
+  { force = false }: { force?: boolean } = {},
 ): Promise<GenerateArticleResult> => {
-  if ( inProgress ) return { status : 'skipped', reason : 'A generation is already in progress' }
 
-  inProgress = true
-  try {
-    return await runGeneration( payload, options )
-  } finally {
-    inProgress = false
-  }
-}
-
-const runGeneration = async (
-  payload: Payload,
-  { force = false }: { force?: boolean },
-): Promise<GenerateArticleResult> => {
   const apiKey = process.env.GEMINI_API_KEY
   if ( !apiKey ) throw new Error( 'GEMINI_API_KEY is not set' )
 
