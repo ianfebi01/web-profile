@@ -1,9 +1,11 @@
-import { GoogleGenAI } from '@google/genai'
+import { ApiError, GoogleGenAI } from '@google/genai'
 import type { Payload } from 'payload'
 
 import { uploadCoverImage } from './coverImage'
 
-const DEFAULT_MODEL = 'gemini-3.8-flash'
+// Tried in order; a later model is used only when the previous one stays overloaded.
+// Override with GEMINI_MODEL, comma-separated (e.g. "gemini-3.8-flash,gemini-3.6-flash").
+const DEFAULT_MODELS = ['gemini-3.8-flash', 'gemini-3.6-flash']
 // Skip generation if an AI article was already created within this window,
 // so retried or duplicated workflow runs don't publish twice in one day.
 const MIN_HOURS_BETWEEN_ARTICLES = 20
@@ -189,20 +191,39 @@ export const generateArticle = async (
 
   const tags = tagDocs.docs.map( ( t ) => ( { id : t.id, slug : t.slug, title : t.title } ) )
 
-  const ai = new GoogleGenAI( { apiKey } )
-  const response = await ai.models.generateContent( {
-    model    : process.env.GEMINI_MODEL || DEFAULT_MODEL,
-    contents : buildPrompt( {
-      bio          : profile?.bio || '',
-      tags,
-      recentTitles : recent.docs.map( ( a ) => a.title ).filter( Boolean ),
-      topicHint    : process.env.ARTICLE_TOPICS,
-    } ),
-    config : {
-      responseMimeType   : 'application/json',
-      responseJsonSchema : responseSchema,
-    },
+  const ai = new GoogleGenAI( {
+    apiKey,
+    // Retry 429/5xx ("model is experiencing high demand") with backoff: ~10s, 20s, 40s
+    httpOptions : { retryOptions : { attempts : 4, initialDelay : 10, maxDelay : 60 } },
   } )
+  const prompt = buildPrompt( {
+    bio          : profile?.bio || '',
+    tags,
+    recentTitles : recent.docs.map( ( a ) => a.title ).filter( Boolean ),
+    topicHint    : process.env.ARTICLE_TOPICS,
+  } )
+  const models = process.env.GEMINI_MODEL?.split( ',' ).map( ( m ) => m.trim() ).filter( Boolean ) ?? DEFAULT_MODELS
+
+  let response: Awaited<ReturnType<typeof ai.models.generateContent>> | undefined
+  for ( const [index, model] of models.entries() ) {
+    try {
+      response = await ai.models.generateContent( {
+        model,
+        contents : prompt,
+        config   : {
+          responseMimeType   : 'application/json',
+          responseJsonSchema : responseSchema,
+        },
+      } )
+      break
+    } catch ( error ) {
+      const overloaded = error instanceof ApiError && ( error.status === 429 || error.status >= 500 )
+      if ( !overloaded || index === models.length - 1 ) throw error
+      payload.logger.warn( `Gemini model ${model} unavailable (${error.status}); falling back to ${models[index + 1]}` )
+    }
+  }
+
+  if ( !response ) throw new Error( 'No Gemini model configured' )
 
   if ( !response.text ) throw new Error( 'Gemini returned an empty response' )
 

@@ -82,7 +82,7 @@ CLOUDINARY_FOLDER=web-profile-payload
 
 # AI articles (daily via .github/workflows/generate-article.yml)
 GEMINI_API_KEY=your-gemini-api-key
-GEMINI_MODEL=gemini-3.8-flash        # optional
+GEMINI_MODEL=gemini-3.8-flash,gemini-3.6-flash  # optional, tried in order
 ARTICLE_TOPICS="Next.js, React, TypeScript, web performance"  # optional topic hint
 
 # App

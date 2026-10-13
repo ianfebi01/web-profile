@@ -15,7 +15,7 @@ jobs:
   generate:
     runs-on: ubuntu-latest
     environment: Production
-    timeout-minutes: 15
+    timeout-minutes: 25
 
     steps:
       - name: Generate article with Gemini
@@ -39,7 +39,8 @@ jobs:
           fi
           run_id=$(jq -r .runId start.json)
 
-          for _ in $(seq 1 40); do
+          # Up to 20 min: Gemini retries and model fallback can add several minutes when it's busy
+          for _ in $(seq 1 80); do
             sleep 15
             curl -sS --max-time 30 -o state.json "${api}/status" -H "$auth" || continue
             if [ "$(jq -r .runId state.json)" = "$run_id" ] && [ "$(jq -r .running state.json)" = false ]; then
