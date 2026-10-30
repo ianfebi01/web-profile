@@ -80,12 +80,12 @@ const HeaderPanelSocial = ( {
   return (
     <a
       ref={buttonRef}
-      href={item.url}
+      href={item.platform === 'Email' ? `mailto:${item.url}` : item.url}
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
         transitionEnabled && 'opacity-0 translate-y-[50px] will-change-transform',
-        'flex size-12 items-center justify-center rounded-full text-black dark:text-white hover:text-orange transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-orange'
+        'flex size-12 items-center justify-center rounded-full text-black dark:text-white hover:text-orange transition-all duration-300 outline-none focus-visible:ring-2 focus-visible:ring-orange group'
       )}
       data-name="button"
       aria-label={item.platform}
@@ -95,6 +95,7 @@ const HeaderPanelSocial = ( {
         <FontAwesomeIcon icon={icon}
           aria-hidden="true"
           size="lg"
+          className='transition-transform duration-150 group-active:scale-90'
         />
       ) : (
         <span className="text-sm font-bold uppercase">
