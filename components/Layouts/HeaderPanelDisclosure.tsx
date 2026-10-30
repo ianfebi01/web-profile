@@ -35,7 +35,7 @@ const HeaderPanelDisclosure = ( { item, index, setIsOpen }: Props ) => {
   return (
     <Disclosure as="div">
       {( { open } ) => (
-        <div className={cn( 'rounded-2xl transition-colors duration-200', open && 'bg-light-secondary dark:bg-dark-secondary' )}>
+        <div className={cn( 'rounded-2xl transition-colors duration-200' )}>
           {hasDirectLink ? (
             // Label navigates; only the + button toggles the sub-links
             <div className={cn( panelRowClass, open && 'hover:bg-transparent dark:hover:bg-transparent' )}>
@@ -56,7 +56,7 @@ const HeaderPanelDisclosure = ( { item, index, setIsOpen }: Props ) => {
             </div>
           ) : (
             <Disclosure.Button
-              className={cn( panelRowClass, 'text-left text-black dark:text-white cursor-pointer', open && 'hover:bg-transparent dark:hover:bg-transparent' )}
+              className={cn( panelRowClass, 'text-left text-black dark:text-white cursor-pointer' )}
             >
               <PanelIndex index={index} />
               <span className={panelLabelClass}>{item.categoryName}</span>

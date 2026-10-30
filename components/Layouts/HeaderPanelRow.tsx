@@ -1,6 +1,6 @@
 // Shared row styling for the menu panel items
 export const panelRowClass =
-  'group flex items-baseline gap-4 w-full px-3 py-3 rounded-2xl no-underline transition-colors duration-200 hover:bg-light-secondary dark:hover:bg-dark-secondary'
+  'group flex items-baseline gap-4 w-full px-3 py-3 rounded-2xl no-underline transition-colors duration-200 hover:bg-light-secondary dark:hover:bg-dark-secondary flex items-center'
 
 export const PanelIndex = ( { index }: { index: number } ) => (
   <span aria-hidden="true"
